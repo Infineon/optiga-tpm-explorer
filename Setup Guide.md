@@ -1,0 +1,223 @@
+# **OPTIGA™ TPM 2.0 Explorer Setup Guide**
+
+This page provides instructions on how to install and configure the Raspberry Pi® to enable the [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) in order to use the OPTIGA™ TPM 2.0 Explorer.
+
+1.  [Prerequisites](#prerequisites)
+2.  [Enable OPTIGA™ TPM 2.0 support on Raspberry Pi®](#enabletpm)
+3.  [Set up VNC Connection](#vnc-connection-setup-optional)
+4.  [Install OPTIGA™ TPM 2.0 Explorer](#install-tpm_explorer)
+5.  [References](#references)
+
+## Prerequisites 
+
+-   Raspberry Pi® 3 Model B+
+-   Micro SD card (≥8GB) flashed with Raspberry Pi® Raspbian Linux in Release Version 9.4 (Stretch) OS. Download the official image from [[1]](#references)
+-   OPTIGA™ TPM 2.0 evaluation board
+    -   [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/)
+
+| ![](/images/Overview/TPMRPI3.png) |
+| --------------------------------- |
+
+
+
+**Table 1** shows a summary of the hardware and environment used.
+
+| Hardware             | Version   and Firmware/OS                                    | Comment                                                      |
+| -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Host  PC             | • x86  architecture and USB 2.0 (or higher)  •  Capable of running Linux, for example Ubuntu® 18.04  •  Arbitrary as long as VNC viewer is present | This  platform is used for patching the Kernel, maintaining and interacting with  the Raspberry Pi® in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi®. |
+|  OPTIGA™ TPM 2.0 evaluation board       |  • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) | This  board contains the Infineon OPTIGA™ TPM SLB 9670 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
+| Raspberry  Pi® Board | •  Model 3 B+, Raspbian 9.4   •  Micro SD Card with at least 8 GB   •  Micro-B USB cable for power supply | A SD  card with the Raspbian  Linux in Release Version 9.4 (Stretch) and kernel version 4.19 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
+
+
+
+**Table 2** shows a summary of the software used.
+
+| Software        | Version    | Comment                                                      |
+| --------------- | ---------- | ------------------------------------------------------------ |
+| tpm2-tools      | 5.1-rc0    | https://github.com/tpm2-software/tpm2-tools  Tag: 961f8b5e21101ed0130ca2edf496312ab1b36961 |
+| tpm2-abrmd      | 2.4.0      | https://github.com/tpm2-software/tpm2-abrmd  Tag: 1beda7906dd959bfa53f39ca58f66bea073fa58c |
+| tpm2-tss        | 3.1.0-rc2  | https://github.com/tpm2-software/tpm2-tss  Tag: 23a264b041e836a0e485f7c10e1da2e2bce6bd6c |
+| tpm2-tss-engine | v1.1.0-rc0 | https://github.com/tpm2-software/tpm2-tss-engine  Tag: 2da48e4ceadc91a7198136309a81b8611327bdf3 |
+
+
+
+## <a name="enabletpm"></a>Enable OPTIGA™ TPM 2.0 support on Raspberry Pi®
+
+Insert the flashed SD card and boot the Raspberry Pi®.
+
+Open the configuration file in an editor:  
+
+```
+sudo nano /boot/config.txt   
+```
+
+Insert the following lines to enable SPI and TPM: 
+
+```
+dtoverlay=tpm-slb9670
+```
+
+Save the file and exit the editor.  
+
+
+
+## <a name="vnc-connection-setup-optional"></a>Set up VNC Connection
+
+This optional step will guide you on how to set up a VNC connection from your RPI to your computer. This step requires a flashed MicroSD with the TPM Explorer image in an RPI3 and VNC Viewer installed on your computer.
+
+Start-up the RaspberryPi with HDMI cable to monitor and start the terminal.
+
+| ![](/images/Setup/terminal.png) |
+| ------------------------------- |
+
+**Figure 1**: RPI Home Screen on monitor
+
+ Enter the Raspberry Pi Software Configuration Menu
+
+```python
+sudo raspi-config
+```
+
+Select option 5 Interfacing Options.
+
+| ![](/images/Setup/raspi-config.png) |
+| --------------------------------------------------------- |
+
+**Figure 2**: Raspberri Pi Software Configuration Tool
+
+Select P2 SSH and enable.
+
+| ![](/images/Setup/ssh.png) |
+| ------------------------------------------------ |
+
+**Figure 3**: SSH Selection
+
+| ![](/images/Setup/ssh_enable.png) |
+| ------------------------------------------------------- |
+
+**Figure 4**: SSH Enable
+
+Select P3 VNC and enable.
+
+| ![](/images/Setup/vnc.png) |
+| ------------------------------------------------ |
+
+**Figure 5**: VNC Selection
+
+| ![](/images/Setup/vnc_enable.png) |
+| ------------------------------------------------------- |
+
+**Figure 6**: VNC Enable
+
+Select finish and return to the terminal
+
+| ![](/images/Setup/terminal2.png) |
+| ------------------------------------------------------ |
+
+**Figure 7**: Raspberry Pi Terminal
+
+Enter "hostname -I" into the terminal and copy the IP address
+
+```
+hostname -I       
+192.168.###.###
+```
+
+Paste the IP Address of RPI3 into VNC Viewer and connect.
+
+| ![](/images/Setup/VNCViewer.png) |
+| ------------------------------------------------------ |
+
+**Figure 8**: VNC Viewer Connection Screen
+
+Enter the Username and the Password.
+
+Username: pi
+
+Password: infineondss
+
+| ![](/images/Setup/VNCViewerUserPass.png) |
+| ------------------------------------------------------------ |
+
+**Figure 9**: VNC Viewer Authentication Menu
+
+You should be successfully connected and able to view the RPI through VNC connection on your device.
+
+| ![](/images/Setup/RPIHomeScreen_VNC.png) |
+| ------------------------------------------------------------ |
+
+**Figure 10**: RPI Home Screen on VNC Viewer
+
+
+
+## <a name="install-tpm_explorer"></a> Install OPTIGA™ TPM 2.0 Explorer 
+
+Download TPM Explorer Source Code (Approx. 175MB):  
+
+```
+git clone ********GITHUB LINK*********
+cd ***Repo name***/
+```
+
+
+
+Execute Installation script:
+
+```
+./installation_script.sh
+```
+
+
+
+The installation script installs the following dependencies required and compiles the source code for the OPTIGA™ TPM 2.0 Explorer Application.
+-   python-wxtools
+-   tpm2-tss
+-   tpm2-tools
+-   tpm2-abrmd
+-   tpm2-tss-engine
+
+Once complete, go to your home directory and access the file called TPM_Explorer.
+
+| ![](/images/Settingup_TPMExplorer/TPM_Explorer.png) |
+| ------------------------------------------------------------ |
+
+**Figure 11**: TPM_Explorer File Directory
+
+Next, access the file called Python_TPM20_GUI.
+
+| ![](/images/Settingup_TPMExplorer/Python_TPM20_GUI.png) |
+| ------------------------------------------------------------ |
+
+**Figure 12**: Python_TPM20_GUI File Directory
+
+Next, enter the bin file.
+
+| ![](/images/Settingup_TPMExplorer/binfile.png) |
+| ------------------------------------------------------------ |
+
+**Figure 13**: Python_TPM20_GUI Bin File Directory
+
+Execute "start_gui.sh" and select execute in terminal.
+
+| ![](/images/Settingup_TPMExplorer/start_gui.png) |
+| ------------------------------------------------------------ |
+
+**Figure 14**: Selecting start_gui.sh
+
+| ![](/images/Settingup_TPMExplorer/execute.png) |
+| ------------------------------------------------------------ |
+
+**Figure 15**: Executing start_gui.sh in terminal
+
+A terminal will pop up and the OPTIGA TPM 2.0 Explorer interface will be open.
+
+| ![](/images/Setup/MainScreen.png) |
+| ------------------------------------------------------- |
+
+**Figure 16**: Home Screen of OPTIGA TPM 2.0 Explorer
+
+For more information on the OPTIGA™ TPM 2.0 Explorer, please refer to the [OPTIGA™ TPM 2.0 Explorer User Guide](./User%20Guide.md).
+
+## References
+
+1.  <https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-04-09/>

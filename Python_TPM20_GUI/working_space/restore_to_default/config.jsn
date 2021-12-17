@@ -1,0 +1,11 @@
+{
+  "CN": "AWS_IoT_TPM_Certificate",
+  "O": "Infineon_Technologies",
+  "C": "SG",
+  "ST": "Singapore",
+  "AmazonIoT": {
+		"ThingName": "TPM_UI_Demo",
+       		"PolicyName": "IoT_Publish_Subscribe",
+        	"Endpoint": "a26ch0cchp0v7h-ats.iot.us-east-2.amazonaws.com"
+   }
+}
