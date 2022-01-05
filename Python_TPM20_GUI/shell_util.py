@@ -67,18 +67,18 @@ def execTpmToolsAndCheck(cmd, allowFail=True):
     output = ""
     
     try:
-        print(">>> ", " ".join(cmd))
+        print((">>> ", " ".join(cmd)))
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         output = e.output
-        print("{0} returned {1}".format(cmd[0], e.returncode))
+        print(("{0} returned {1}".format(cmd[0], e.returncode)))
     if ("error" in str(output).lower()) or ("fail" in str(output).lower()):
         if not allowFail:
-            print("ERROR in {0}".format(cmd[0]))
-            print(str(output))
+            print(("ERROR in {0}".format(cmd[0])))
+            print((str(output)))
             exit()
           
-    print(str(output))
+    print((str(output)))
     return(output)
 
 
@@ -86,7 +86,7 @@ def execTpmToolsAndCheck(cmd, allowFail=True):
 def execCLI(cmd):
     output = ""
     try:
-        print(">>> ", " ".join(cmd))
+        print((">>> ", " ".join(cmd)))
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         output = e.output

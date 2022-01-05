@@ -65,10 +65,10 @@ def ClientProcess(client_log):
 
 
 def LogReader(text_server, text_client, server_log, client_log):
-    print("server log is: " + str(server_log))
-    print("client log is: " + str(client_log))
-    print("text_server is: " + str(text_server))
-    print("text_client is: " + str(text_client))
+    print(("server log is: " + str(server_log)))
+    print(("client log is: " + str(client_log)))
+    print(("text_server is: " + str(text_server)))
+    print(("text_client is: " + str(text_client)))
     time.sleep(2)
     server_log.seek(0)
     client_log.seek(0)
@@ -108,7 +108,7 @@ def kill_child_processes(parent_pid, sig=signal.SIGTERM):
             for pid_str in ps_output.split("\n")[:-1]:
                     os.kill(int(pid_str), sig)
         else:
-            print "ps command returned %d" % retcode
+            print("ps command returned %d" % retcode)
 class RSA_Server_Thread(threading.Thread):
     
     
@@ -136,7 +136,7 @@ class RSA_Server_Thread(threading.Thread):
         finally:
             
             RSA_Server_thread_active_flag=0
-            print "Exit RSA server Thread"
+            print("Exit RSA server Thread")
             wx.CallAfter(Publisher.sendMessage, "Server_Text","Server Stopped..\n")
 
     def get_id(self): 
@@ -144,10 +144,10 @@ class RSA_Server_Thread(threading.Thread):
         # returns id of the respective thread 
         if hasattr(self, '_thread_id'):
             return self._thread_id 
-        for id, thread in threading._active.items(): 
+        for id, thread in list(threading._active.items()): 
             if thread is self: 
-                print "thread ID"
-                print id
+                print("thread ID")
+                print(id)
                 return id
    
     def raise_exception(self): 
@@ -182,7 +182,7 @@ class RSA_Client_Thread(threading.Thread):
         #self.Process.terminate()
         #self.Process.wait()
         #client_proc=None
-        print "Exit RSA client Thread"
+        print("Exit RSA client Thread")
         wx.CallAfter(Publisher.sendMessage, "Client_Text","Client Stopped..\n")
 
         
@@ -312,13 +312,13 @@ class Tab_RSA_CS(wx.Panel):
 
             if (client_proc is not None):
                 RSA_Client_thread_active_flag=0
-                print "Client Thread Active..killing it: %d \n" % client_proc.pid
+                print("Client Thread Active..killing it: %d \n" % client_proc.pid)
                 kill_child_processes(client_proc.pid)
                 client_proc.terminate()
                 client_proc.wait()
                 client_proc = None                
 
-            print "Server Thread Active..killing it: %d \n" % server_proc.pid
+            print("Server Thread Active..killing it: %d \n" % server_proc.pid)
             kill_child_processes(server_proc.pid)
             
             server_proc.terminate()
@@ -476,13 +476,13 @@ class Tab_RSA_CS(wx.Panel):
 
             if (client_proc is not None):
                 RSA_Client_thread_active_flag=0
-                print "Client Thread Active..killing it: %d \n" % client_proc.pid
+                print("Client Thread Active..killing it: %d \n" % client_proc.pid)
                 kill_child_processes(client_proc.pid)
                 client_proc.terminate()
                 client_proc.wait()
                 client_proc = None                
 
-            print "Server Thread Active..killing it: %d \n" % server_proc.pid
+            print("Server Thread Active..killing it: %d \n" % server_proc.pid)
             kill_child_processes(server_proc.pid)
             #server_proc.stdin.write("stop\n")
             #server_thread.raise_exception()
@@ -510,7 +510,7 @@ class Tab_RSA_CS(wx.Panel):
         
         if (client_proc is not None):
             RSA_Client_thread_active_flag=0
-            print "Client Thread Active..killing it: %d \n" % client_proc.pid
+            print("Client Thread Active..killing it: %d \n" % client_proc.pid)
             kill_child_processes(client_proc.pid)
             client_proc.terminate()
             client_proc.wait()
@@ -647,7 +647,7 @@ class Tab_ECC_CS(wx.Panel):
         finally:
             
             self.Server_thread_active_flag=0
-            print "Exit ECC server Thread\n"
+            print("Exit ECC server Thread\n")
             wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text","Server Stopped..\n")
 
     def client_thread(self):
@@ -659,7 +659,7 @@ class Tab_ECC_CS(wx.Panel):
                 wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text",line) 
             
         self.Client_thread_active_flag=0
-        print "Exit ECC client Thread\n"
+        print("Exit ECC client Thread\n")
         wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text","Client Stopped..\n")        
                 
     def Upd_Server_Status(self,msg):
@@ -695,13 +695,13 @@ class Tab_ECC_CS(wx.Panel):
 
             if (self.client_proc is not None):
                 self.Client_thread_active_flag=0
-                print "Client Thread Active..killing it: %d \n" % self.client_proc.pid
+                print("Client Thread Active..killing it: %d \n" % self.client_proc.pid)
                 kill_child_processes(self.client_proc.pid)
                 self.client_proc.terminate()
                 self.client_proc.wait()
                 self.client_proc = None                
 
-            print "Server Thread Active..killing it: %d \n" % self.server_proc.pid
+            print("Server Thread Active..killing it: %d \n" % self.server_proc.pid)
             kill_child_processes(self.server_proc.pid)
             
             self.server_proc.terminate()
@@ -879,13 +879,13 @@ class Tab_ECC_CS(wx.Panel):
 
             if (self.client_proc is not None):
                 self.Client_thread_active_flag=0
-                print "Client Thread Active..killing it: %d \n" % self.client_proc.pid
+                print("Client Thread Active..killing it: %d \n" % self.client_proc.pid)
                 kill_child_processes(self.client_proc.pid)
                 self.client_proc.terminate()
                 self.client_proc.wait()
                 self.client_proc = None                
 
-            print "Server Thread Active..killing it: %d \n" % self.server_proc.pid
+            print("Server Thread Active..killing it: %d \n" % self.server_proc.pid)
             kill_child_processes(self.server_proc.pid)
 
             self.server_proc.terminate()
@@ -911,7 +911,7 @@ class Tab_ECC_CS(wx.Panel):
         
         if (self.client_proc is not None):
             self.Client_thread_active_flag=0
-            print "Client Thread Active..killing it: %d \n" % self.client_proc.pid
+            print("Client Thread Active..killing it: %d \n" % self.client_proc.pid)
             kill_child_processes(self.client_proc.pid)
             self.client_proc.terminate()
             self.client_proc.wait()

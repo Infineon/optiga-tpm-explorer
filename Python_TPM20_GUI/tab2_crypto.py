@@ -61,7 +61,7 @@ class Tab_Hash(wx.Panel):
             self.command_display.AppendText("Input must be in HEX please. \n")
             return
         input_message_hex_bytes= input_message_hex.decode("hex")   
-        print input_message_hex_bytes   
+        print(input_message_hex_bytes)   
         data_file = open("data_for_hash.data", "w")
         data_file.write(input_message_hex_bytes)
         data_file.close()

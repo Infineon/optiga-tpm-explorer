@@ -578,7 +578,7 @@ class Tab_NVM(wx.Panel):
         openFileDialog = wx.FileDialog(frame, "Open", "", "","All|*.bin;*.crt;*.der|Binary|*.bin|Certificate|*.crt;*.der", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
         if openFileDialog.ShowModal() ==wx.ID_CANCEL:
                 return
-        print(openFileDialog.GetPath())
+        print((openFileDialog.GetPath()))
         self.filename_input.SetValue(openFileDialog.GetPath())
         
         openFileDialog.Destroy()

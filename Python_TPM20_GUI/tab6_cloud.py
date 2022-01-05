@@ -207,7 +207,7 @@ class Tab6Frame(wx.Frame):
             
             self.AWS_thread_active_flag=0
             #~ self.aws_proc=None
-            print "Exit process AWS process Thread\n"
+            print("Exit process AWS process Thread\n")
             #~ wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text"," Exit AWS thread..\n")   
                  
     def Upd_Cloud_Status(self,msg):
@@ -374,7 +374,7 @@ class Tab6Frame(wx.Frame):
         if (self.aws_proc is not None):
             self.AWS_thread_active_flag=0
 
-            print "Server Thread Active..killing it: %d \n" % self.aws_proc.pid
+            print("Server Thread Active..killing it: %d \n" % self.aws_proc.pid)
             #kill_child_processes(self.aws_proc.pid)
 
             self.aws_proc.terminate()

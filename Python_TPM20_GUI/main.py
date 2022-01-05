@@ -32,44 +32,44 @@ class MainFrame(wx.Frame):
         font = wx.Font(30, wx.ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD)
         title_screen.SetFont(font)
         # TPM Image
-        #tpm_image = wx.Image('../images/tpm_slb_9670.png', wx.BITMAP_TYPE_PNG)
-        #tpm_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tpm_image))
-        tpm_image = wx.StaticBitmap(self, wx.ID_ANY, img.tpm_slb_9670.getBitmap())
+        tpm_image = wx.Image('../images/tpm_slb_9670.png', wx.BITMAP_TYPE_PNG)
+        tpm_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tpm_image))
+        # ~ tpm_image = wx.StaticBitmap(self, wx.ID_ANY, img.tpm_slb_9670.getBitmap())
 
         # IFX Logo
-        #~ ifx_image = wx.Image('../images/250px-Infineon-Logo.png', wx.BITMAP_TYPE_PNG)
-        #~ ifx_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(ifx_image))
-        ifx_image = wx.StaticBitmap(self, wx.ID_ANY, img._250px_Infineon_Logo.getBitmap())    
+        ifx_image = wx.Image('../images/250px-Infineon-Logo.png', wx.BITMAP_TYPE_PNG)
+        ifx_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(ifx_image))
+        # ~ ifx_image = wx.StaticBitmap(self, wx.ID_ANY, img._250px_Infineon_Logo.getBitmap())    
         
         # Setup logo
-        #~ tab1_image = wx.Image('../images/setup.png', wx.BITMAP_TYPE_PNG)
-        #~ tab1_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tab1_image))
-        tab1_image = wx.StaticBitmap(self, wx.ID_ANY, img.setup.getBitmap())
+        tab1_image = wx.Image('../images/setup.png', wx.BITMAP_TYPE_PNG)
+        tab1_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tab1_image))
+        # ~ tab1_image = wx.StaticBitmap(self, wx.ID_ANY, img.setup.getBitmap())
 
         # Crypto logo
-        #~ tab2_image = wx.Image('../images/crypto.png', wx.BITMAP_TYPE_PNG)
-        #~ tab2_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tab2_image))
-        tab2_image = wx.StaticBitmap(self, wx.ID_ANY, img.crypto.getBitmap())
+        tab2_image = wx.Image('../images/crypto.png', wx.BITMAP_TYPE_PNG)
+        tab2_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tab2_image))
+        # ~ tab2_image = wx.StaticBitmap(self, wx.ID_ANY, img.crypto.getBitmap())
 
         # Engine logo
-        #~ tab3_image = wx.Image('../images/engine.png', wx.BITMAP_TYPE_PNG)
-        #~ tab3_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tab3_image))
-        tab3_image = wx.StaticBitmap(self, wx.ID_ANY, img.engine.getBitmap())
+        tab3_image = wx.Image('../images/engine.png', wx.BITMAP_TYPE_PNG)
+        tab3_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tab3_image))
+        # ~ tab3_image = wx.StaticBitmap(self, wx.ID_ANY, img.engine.getBitmap())
 
         # Cloud logo
-        #~ tab6_image = wx.Image('../images/cloud.png', wx.BITMAP_TYPE_PNG)
-        #~ tab6_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tab6_image))
-        tab6_image = wx.StaticBitmap(self, wx.ID_ANY, img.cloud.getBitmap())
+        tab6_image = wx.Image('../images/cloud.png', wx.BITMAP_TYPE_PNG)
+        tab6_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tab6_image))
+        # ~ tab6_image = wx.StaticBitmap(self, wx.ID_ANY, img.cloud.getBitmap())
    
         # Attestation logo
-        #~ tab5_image = wx.Image('../images/attest.png', wx.BITMAP_TYPE_PNG)
-        #~ tab5_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tab5_image))
-        tab5_image = wx.StaticBitmap(self, wx.ID_ANY, img.attest.getBitmap())
+        tab5_image = wx.Image('../images/attest.png', wx.BITMAP_TYPE_PNG)
+        tab5_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tab5_image))
+        # ~ tab5_image = wx.StaticBitmap(self, wx.ID_ANY, img.attest.getBitmap())
         
         # Policy logo
-        #~ tab4_image = wx.Image('../images/policy.png', wx.BITMAP_TYPE_PNG)
-        #~ tab4_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tab4_image))
-        tab4_image = wx.StaticBitmap(self, wx.ID_ANY, img.policy.getBitmap())
+        tab4_image = wx.Image('../images/policy.png', wx.BITMAP_TYPE_PNG)
+        tab4_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tab4_image))
+        # ~ tab4_image = wx.StaticBitmap(self, wx.ID_ANY, img.policy.getBitmap())
 
         # declare the sizer
         mainsizer = wx.GridSizer(cols=3, vgap=5, hgap=5)
@@ -125,9 +125,7 @@ class MainFrame(wx.Frame):
             ps_command = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
             command_output = ps_command.stdout.read()
             retcode = ps_command.wait()
-
-            if( not "/dev/tpm0" in command_output):
-                print "TPM driver missing"    
+            if( command_output.decode() != "/dev/tpm0\n"):
                 misc.Not_IFX_TPM_Dlg(self, "TPM Device Not Found").ShowModal()
                 self.Disable_Buttons()              
                 return
@@ -136,8 +134,9 @@ class MainFrame(wx.Frame):
             cmd =" tpm2_getcap properties-fixed | grep -A2 'MANUFACTURER' | grep value | grep -Eo '[A-Z]*'"
             ps_command = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
             command_output = ps_command.stdout.read()
+            print(command_output)
             retcode = ps_command.wait()
-            if (not "IFX" in command_output):
+            if (not "IFX" in command_output.decode()):
                 misc.Not_IFX_TPM_Dlg(self, "Insert Infineon IRIDIUM Module").ShowModal()
                 self.Disable_Buttons()    
                 return    
