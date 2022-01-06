@@ -28,7 +28,7 @@ class MainFrame(wx.Frame):
         self.button6 = wx.Button(self, -1, 'AWS: IOT Core')
         # Title screen widget setup
         # "\xe2\x84\xa2" represents the Trademark symbol in UTF-8 for Python 2.x, will not display properly on Windows (or Python 3.x)
-        title_screen = wx.StaticText(self, -1, style=wx.ALIGN_CENTER, label="OPTIGA\xe2\x84\xa2 TPM 2.0 Explorer")
+        title_screen = wx.StaticText(self, -1, style=wx.ALIGN_CENTER, label="OPTIGA"+ u"\u1d40\u1d39"+" TPM 2.0 Explorer")
         font = wx.Font(30, wx.ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD)
         title_screen.SetFont(font)
         # TPM Image
