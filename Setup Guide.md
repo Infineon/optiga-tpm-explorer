@@ -47,13 +47,13 @@ Insert the flashed SD card and boot the Raspberry Pi®.
 
 Open the configuration file in an editor:  
 
-```
+```shell
 sudo nano /boot/config.txt   
 ```
 
 Insert the following lines to enable SPI and TPM: 
 
-```
+```shell
 dtoverlay=tpm-slb9670
 ```
 
@@ -65,7 +65,7 @@ Save the file and exit the editor.
 
 This optional step will guide you on how to set up a VNC connection from your RPI to your computer. This step requires a flashed MicroSD with the TPM Explorer image in an RPI3 and VNC Viewer installed on your computer.
 
-Start-up the RaspberryPi with HDMI cable to monitor and start the terminal.
+Start-up the Raspberry Pi with HDMI cable to monitor and start the terminal.
 
 | ![](/images/Setup/terminal.png) |
 | ------------------------------- |
@@ -74,7 +74,7 @@ Start-up the RaspberryPi with HDMI cable to monitor and start the terminal.
 
  Enter the Raspberry Pi Software Configuration Menu
 
-```python
+```shell
 sudo raspi-config
 ```
 
@@ -83,7 +83,7 @@ Select option 5 Interfacing Options.
 | ![](/images/Setup/raspi-config.png) |
 | --------------------------------------------------------- |
 
-**Figure 2**: Raspberri Pi Software Configuration Tool
+**Figure 2**: Raspberry Pi Software Configuration Tool
 
 Select P2 SSH and enable.
 
@@ -109,16 +109,28 @@ Select P3 VNC and enable.
 
 **Figure 6**: VNC Enable
 
+Select  SPI and enable.
+
+| ![](/images/Setup/spi.png) |
+| -------------------------- |
+
+**Figure 7**: SPI Selection
+
+| ![](/images/Setup/spi_enable.png) |
+| --------------------------------- |
+
+**Figure 8**: SPI Enable
+
 Select finish and return to the terminal
 
 | ![](/images/Setup/terminal2.png) |
 | ------------------------------------------------------ |
 
-**Figure 7**: Raspberry Pi Terminal
+**Figure 9**: Raspberry Pi Terminal
 
 Enter "hostname -I" into the terminal and copy the IP address
 
-```
+```shell
 hostname -I       
 192.168.###.###
 ```
@@ -128,25 +140,25 @@ Paste the IP Address of RPI3 into VNC Viewer and connect.
 | ![](/images/Setup/VNCViewer.png) |
 | ------------------------------------------------------ |
 
-**Figure 8**: VNC Viewer Connection Screen
+**Figure 10**: VNC Viewer Connection Screen
 
 Enter the Username and the Password.
 
 Username: pi
 
-Password: infineondss
+Password:  Enter your RPI password
 
 | ![](/images/Setup/VNCViewerUserPass.png) |
 | ------------------------------------------------------------ |
 
-**Figure 9**: VNC Viewer Authentication Menu
+**Figure 11**: VNC Viewer Authentication Menu
 
 You should be successfully connected and able to view the RPI through VNC connection on your device.
 
 | ![](/images/Setup/RPIHomeScreen_VNC.png) |
 | ------------------------------------------------------------ |
 
-**Figure 10**: RPI Home Screen on VNC Viewer
+**Figure 12**: RPI Home Screen on VNC Viewer
 
 
 
@@ -154,16 +166,16 @@ You should be successfully connected and able to view the RPI through VNC connec
 
 Download TPM Explorer Source Code (Approx. 175MB):  
 
-```
-git clone ********GITHUB LINK*********
-cd ***Repo name***/
+```shell
+git clone git@github.com:Infineon/optiga-tpm-explorer.git
+cd optiga-tpm-explorer
 ```
 
 
 
 Execute Installation script:
 
-```
+```shell
 ./installation_script.sh
 ```
 
@@ -181,40 +193,40 @@ Once complete, go to your home directory and access the file called TPM_Explorer
 | ![](/images/Settingup_TPMExplorer/TPM_Explorer.png) |
 | ------------------------------------------------------------ |
 
-**Figure 11**: TPM_Explorer File Directory
+**Figure 13**: TPM_Explorer File Directory
 
 Next, access the file called Python_TPM20_GUI.
 
 | ![](/images/Settingup_TPMExplorer/Python_TPM20_GUI.png) |
 | ------------------------------------------------------------ |
 
-**Figure 12**: Python_TPM20_GUI File Directory
+**Figure 14**: Python_TPM20_GUI File Directory
 
 Next, enter the bin file.
 
 | ![](/images/Settingup_TPMExplorer/binfile.png) |
 | ------------------------------------------------------------ |
 
-**Figure 13**: Python_TPM20_GUI Bin File Directory
+**Figure 15**: Python_TPM20_GUI Bin File Directory
 
 Execute "start_gui.sh" and select execute in terminal.
 
 | ![](/images/Settingup_TPMExplorer/start_gui.png) |
 | ------------------------------------------------------------ |
 
-**Figure 14**: Selecting start_gui.sh
+**Figure 16**: Selecting start_gui.sh
 
 | ![](/images/Settingup_TPMExplorer/execute.png) |
 | ------------------------------------------------------------ |
 
-**Figure 15**: Executing start_gui.sh in terminal
+**Figure 17**: Executing start_gui.sh in terminal
 
 A terminal will pop up and the OPTIGA TPM 2.0 Explorer interface will be open.
 
 | ![](/images/Setup/MainScreen.png) |
 | ------------------------------------------------------- |
 
-**Figure 16**: Home Screen of OPTIGA TPM 2.0 Explorer
+**Figure 18**: Home Screen of OPTIGA TPM 2.0 Explorer
 
 For more information on the OPTIGA™ TPM 2.0 Explorer, please refer to the [OPTIGA™ TPM 2.0 Explorer User Guide](./User%20Guide.md).
 
