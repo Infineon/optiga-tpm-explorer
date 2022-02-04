@@ -2,6 +2,7 @@ import wx
 import shell_util as exec_cmd
 import misc_dialogs as misc
 import images as img
+from binascii import unhexlify
 """ NOTE: All the tpm2_evictcontrol commands, the context is hardcoded. Also, all the files created are fixed in their naming.
 Thus if not removed from persistent store, the newly created key will be 'lost',
 as the old one still resides at the same context. To fix this, the context value will have to be cleared in tab1, context management.
@@ -24,13 +25,13 @@ class Tab_Hash(wx.Panel):
         self.input_display = wx.TextCtrl(self,value="12345")
         self.command_display = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
         self.command_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
         
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
         mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 5)
@@ -57,13 +58,12 @@ class Tab_Hash(wx.Panel):
             self.command_display.AppendText("Hash data cannot be left empty.\n")
             return
         input_message_hex = exec_cmd.convertInputToHex(input_message, 64)
+        print(input_message_hex) 
         if (input_message_hex == 0):
             self.command_display.AppendText("Input must be in HEX please. \n")
             return
-        input_message_hex_bytes= input_message_hex.decode("hex")   
-        print(input_message_hex_bytes)   
-        data_file = open("data_for_hash.data", "w")
-        data_file.write(input_message_hex_bytes)
+        data_file = open("data_for_hash.data", "wb")
+        data_file.write(unhexlify(input_message_hex))
         data_file.close()
         output_message = exec_cmd.execTpmToolsAndCheck([
             "tpm2_hash",
@@ -112,13 +112,13 @@ class Tab_RSA(wx.Panel):
         self.input_display = wx.TextCtrl(self,value="168168")
         self.command_display = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
         self.command_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
         
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
         mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 5)
@@ -126,13 +126,22 @@ class Tab_RSA(wx.Panel):
         mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.ALL, 0)
         input_sizer.Add(inputtext, 0, wx.ALIGN_CENTRE, 5)
         input_sizer.Add(self.input_display, 1, wx.ALIGN_CENTRE, 0)
-        button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(createkeypairbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(encbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(decbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(signbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(opensslverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(tpmverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(createkeypairbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(encbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(decbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(signbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(opensslverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(tpmverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        
+        button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.ALL, 5)
+        button_sizer.Add(createkeypairbutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(encbutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(decbutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(signbutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(opensslverifybutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(tpmverifybutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+
         button_sizer.Add(clearbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
         button_sizer.Add(backbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
 
@@ -421,13 +430,13 @@ class Tab_ECC(wx.Panel):
         self.input_display = wx.TextCtrl(self,value="138831")
         self.command_display = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
         self.command_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
 
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
         mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 5)
@@ -435,13 +444,22 @@ class Tab_ECC(wx.Panel):
         mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.ALL, 0)
         input_sizer.Add(inputtext, 0, wx.ALIGN_CENTRE, 5)
         input_sizer.Add(self.input_display, 1, wx.ALIGN_CENTRE, 0)
-        button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(createkeypairbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(signbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(opensslverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(tpmverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.ALL, 5)
+        button_sizer.Add(createkeypairbutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(signbutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(opensslverifybutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
+        button_sizer.Add(tpmverifybutton, 1, wx.ALIGN_CENTRE  | wx.ALL, 5)
         button_sizer.Add(clearbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
         button_sizer.Add(backbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
+        
+        # ~ button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(createkeypairbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(signbutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(opensslverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(tpmverifybutton, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
+        # ~ button_sizer.Add(clearbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
+        # ~ button_sizer.Add(backbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
+
 
         # set colours for UI elements
 #         createkeypairbutton.SetBackgroundColour((255, 153, 204))
@@ -643,7 +661,7 @@ class Tab2Frame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title="Cryptographic Functions", size=(1280, 720), style=(wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)))
         self.Centre(wx.BOTH)
-        main_menu_font = wx.Font(14, wx.FONTFAMILY_ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+        main_menu_font = wx.Font(12, wx.FONTFAMILY_ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
         self.SetFont(main_menu_font)
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
