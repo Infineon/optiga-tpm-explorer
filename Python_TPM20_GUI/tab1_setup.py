@@ -43,13 +43,13 @@ class Tab_Setup(wx.Panel):
         #~ self.text_display.SetFont(wx.Font(14, wx.FONTFAMILY_ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
         self.text_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
 
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~ clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
 
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~ backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
         mainsizer.Add(buttonsizer, 0, wx.EXPAND | wx.ALL, 5)
@@ -251,13 +251,13 @@ class Tab_PCR(wx.Panel):
         button_pcrevent = wx.Button(self, -1, 'PCR Event')
         self.bottom_txt_display = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.bottom_txt_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
 
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
 
         # attach the sizers to the main sizer
@@ -460,15 +460,15 @@ class Tab_NVM(wx.Panel):
         self.ecc_cert_index = wx.TextCtrl(self, -1,value="0x1c0000a")
         
         self.bottom_txt_display = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
-        self.bottom_txt_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+        self.bottom_txt_display.SetFont(wx.Font(11, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
  
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
 
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
         
         # attach the sizers to the main sizer
         mainsizer.Add(nvm_attr_sizer, 0, wx.EXPAND | wx.ALL, 5)
@@ -646,7 +646,7 @@ class Tab_NVM(wx.Panel):
 
         
         
-        self.bottom_txt_display.AppendText(str(command_output))
+        self.bottom_txt_display.AppendText(str(command_output.decode()))
         self.bottom_txt_display.AppendText("\n")
         #~ self.bottom_txt_display.AppendText("%s executed \n")
         self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
@@ -703,7 +703,7 @@ class Tab_NVM(wx.Panel):
 
 #        
         
-        self.bottom_txt_display.AppendText(str(command_output))
+        self.bottom_txt_display.AppendText(str(command_output.decode()))
         self.bottom_txt_display.AppendText("\n")
         #~ self.bottom_txt_display.AppendText("%s executed \n")
         self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
@@ -898,17 +898,17 @@ class Tab_Handles(wx.Panel):
         #~ button_flushSpecific = wx.Button(self, -1, 'Flush specific transient')
         self.txt_display = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.txt_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
 
-        #~ infoimage = wx.Image('../images/info.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ infobutton = wx.BitmapButton(self, -1, infoimage)
-        infobutton = wx.BitmapButton(self, -1, img.info.getBitmap())
+        infoimage = wx.Image('../images/info.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        infobutton = wx.BitmapButton(self, -1, infoimage)
+        # ~infobutton = wx.BitmapButton(self, -1, img.info.getBitmap())
         
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the sizers to the main sizer
         mainsizer.Add(handle_sizer, 0, wx.EXPAND | wx.ALL, 0)
