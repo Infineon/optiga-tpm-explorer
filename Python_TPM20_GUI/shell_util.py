@@ -58,8 +58,8 @@ def execShellScript(fullpath):
     except subprocess.CalledProcessError as e:
         output = e.output
         print("ERROR")
-        print(output)
-    return(output)
+        print(output.decode())
+    return(output.decode())
 
 
 # Executes a command on the command line
@@ -78,8 +78,8 @@ def execTpmToolsAndCheck(cmd, allowFail=True):
             print((str(output)))
             exit()
           
-    print((str(output)))
-    return(output)
+    print((str(output.decode())))
+    return(output.decode())
 
 
 # Executes the supplied command parameters with OpenSSL
@@ -91,8 +91,8 @@ def execCLI(cmd):
     except subprocess.CalledProcessError as e:
         output = e.output
         print("ERROR")
-        print(output)
-    return(output)
+        print(output.decode())
+    return(output.decode())
 
 
 def createProcess(cmd, file):
