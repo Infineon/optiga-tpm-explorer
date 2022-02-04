@@ -563,7 +563,7 @@ class Tab_NVM(wx.Panel):
         self.filename_input.Bind(wx.EVT_LEFT_DOWN,self.OnClickFileName)
         # Set default values
         self.nvm_index.write("0x1500016")
-        self.nvm_size.write("800")
+        self.nvm_size.write("900")
         self.nvm_offset.write("0")
         self.read_amt.write("32")
         self.nvm_data.write("Hello World!")
@@ -796,10 +796,10 @@ class Tab_NVM(wx.Panel):
         if (nvm_index == 0):
             return
         command_output = exec_cmd.execTpmToolsAndCheck([
-            "tpm2_nvrelease",
-            "-x",nvm_index,
-            "-a", "o",
+            "tpm2_nvundefine",
+            "-C", "o",
             "-P", owner_val,
+            nvm_index,
         ])
         self.bottom_txt_display.AppendText(str(command_output))
         self.bottom_txt_display.AppendText("'tpm2_nvrelease' executed \n")
