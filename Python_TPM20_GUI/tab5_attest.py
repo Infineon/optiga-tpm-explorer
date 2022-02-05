@@ -49,34 +49,34 @@ class Tab5Frame(wx.Frame):
         self.command_out.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
         button_listpersist = wx.Button(self, -1, 'List Persistent')
         # server logo
-        #~ server_image = wx.Image('../images/server.png', wx.BITMAP_TYPE_PNG)
-        #~ server_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(server_image))
-        server_image = wx.StaticBitmap(self, wx.ID_ANY, img.server.getBitmap())
+        server_image = wx.Image('../images/server.png', wx.BITMAP_TYPE_PNG)
+        server_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(server_image))
+        # ~server_image = wx.StaticBitmap(self, wx.ID_ANY, img.server.getBitmap())
 
         # TPM Image
-        #~ tpm_image = wx.Image('../images/tpm_slb_9670.png', wx.BITMAP_TYPE_PNG)
-        #~ tpm_image = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(tpm_image))
-        tpm_image = wx.StaticBitmap(self, wx.ID_ANY, img.tpm_slb_9670.getBitmap())
+        tpm_image = wx.Image('../images/tpm_slb_9670.png', wx.BITMAP_TYPE_PNG)
+        tpm_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tpm_image))
+        # ~tpm_image = wx.StaticBitmap(self, wx.ID_ANY, img.tpm_slb_9670.getBitmap())
 
         # Clear icon
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ button_clear = wx.BitmapButton(self, -1, clearimage)
-        button_clear = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        button_clear = wx.BitmapButton(self, -1, clearimage)
+        # ~button_clear = wx.BitmapButton(self, -1, img.clear.getBitmap())
         
         # attest combined image
-        #~ combimage = wx.Image('../images/attest_comb.png', wx.BITMAP_TYPE_PNG)
-        #~ combimage = wx.StaticBitmap(self, wx.ID_ANY, wx.BitmapFromImage(combimage))
-        combimage = wx.StaticBitmap(self, wx.ID_ANY, img.attest_comb.getBitmap())
+        combimage = wx.Image('../images/attest_comb.png', wx.BITMAP_TYPE_PNG)
+        combimage = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(combimage))
+        # ~combimage = wx.StaticBitmap(self, wx.ID_ANY, img.attest_comb.getBitmap())
 
         # info image button
-        #~ infoimage = wx.Image('../images/info.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ infobutton = wx.BitmapButton(self, -1, infoimage)
-        infobutton = wx.BitmapButton(self, -1, img.info.getBitmap())
+        infoimage = wx.Image('../images/info.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        infobutton = wx.BitmapButton(self, -1, infoimage)
+        # ~infobutton = wx.BitmapButton(self, -1, img.info.getBitmap())
         
         # back image
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the sizers to the main sizer
         mainsizer.Add(column_sizer, 1, wx.EXPAND | wx.ALL, 5)
