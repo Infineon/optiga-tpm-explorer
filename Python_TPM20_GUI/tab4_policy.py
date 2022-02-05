@@ -36,17 +36,17 @@ class Tab4Frame(wx.Frame):
         button_satisfy_unseal = wx.Button(self, -1, 'Satisfy Policy and Unseal')
         self.command_out = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.command_out.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
         
-        #~ infoimage = wx.Image('../images/info.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ infobutton = wx.BitmapButton(self, -1, infoimage)
-        infobutton = wx.BitmapButton(self, -1, img.info.getBitmap())
+        infoimage = wx.Image('../images/info.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        infobutton = wx.BitmapButton(self, -1, infoimage)
+        # ~infobutton = wx.BitmapButton(self, -1, img.info.getBitmap())
                 
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the sizers to the main sizer
         mainsizer.Add(choices_sizer, 0, wx.EXPAND | wx.ALL, 0)
