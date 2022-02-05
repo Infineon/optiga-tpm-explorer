@@ -12,7 +12,7 @@ APP_INCLUDE_DIRS += -I $(APP_DIR)
 APP_NAME=eHealthDevice
 APP_SRC_FILES=$(APP_NAME).c
 
-EHEALTH_SRC_FILES=eHealthRPI.c
+#~EHEALTH_SRC_FILES=eHealthRPI.c
 
 #IoT client directory
 IOT_CLIENT_DIR=../../aws_iot_src
@@ -45,7 +45,8 @@ MQTT_SRC_FILES += $(MQTT_C_DIR)/MQTTClient.c
 TLS_LIB_DIR = /usr/lib/
 TLS_INCLUDE_DIR = -I /usr/include/openssl
 EXTERNAL_LIBS += -L$(TLS_LIB_DIR)
-LD_FLAG := -ldl -lssl -lcrypto -lwiringPi
+#~LD_FLAG := -ldl -lssl -lcrypto -lwiringPi
+LD_FLAG := -ldl -lssl -lcrypto 
 LD_FLAG += -Wl,-rpath,$(TLS_LIB_DIR)
 
 #Aggregate all include and src directories
