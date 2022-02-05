@@ -105,7 +105,7 @@ def kill_child_processes(parent_pid, sig=signal.SIGTERM):
         retcode = ps_command.wait()
         #assert retcode == 0, "ps command returned %d" % retcode
         if (retcode==0):
-            for pid_str in ps_output.split("\n")[:-1]:
+            for pid_str in ps_output.split("\n".encode())[:-1]:
                     os.kill(int(pid_str), sig)
         else:
             print("ps command returned %d" % retcode)
@@ -213,9 +213,9 @@ class Tab_RSA_CS(wx.Panel):
         self.text_server.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
         self.input_client = wx.TextCtrl(self, -1,value="Send from Client")
         self.input_server = wx.TextCtrl(self, -1,value="Send from Server")
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the sizers to the main sizer
         mainsizer.Add(steps_sizer, 0, wx.EXPAND | wx.ALL, 5)
@@ -537,8 +537,8 @@ class Tab_RSA_CS(wx.Panel):
         if (write_value == ""):
             self.text_server.AppendText("I need something to write!\n")
             return
-        server_proc.stdin.write(write_value+"\n")
-
+        server_proc.stdin.write((write_value+"\n").encode())
+        server_proc.stdin.flush()
     def OnWriteClient(self, evt):
         global client_proc
         if (client_proc is None):
@@ -549,8 +549,8 @@ class Tab_RSA_CS(wx.Panel):
             self.text_client.AppendText("I need something to write!\n")
             return
    
-        client_proc.stdin.write(write_value+"\n")
-
+        client_proc.stdin.write((write_value+"\n").encode())
+        client_proc.stdin.flush()
         
 
 
@@ -582,9 +582,9 @@ class Tab_ECC_CS(wx.Panel):
         
         self.input_client = wx.TextCtrl(self, -1,value="Send from Client")
         self.input_server = wx.TextCtrl(self, -1,value="Send from Server")
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
 
         # attach the objects to the sizers
@@ -939,7 +939,8 @@ class Tab_ECC_CS(wx.Panel):
         if (write_value == ""):
             self.text_server.AppendText("I need something to write!\n")
             return
-        self.server_proc.stdin.write(write_value+"\n")
+        self.server_proc.stdin.write((write_value+"\n").encode())
+        self.server_proc.stdin.flush()
 
     def OnWriteClient(self, evt):
         if (self.client_proc is None):
@@ -950,7 +951,9 @@ class Tab_ECC_CS(wx.Panel):
             self.text_client.AppendText("I need something to write!\n")
             return
    
-        self.client_proc.stdin.write(write_value+"\n")
+        self.client_proc.stdin.write((write_value+"\n").encode())
+        self.client_proc.stdin.flush()
+
 
 class Tab_RSA_MISC(wx.Panel):
     def __init__(self, parent):
@@ -971,13 +974,13 @@ class Tab_RSA_MISC(wx.Panel):
         button_rsa_dec = wx.Button(self, -1, 'RSA Decrypt')
         button_rsa_sign = wx.Button(self, -1, 'RSA Signing')
         button_rsa_verify = wx.Button(self, -1, 'RSA Verification')
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
         
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the ui elements to the main sizer
         mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 0)
@@ -1107,7 +1110,7 @@ class Tab_RSA_MISC(wx.Panel):
             retcode = ps_command.wait()        
 
 
-            self.command_out.AppendText(str(command_output))
+            self.command_out.AppendText(str(command_output.decode()))
             self.command_out.AppendText("\n' OPENSSL_CONF=temp.conf openssl pkeyutl -engine tpm2tss -keyform engine -inkey rsa2.tss -decrypt -in mycipher' executed \n")
             self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
         else:
@@ -1118,7 +1121,7 @@ class Tab_RSA_MISC(wx.Panel):
             retcode = ps_command.wait()        
 
 
-            self.command_out.AppendText(str(command_output))
+            self.command_out.AppendText(str(command_output.decode()))
             self.command_out.AppendText("\n'openssl pkeyutl -engine tpm2tss -keyform engine -inkey rsa2.tss -decrypt -in mycipher' executed \n")
             self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
@@ -1208,13 +1211,13 @@ class Tab_RNG(wx.Panel):
         self.command_out.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
         rng_type_blurb = wx.StaticText(self, -1, "Pick encoding of Random Number: ")
         self.rng_type = wx.ComboBox(self, -1, "RN Encoding", choices=rng_type_list, style=wx.CB_READONLY)
-        #~ clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ clearbutton = wx.BitmapButton(self, -1, clearimage)
-        clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
+        clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        clearbutton = wx.BitmapButton(self, -1, clearimage)
+        # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
         
-        #~ backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-        #~ backbutton = wx.BitmapButton(self, -1, backimage)
-        backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
+        backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+        backbutton = wx.BitmapButton(self, -1, backimage)
+        # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the ui elements to the main sizer
         mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)

@@ -98,7 +98,7 @@ def execCLI(cmd):
 def createProcess(cmd, file):
     output = ""
     try:
-        output = subprocess.Popen(cmd, shell=True, stdout=PIPE,stdin=PIPE,stderr=subprocess.STDOUT)
+        output = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
 
     except subprocess.CalledProcessError as e:
         output = e.output

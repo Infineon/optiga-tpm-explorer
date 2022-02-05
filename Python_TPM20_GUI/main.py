@@ -134,7 +134,7 @@ class MainFrame(wx.Frame):
             cmd =" tpm2_getcap properties-fixed | grep -A2 'MANUFACTURER' | grep value | grep -Eo '[A-Z]*'"
             ps_command = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
             command_output = ps_command.stdout.read()
-            print(command_output)
+            
             retcode = ps_command.wait()
             if (not "IFX" in command_output.decode()):
                 misc.Not_IFX_TPM_Dlg(self, "Insert Infineon IRIDIUM Module").ShowModal()
