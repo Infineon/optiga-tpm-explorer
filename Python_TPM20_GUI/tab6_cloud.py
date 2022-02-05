@@ -199,7 +199,10 @@ class Tab6Frame(wx.Frame):
         
         try:    
             while self.AWS_thread_active_flag==1 :
+                if (self.aws_proc is not None):
+                        self.AWS_thread_active_flag=0
                 line = self.aws_proc.stdout.readline()
+                
                 if line != '':
                     wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text",line)
                      
