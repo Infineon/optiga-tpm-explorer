@@ -8,7 +8,7 @@ from wx.lib.pubsub import setuparg1
 from wx.lib.pubsub import pub as Publisher
 import threading
 from threading import Thread
-
+aws_log = None
 aws_region_list = [
     'us-east-1', 'us-east-2', 'us-west-1', 'us-west-2', 'ap-south-1',
     'ap-northeast-1', 'ap-northeast-2', 'ap-southeast-1', 'ap-southeast-2',
@@ -199,12 +199,9 @@ class Tab6Frame(wx.Frame):
         
         try:    
             while self.AWS_thread_active_flag==1 :
-                if (self.aws_proc is not None):
-                        self.AWS_thread_active_flag=0
                 line = self.aws_proc.stdout.readline()
-                
-                if line != '':
-                    wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text",line)
+                if line.decode() != '':
+                    wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text",line.decode())
                      
         finally:
             
