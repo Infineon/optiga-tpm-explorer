@@ -110,11 +110,11 @@ Using this tool, you can start experiencing the benefits that the [OPTIGA™ TPM
 
 For more information on how to setup the environment for the OPTIGA™ TPM 2.0 Explorer Application, you may refer to the [OPTIGA™ TPM 2.0 Explorer Setup Guide](./Setup%20Guide.md)
 
-This tool was tested on a Raspberry Pi ® (RPi) 3 Model B+ with Raspbian Linux in Release Version 9.4 (Stretch) and kernel version 4.19 with an Infineon OPTIGA™ TPM SLB 9670 TPM2.0 attached to the Raspberry Pi® board (Figure 1 and Figure 2).
+This tool was tested on a Raspberry Pi ® (RPi) 3 Model B+/ RPi 4 Model B with Raspbian Linux in Release Version 11 (Bullseye) and kernel version 5.10.92 with an Infineon OPTIGA™ TPM SLB 9670/ 9672 TPM2.0 attached to the Raspberry Pi® board (Figure 1 and Figure 2).
 
-![](/images/Overview/RaspbianStretch.png) 
+![](/images/Overview/RpiBullseye.png) 
 
-Figure 1: Raspbian Linux 9.4 (Stretch) is used with kernel version 4.14
+Figure 1: Raspbian Linux 11 (Bullseye) is used with kernel version 5.10.92
 
 ![](/images/Overview/TPMRPI3.png) 
 
@@ -127,8 +127,8 @@ Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi® 3
 | Hardware             | Version   and Firmware/OS                                    | Comment                                                      |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Host  PC             | • x86  architecture and USB 2.0 (or higher)  •  Capable of running Linux, for example Ubuntu® 18.04  •  Arbitrary as long as VNC viewer is present | This  platform is used for patching the Kernel, maintaining and interacting with  the Raspberry Pi® in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi®. |
-| OPTIGA™ TPM 2.0 evaluation board      | • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/)| This  board contains the Infineon OPTIGA™ TPM SLB 9670 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
-| Raspberry  Pi® Board | •  Model 3 B+, Raspbian 9.4   •  Micro SD Card with at least 8 GB   •  Micro-B USB cable for power supply | A SD  card with the Raspbian  Linux in Release Version 9.4 (Stretch) and kernel version 4.19 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
+| OPTIGA™ TPM 2.0 evaluation board      | • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) / [SLB 9672 TPM2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/optiga-tpm-slb-9672/)| This  board contains the Infineon OPTIGA™ TPM SLB 9670/ 9672 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
+| Raspberry  Pi® Board | •  Model 3 B+/ 4 B, Bullseye OS (2022-01-28)   •  Micro SD Card with at least 8 GB   •  Micro-B/ Type C USB cable for power supply | A SD  card with Raspberry Pi® Bullseye OS and kernel version 5.10.92 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
 
 
 
@@ -1655,10 +1655,11 @@ Figure 168: AWS IOT WebBrowser Successfully Published
 
 ## <a name="references"></a>References
 
-1.  https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-04-09/
+1.  https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2022-01-28/
 2.  <https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/>
-3.  <http://www.infineon.com/tpm>
-4.  https://trustedcomputinggroup.org/resource/tpm-main-specification/
+3.  https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/optiga-tpm-slb-9672/
+4.  <http://www.infineon.com/tpm>
+5.  https://trustedcomputinggroup.org/resource/tpm-main-specification/
 
 
 

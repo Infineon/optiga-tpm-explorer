@@ -5,15 +5,16 @@ This page provides instructions on how to install and configure the Raspberry Pi
 1.  [Prerequisites](#prerequisites)
 2.  [Enable OPTIGA™ TPM 2.0 support on Raspberry Pi®](#enabletpm)
 3.  [Set up VNC Connection](#vnc-connection-setup-optional)
-4.  [Install OPTIGA™ TPM 2.0 Explorer](#install-tpm_explorer)
-5.  [References](#references)
+4.  [Disable Openbox when VNC Server is running](#disable-openbox)
+5.  [Install OPTIGA™ TPM 2.0 Explorer](#install-tpm_explorer)
+6.  [References](#references)
 
 ## Prerequisites 
 
--   Raspberry Pi® 3 Model B+
--   Micro SD card (≥8GB) flashed with Raspberry Pi® Raspbian Linux in Release Version 9.4 (Stretch) OS. Download the official image from [[1]](#references)
+-   Raspberry Pi® 3 Model B+ / Raspberry Pi® 4 Model B
+-   Micro SD card (≥8GB) flashed with Raspberry Pi® Bullseye OS (Released on 2022-01-28). Download the official image from [[1]](#references).
 -   OPTIGA™ TPM 2.0 evaluation board
-    -   [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/)
+    -   [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) / [SLB 9672 TPM2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/optiga-tpm-slb-9672/)
 
 | ![](/images/Overview/TPMRPI3.png) |
 | --------------------------------- |
@@ -25,8 +26,8 @@ This page provides instructions on how to install and configure the Raspberry Pi
 | Hardware             | Version   and Firmware/OS                                    | Comment                                                      |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Host  PC             | • x86  architecture and USB 2.0 (or higher)  •  Capable of running Linux, for example Ubuntu® 18.04  •  Arbitrary as long as VNC viewer is present | This  platform is used for patching the Kernel, maintaining and interacting with  the Raspberry Pi® in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi®. |
-|  OPTIGA™ TPM 2.0 evaluation board       |  • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) | This  board contains the Infineon OPTIGA™ TPM SLB 9670 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
-| Raspberry  Pi® Board | •  Model 3 B+, Raspbian 9.4   •  Micro SD Card with at least 8 GB   •  Micro-B USB cable for power supply | A SD  card with the Raspbian  Linux in Release Version 9.4 (Stretch) and kernel version 4.19 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
+|  OPTIGA™ TPM 2.0 evaluation board       |  • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) / [SLB 9672 TPM2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/optiga-tpm-slb-9672/) | This  board contains the Infineon OPTIGA™ TPM SLB 9670/ 9672 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
+| Raspberry  Pi® Board | •  Model 3 B+/ 4 B, Bullseye OS (2022-01-28)   •  Micro SD Card with at least 8 GB   •  Micro-B/ Type C USB cable for power supply | A SD  card with Raspberry Pi® Bullseye OS and kernel version 5.10.92 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
 
 
 
@@ -65,14 +66,14 @@ Save the file and exit the editor.
 
 This optional step will guide you on how to set up a VNC connection from your RPI to your computer. This step requires a flashed MicroSD with the TPM Explorer image in an RPI3 and VNC Viewer installed on your computer.
 
-Start-up the Raspberry Pi with HDMI cable to monitor and start the terminal.
+Start-up the Raspberry Pi® with HDMI cable to monitor and start the terminal.
 
 | ![](/images/Setup/terminal.png) |
 | ------------------------------- |
 
 **Figure 1**: RPI Home Screen on monitor
 
- Enter the Raspberry Pi Software Configuration Menu
+ Enter the Raspberry Pi® Software Configuration Menu
 
 ```shell
 sudo raspi-config
@@ -83,7 +84,7 @@ Select option 5 Interfacing Options.
 | ![](/images/Setup/raspi-config.png) |
 | --------------------------------------------------------- |
 
-**Figure 2**: Raspberry Pi Software Configuration Tool
+**Figure 2**: Raspberry Pi® Software Configuration Tool
 
 Select P2 SSH and enable.
 
@@ -162,6 +163,32 @@ You should be successfully connected and able to view the RPI through VNC connec
 
 
 
+## <a name="disable-openbox"></a> Disable Openbox when VNC Server is running
+
+Open the `startlxde-pi` file in an editor:
+
+```shell
+sudo nano /usr/bin/startlxde-pi
+```
+
+Comment out conditional statement and insert `if true; then`
+
+```shell
+#if [ $TOTAL_MEM -ge 2048 ] && [ -f /usr/bin/mutter ] && [ -z "$VNC" ] ; then
+if true; then
+  if [ -f "$XDG_CONFIG_HOME/gtk-3.0/gtk.css" ] ; then
+```
+
+Save the file and exit the editor.
+
+Reboot Raspberry Pi® for the changes to take effect.
+
+```shell
+sudo reboot
+```
+
+
+
 ## <a name="install-tpm_explorer"></a> Install OPTIGA™ TPM 2.0 Explorer 
 
 Download TPM Explorer Source Code (Approx. 175MB):  
@@ -188,7 +215,15 @@ The installation script installs the following dependencies required and compile
 -   tpm2-abrmd
 -   tpm2-tss-engine
 
-Once complete, go to your home directory and access the file called TPM_Explorer.
+Once complete, to run from source:
+
+```shell
+cd ~/optiga-tpm-explorer/Python_TPM20_GUI
+python main.py
+```
+To run from binary:
+
+go to your home directory and access the file called TPM_Explorer.
 
 | ![](/images/Settingup_TPMExplorer/TPM_Explorer.png) |
 | ------------------------------------------------------------ |
@@ -232,4 +267,4 @@ For more information on the OPTIGA™ TPM 2.0 Explorer, please refer to the [OPT
 
 ## References
 
-1.  <https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-04-09/>
+1.  <https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2022-01-28/>
