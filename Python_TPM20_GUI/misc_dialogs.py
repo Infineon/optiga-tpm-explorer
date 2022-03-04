@@ -73,6 +73,8 @@ class OwnerDlg(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.OnOK, button_ok)
         self.ownerAuth_input.WriteText(exec_cmd.ownerAuth)
         self.SetSizer(mainsizer)
+        mainsizer.Fit(self)
+        self.Centre(wx.BOTH)
         self.Show(True)
 
     def OnCloseWindow(self, evt):
@@ -134,7 +136,7 @@ class EndorseDlg(wx.Dialog):
 # Dialog for main menu, for OwnerAuth, EndorseAuth, LockoutAuth value
 class CredentialDlg(wx.Dialog):
     def __init__(self, parent, title):
-        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title, size=(550, 300))
+        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title)
         self.SetBackgroundColour(wx.WHITE)
         self.parent=parent
         # declare the sizers
@@ -194,6 +196,8 @@ class CredentialDlg(wx.Dialog):
         self.endorseAuth_input.WriteText(exec_cmd.endorseAuth)
         self.lockoutAuth_input.WriteText(exec_cmd.lockoutAuth)
         self.SetSizer(mainsizer)
+        mainsizer.Fit(self)
+        self.Center()
         self.Show(True)
 
     def OnClearOwnerAuth(self, evt):
@@ -253,7 +257,7 @@ class CredentialDlg(wx.Dialog):
 # Very Specific Dialog for Tab 1, Dictionary Attack Settings
 class DictAttackDlg(wx.Dialog):
     def __init__(self, parent, title):
-        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title, size=(700, 280))
+        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title)
         self.SetBackgroundColour(wx.WHITE)
 
         # declare the sizers
@@ -298,6 +302,7 @@ class DictAttackDlg(wx.Dialog):
         self.lockoutInterval_input.WriteText("7200")
         self.lockoutRecovery_input.WriteText("86400")
         self.SetSizer(mainsizer)
+        mainsizer.Fit(self)
 
     def OnCloseWindow(self, evt):
         self.EndModal(-1)
@@ -364,9 +369,10 @@ class Not_IFX_TPM_Dlg(wx.MessageDialog):
 # Generic File Editor for AWS Cloud connectivity (for tab6 use)
 class EditorFrame(wx.Dialog):
     def __init__(self, parent, title, filename):
-        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title, size=(800, 600))
-
-        self.editor = wx.TextCtrl(self, 1, style=wx.TE_MULTILINE)
+        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title)
+        mainsizer = wx.BoxSizer(wx.VERTICAL)
+        self.editor = wx.TextCtrl(self, 1, size=wx.Size(800, 600), style=wx.TE_MULTILINE)
+        mainsizer.Add(self.editor)
         self.filename = filename
         # Open the file, read the contents and set them into
         # the text edit window
@@ -375,6 +381,8 @@ class EditorFrame(wx.Dialog):
         filehandle.close()
 
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+        mainsizer.Fit(self)
+        self.Centre(wx.BOTH)
         self.Show()
 
     def OnCloseWindow(self, evt):

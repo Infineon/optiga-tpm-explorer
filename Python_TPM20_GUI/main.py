@@ -12,9 +12,8 @@ import subprocess
 
 class MainFrame(wx.Frame):
     def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title="Main Window", size=(1280, 720), style=(wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)))
+        wx.Frame.__init__(self, parent, title="Main Window", style=(wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)))
         self.SetBackgroundColour(wx.WHITE)
-        self.Centre(wx.BOTH)
         # Set Font for frame, so all buttons will inherit this, so it saves time
         main_menu_font = wx.Font(16, wx.FONTFAMILY_ROMAN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
         self.SetFont(main_menu_font)
@@ -79,25 +78,25 @@ class MainFrame(wx.Frame):
         mainsizer.Add(title_screen, 0, wx.ALIGN_CENTRE, 0)
         mainsizer.Add(ifx_image, 0, wx.ALIGN_RIGHT | wx.ALIGN_TOP, 5)
 
-        mainsizer.Add(tab1_image, 0, wx.ALIGN_CENTRE | wx.TOP, 50)
-        mainsizer.Add(tab2_image, 0, wx.ALIGN_CENTRE | wx.TOP, 50)
-        mainsizer.Add(tab3_image, 0, wx.ALIGN_CENTRE | wx.TOP, 50)
+        mainsizer.Add(tab1_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        mainsizer.Add(tab2_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        mainsizer.Add(tab3_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
 
         mainsizer.Add(self.button1, 1, wx.EXPAND | wx.ALL, 30)
         mainsizer.Add(self.button2, 1, wx.EXPAND | wx.ALL, 30)
         mainsizer.Add(self.button3, 1, wx.EXPAND | wx.ALL, 30)
 
-        mainsizer.Add(tab4_image, 0, wx.ALIGN_CENTRE | wx.TOP, 50)
-        mainsizer.Add(tab5_image, 0, wx.ALIGN_CENTRE | wx.TOP, 50)
-        mainsizer.Add(tab6_image, 0, wx.ALIGN_CENTRE | wx.TOP, 50)
+        mainsizer.Add(tab4_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        mainsizer.Add(tab5_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        mainsizer.Add(tab6_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
 
         mainsizer.Add(self.button4, 1, wx.EXPAND | wx.ALL, 30)
         mainsizer.Add(self.button5, 1, wx.EXPAND | wx.ALL, 30)
         mainsizer.Add(self.button6, 1, wx.EXPAND | wx.ALL, 30)
 
-        mainsizer.Add((120, 80))
-        mainsizer.Add((120, 80))
-        mainsizer.Add((120, 80))
+#         mainsizer.Add((120, 80))
+#         mainsizer.Add((120, 80))
+#         mainsizer.Add((120, 80))
 
         # Bind events
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
@@ -117,7 +116,10 @@ class MainFrame(wx.Frame):
         self.button6.SetToolTip(wx.ToolTip("Example use-case with AWS"))
 
         self.SetSizer(mainsizer)
-        self.Show(True)
+        mainsizer.Fit(self)
+#         self.Show(True)
+        
+        self.Centre()
         self.Check_IFX_TPM()
         
     def Check_IFX_TPM(self):
@@ -181,6 +183,8 @@ class Main(wx.App):
     def __init__(self, redirect=False, filename=None):
         wx.App.__init__(self, redirect, filename)
         dlg = MainFrame(None, title="Main")
+        self.SetTopWindow(dlg)
+        dlg.Centre()
         dlg.Show()
 
 
