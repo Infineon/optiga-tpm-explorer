@@ -301,6 +301,8 @@ class Tab_PCR(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.OnBack, backbutton)
 
         self.SetSizer(mainsizer)
+        mainsizer.Fit(self)
+        self.Centre()
 
     def OnPCRListAll(self, evt):
         hash_alg = self.sha_checkbox.GetValue()

@@ -5,9 +5,8 @@ This page provides instructions on how to install and configure the Raspberry Pi
 1.  [Prerequisites](#prerequisites)
 2.  [Enable OPTIGA™ TPM 2.0 support on Raspberry Pi®](#enabletpm)
 3.  [Set up VNC Connection](#vnc-connection-setup-optional)
-4.  [Disable Openbox when VNC Server is running](#disable-openbox)
-5.  [Install OPTIGA™ TPM 2.0 Explorer](#install-tpm_explorer)
-6.  [References](#references)
+4.  [Install OPTIGA™ TPM 2.0 Explorer](#install-tpm_explorer)
+5.  [References](#references)
 
 ## Prerequisites 
 
@@ -160,32 +159,6 @@ You should be successfully connected and able to view the RPI through VNC connec
 | ------------------------------------------------------------ |
 
 **Figure 12**: RPI Home Screen on VNC Viewer
-
-
-
-## <a name="disable-openbox"></a> Disable Openbox when VNC Server is running
-
-Open the `startlxde-pi` file in an editor:
-
-```shell
-sudo nano /usr/bin/startlxde-pi
-```
-
-Comment out conditional statement and insert `if true; then`
-
-```shell
-#if [ $TOTAL_MEM -ge 2048 ] && [ -f /usr/bin/mutter ] && [ -z "$VNC" ] ; then
-if true; then
-  if [ -f "$XDG_CONFIG_HOME/gtk-3.0/gtk.css" ] ; then
-```
-
-Save the file and exit the editor.
-
-Reboot Raspberry Pi® for the changes to take effect.
-
-```shell
-sudo reboot
-```
 
 
 
