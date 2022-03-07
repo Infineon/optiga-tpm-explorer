@@ -1,7 +1,7 @@
 # **OPTIGA™ TPM 2.0 Explorer User Guide**
 
 
-This page helps you explore the tool to accelerate your learning about TPM2.0. 
+This page helps you explore the tool to accelerate your learning about OPTIGA™ TPM2.0. 
 
 1. [Overview](#overview)
     - [1.1 Features](#features)
@@ -78,18 +78,18 @@ This page helps you explore the tool to accelerate your learning about TPM2.0.
 
 # Overview
 
-The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for beginners to evaluate Infineon OPTIGA™ TPM 2.0 with Infineon OPTIGA™ TPM 2.0 evaluation board connected to the Raspberry Pi® running TPM 2.0 Software Stack (TSS) on Raspbian Linux.  
+The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for beginners to evaluate Infineon OPTIGA™ TPM 2.0 with Infineon OPTIGA™ TPM 2.0 evaluation board connected to the Raspberry Pi running TPM 2.0 Software Stack (TSS) on Raspbian Linux.  
 
 Using this tool, you can start experiencing the benefits that the [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) will bring to smart home devices and network equipment.
 
 ## Features
 
--   Allow for reading TPM2.0 commands executed and the corresponded responses from the display screen or the terminal in the background.
--   Display all properties defined within a TPM 2.0
--   Initialize a TPM 2.0
+-   Allow for reading OPTIGA™ TPM2.0 commands executed and the corresponded responses from the display screen or the terminal in the background.
+-   Display all properties defined within a OPTIGA™ TPM 2.0
+-   Initialize a OPTIGA™ TPM 2.0
 -   Reset back to default settings
 -   Manage the authorization values for the owner, endorsement and lockout
--   Manage TPM 2.0 NV memory for creation, deletion, reading, writing, listing and etc
+-   Manage OPTIGA™ TPM 2.0 NV memory for creation, deletion, reading, writing, listing and etc
 -   Handle PCR Indexes by listing all the different registers in SHA-1 or SHA-256
 -   Handle PCR Indexes by extending a value into the registers in SHA-1 or SHA-256 using PCR Extend/Event
 -   Manage specific handle and context associated with transient and persistent objects
@@ -110,11 +110,11 @@ Using this tool, you can start experiencing the benefits that the [OPTIGA™ TPM
 
 For more information on how to setup the environment for the OPTIGA™ TPM 2.0 Explorer Application, you may refer to the [OPTIGA™ TPM 2.0 Explorer Setup Guide](./Setup%20Guide.md)
 
-This tool was tested on a Raspberry Pi ® (RPi) 3 Model B+ with Raspbian Linux in Release Version 9.4 (Stretch) and kernel version 4.19 with an Infineon OPTIGA™ TPM SLB 9670 TPM2.0 attached to the Raspberry Pi® board (Figure 1 and Figure 2).
+This tool was tested on a Raspberry Pi ® (RPi) 3 Model B+/ RPi 4 Model B with Raspbian Linux in Release Version 11 (Bullseye) and kernel version 5.10.92 with an Infineon OPTIGA™ TPM SLB 9670/ 9672 TPM2.0 attached to the Raspberry Pi® board (Figure 1 and Figure 2).
 
-![](/images/Overview/RaspbianStretch.png) 
+![](/images/Overview/RpiBullseye.png) 
 
-Figure 1: Raspbian Linux 9.4 (Stretch) is used with kernel version 4.14
+Figure 1: Raspbian Linux 11 (Bullseye) is used with kernel version 5.10.92
 
 ![](/images/Overview/TPMRPI3.png) 
 
@@ -127,8 +127,8 @@ Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi® 3
 | Hardware             | Version   and Firmware/OS                                    | Comment                                                      |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Host  PC             | • x86  architecture and USB 2.0 (or higher)  •  Capable of running Linux, for example Ubuntu® 18.04  •  Arbitrary as long as VNC viewer is present | This  platform is used for patching the Kernel, maintaining and interacting with  the Raspberry Pi® in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi®. |
-| OPTIGA™ TPM 2.0 evaluation board      | • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/)| This  board contains the Infineon OPTIGA™ TPM SLB 9670 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
-| Raspberry  Pi® Board | •  Model 3 B+, Raspbian 9.4   •  Micro SD Card with at least 8 GB   •  Micro-B USB cable for power supply | A SD  card with the Raspbian  Linux in Release Version 9.4 (Stretch) and kernel version 4.19 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
+| OPTIGA™ TPM 2.0 evaluation board      | • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) / [SLB 9672 TPM2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/optiga-tpm-slb-9672/)| This  board contains the Infineon OPTIGA™ TPM SLB 9670/ 9672 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
+| Raspberry  Pi® Board | •  Model 3 B+/ 4 B, Bullseye OS (2022-01-28)   •  Micro SD Card with at least 8 GB   •  Micro-B/ Type C USB cable for power supply | A SD  card with Raspberry Pi® Bullseye OS and kernel version 5.10.92 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
 
 
 
@@ -136,10 +136,10 @@ Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi® 3
 
 | Software        | Version    | Comment                                                      |
 | --------------- | ---------- | ------------------------------------------------------------ |
-| tpm2-tools      | 5.1-rc0    | https://github.com/tpm2-software/tpm2-tools  Tag: 961f8b5e21101ed0130ca2edf496312ab1b36961 |
-| tpm2-abrmd      | 2.4.0      | https://github.com/tpm2-software/tpm2-abrmd  Tag: 1beda7906dd959bfa53f39ca58f66bea073fa58c |
-| tpm2-tss        | 3.1.0-rc2  | https://github.com/tpm2-software/tpm2-tss  Tag: 23a264b041e836a0e485f7c10e1da2e2bce6bd6c |
-| tpm2-tss-engine | v1.1.0-rc0 | https://github.com/tpm2-software/tpm2-tss-engine  Tag: 2da48e4ceadc91a7198136309a81b8611327bdf3 |
+| tpm2-tools      | 4.1.1-68   | https://github.com/tpm2-software/tpm2-tools  Tag: 961f8b5e21101ed0130ca2edf496312ab1b36961 |
+| tpm2-abrmd      | 2.3.1      | https://github.com/tpm2-software/tpm2-abrmd  Tag: 1beda7906dd959bfa53f39ca58f66bea073fa58c |
+| tpm2-tss        | 2.0.0      | https://github.com/tpm2-software/tpm2-tss  Tag: 23a264b041e836a0e485f7c10e1da2e2bce6bd6c |
+| tpm2-tss-engine | 1.1.0-rc0  | https://github.com/tpm2-software/tpm2-tss-engine  Tag: 2da48e4ceadc91a7198136309a81b8611327bdf3 |
 
 
 
@@ -1655,10 +1655,11 @@ Figure 168: AWS IOT WebBrowser Successfully Published
 
 ## <a name="references"></a>References
 
-1.  https://downloads.raspberrypi.org/raspbian/images/raspbian-2019-04-09/
+1.  https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2022-01-28/
 2.  <https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/>
-3.  <http://www.infineon.com/tpm>
-4.  https://trustedcomputinggroup.org/resource/tpm-main-specification/
+3.  https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/optiga-tpm-slb-9672/
+4.  <http://www.infineon.com/tpm>
+5.  https://trustedcomputinggroup.org/resource/tpm-main-specification/
 
 
 
