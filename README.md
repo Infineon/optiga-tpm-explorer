@@ -1,24 +1,24 @@
 # OPTIGA™ TPM 2.0 Explorer
-The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for users to familiarize themselves with TPM2.0 quickly and easily using Infineon OPTIGA™ TPM 2.0 solution for Raspberry Pi®. In addition, the OPTIGA™ TPM 2.0 Explorer demonstrates how the OPTIGA™ TPM 2.0 can be used to increase security and trust for data sharing, platform and cloud. 
+The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for users to familiarize themselves with TPM 2.0 quickly and easily using Infineon OPTIGA™ TPM 2.0 solution for Raspberry Pi. In addition, the OPTIGA™ TPM 2.0 Explorer demonstrates how the OPTIGA™ TPM 2.0 can be used to increase security and trust for data sharing, platform and cloud. 
 
 Using this tool, you can start experiencing the benefits that the [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) will bring to smart home devices and network equipment.
 
 | ![](/images/Setup/MainScreen.png) |
 | ------------------------------------------------------- |
 
-The main benefit from the tool is that you are able to explore OPTIGA™ TPM 2.0 features and learn use cases faster without having to be familiar with the TPM2.0 as well as sets of commands. You simply select a button to call the relevant function or task. There is also an immediate visual feedback at the view menu for you to know what are the  commands run and corresponding responses after the button was selected. The ease of use of GUI has made it possible for all users in general, regardless of experience or knowledge, to access all kinds of OPTIGA™ TPM 2.0 features and use case for commonly use. 
+The main benefit from the tool is that you are able to explore OPTIGA™ TPM 2.0 features and learn use cases faster without having to be familiar with the TPM 2.0 as well as sets of commands. You simply select a button to call the relevant function or task. There is also an immediate visual feedback at the view menu for you to know what are the  commands run and corresponding responses after the button was selected. The ease of use of GUI has made it possible for all users in general, regardless of experience or knowledge, to access all kinds of OPTIGA™ TPM 2.0 features and use cases for commonly use. 
 
 | ![](/images/Optiga_Setup/PCR/TPMPCRSHA1_ListAll.png) |
 | ---------------------------------------------------- |
 
 ## Features
 
--   Allow for reading TPM 2.0 commands executed and the corresponded responses from the display screen or the terminal in the background.
--   Display all properties defined within a TPM 2.0
--   Initialize a TPM 2.0
+-   Allow for reading OPTIGA™ TPM 2.0 commands executed and the corresponded responses from the display screen or the terminal in the background
+-   Display all properties defined within a OPTIGA™ TPM 2.0
+-   Initialize a OPTIGA™ TPM 2.0
 -   Reset back to default settings
 -   Manage the authorization values for the owner, endorsement and lockout
--   Manage TPM 2.0 NV memory for creation, deletion, reading, writing, listing and etc
+-   Manage OPTIGA™ TPM 2.0 NV memory for creation, deletion, reading, writing, listing and etc
 -   Handle PCR Indexes by listing all the different registers in SHA-1 or SHA-256
 -   Handle PCR Indexes by extending a value into the registers in SHA-1 or SHA-256 using PCR Extend/Event
 -   Manage specific handle and context associated with transient and persistent objects
@@ -64,29 +64,11 @@ For more information on how to setup the environment for the tool, you can refer
 
 ## User Guide
 
-Learn more about the tool, how it works, and the functionalities of the OPTIGA™ TPM 2.0 by following graphical examples and simple step by step instructions - see the [OPTIGA™ TPM 2.0 Explorer User Guide](./User%20Guide.md) for details.
+Learn more about the tool, how it works and the functionalities of the OPTIGA™ TPM 2.0 by following graphical examples and simple step by step instructions - see the [OPTIGA™ TPM 2.0 Explorer User Guide](./User%20Guide.md) for details.
 
 ## Resources
 
-### Tools
-
-1. [ELTT2 - Infineon Embedded Linux TPM Toolbox 2 for TPM 2.0](https://github.com/Infineon/eltt2) for a quick TPM startup
-   - Can be compiled on Linux, other OS, and embedded platforms
-   - Startup tool with basic functions
-
-### Application Notes
-
-#### [OPTIGA™ TPM SLx 9670](https://github.com/Infineon/optiga-tpm)
-
-1. [AWS IoT Greengrass Hardware Security Integration](https://github.com/Infineon/amazon-greengrass-hsi-optiga-tpm)
-2. [PKCS11 token creation](https://github.com/Infineon/pkcs11-optiga-tpm)
-3. [TPM-based remote attestation](https://github.com/Infineon/remote-attestation-optiga-tpm)
-4. [TPM 2.0 integration for PSoC 6 Wi-Fi BT Prototyping Kit to enable TPM backed onboarding to AWS IoT Core](https://github.com/Infineon/psoc6-aws-iot-optiga-tpm)
-5. [TPM 2.0 used with EK based onboarding](https://github.com/Infineon/ek-based-onboarding-optiga-tpm)
-6. [TPM 2.0 backed Linux Trusted and Encrypted Keys](https://github.com/Infineon/linux-trusted-key-optiga-tpm)
-7. [TPM 2.0 in U-Boot on Raspberry Pi 4](https://github.com/joholl/rpi4-uboot-tpm)
-8. [Extend measurements to TPM 2.0 PCR in U-Boot on Raspberry Pi 4](https://github.com/wxleong/tpm2-uboot-rpi4)
-
+You will find relevant resouces (tools, Open Source Host Code and Application notes) which can help you to study and learn OPTIGA™ TPM2.0 on [Infineon OPTIGA™ TPM2.0 Github Repo.](https://github.com/Infineon/optiga-tpm)
 
 ## License
 

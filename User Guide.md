@@ -1,7 +1,7 @@
 # **OPTIGA™ TPM 2.0 Explorer User Guide**
 
 
-This page helps you explore the tool to accelerate your learning about TPM2.0. 
+This page helps you explore the tool to accelerate your learning about OPTIGA™ TPM2.0. 
 
 1. [Overview](#overview)
     - [1.1 Features](#features)
@@ -78,18 +78,18 @@ This page helps you explore the tool to accelerate your learning about TPM2.0.
 
 # Overview
 
-The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for beginners to evaluate Infineon OPTIGA™ TPM 2.0 with Infineon OPTIGA™ TPM 2.0 evaluation board connected to the Raspberry Pi® running TPM 2.0 Software Stack (TSS) on Raspbian Linux.  
+The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for beginners to evaluate Infineon OPTIGA™ TPM 2.0 with Infineon OPTIGA™ TPM 2.0 evaluation board connected to the Raspberry Pi running TPM 2.0 Software Stack (TSS) on Raspbian Linux.  
 
 Using this tool, you can start experiencing the benefits that the [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) will bring to smart home devices and network equipment.
 
 ## Features
 
--   Allow for reading TPM2.0 commands executed and the corresponded responses from the display screen or the terminal in the background.
--   Display all properties defined within a TPM 2.0
--   Initialize a TPM 2.0
+-   Allow for reading OPTIGA™ TPM2.0 commands executed and the corresponded responses from the display screen or the terminal in the background.
+-   Display all properties defined within a OPTIGA™ TPM 2.0
+-   Initialize a OPTIGA™ TPM 2.0
 -   Reset back to default settings
 -   Manage the authorization values for the owner, endorsement and lockout
--   Manage TPM 2.0 NV memory for creation, deletion, reading, writing, listing and etc
+-   Manage OPTIGA™ TPM 2.0 NV memory for creation, deletion, reading, writing, listing and etc
 -   Handle PCR Indexes by listing all the different registers in SHA-1 or SHA-256
 -   Handle PCR Indexes by extending a value into the registers in SHA-1 or SHA-256 using PCR Extend/Event
 -   Manage specific handle and context associated with transient and persistent objects
@@ -136,10 +136,10 @@ Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi® 3
 
 | Software        | Version    | Comment                                                      |
 | --------------- | ---------- | ------------------------------------------------------------ |
-| tpm2-tools      | 5.1-rc0    | https://github.com/tpm2-software/tpm2-tools  Tag: 961f8b5e21101ed0130ca2edf496312ab1b36961 |
-| tpm2-abrmd      | 2.4.0      | https://github.com/tpm2-software/tpm2-abrmd  Tag: 1beda7906dd959bfa53f39ca58f66bea073fa58c |
-| tpm2-tss        | 3.1.0-rc2  | https://github.com/tpm2-software/tpm2-tss  Tag: 23a264b041e836a0e485f7c10e1da2e2bce6bd6c |
-| tpm2-tss-engine | v1.1.0-rc0 | https://github.com/tpm2-software/tpm2-tss-engine  Tag: 2da48e4ceadc91a7198136309a81b8611327bdf3 |
+| tpm2-tools      | 4.1.1-68   | https://github.com/tpm2-software/tpm2-tools  Tag: 961f8b5e21101ed0130ca2edf496312ab1b36961 |
+| tpm2-abrmd      | 2.3.1      | https://github.com/tpm2-software/tpm2-abrmd  Tag: 1beda7906dd959bfa53f39ca58f66bea073fa58c |
+| tpm2-tss        | 2.0.0      | https://github.com/tpm2-software/tpm2-tss  Tag: 23a264b041e836a0e485f7c10e1da2e2bce6bd6c |
+| tpm2-tss-engine | 1.1.0-rc0  | https://github.com/tpm2-software/tpm2-tss-engine  Tag: 2da48e4ceadc91a7198136309a81b8611327bdf3 |
 
 
 

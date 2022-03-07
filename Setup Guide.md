@@ -1,9 +1,9 @@
 # **OPTIGA™ TPM 2.0 Explorer Setup Guide**
 
-This page provides instructions on how to install and configure the Raspberry Pi® to enable the [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) in order to use the OPTIGA™ TPM 2.0 Explorer.
+This page provides instructions on how to install and configure the Raspberry Pi to enable the [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) in order to use the OPTIGA™ TPM 2.0 Explorer.
 
 1.  [Prerequisites](#prerequisites)
-2.  [Enable OPTIGA™ TPM 2.0 support on Raspberry Pi®](#enabletpm)
+2.  [Enable OPTIGA™ TPM 2.0 support on Raspberry Pi](#enabletpm)
 3.  [Set up VNC Connection](#vnc-connection-setup-optional)
 4.  [Install OPTIGA™ TPM 2.0 Explorer](#install-tpm_explorer)
 5.  [References](#references)
@@ -63,7 +63,7 @@ Save the file and exit the editor.
 
 ## <a name="vnc-connection-setup-optional"></a>Set up VNC Connection
 
-This optional step will guide you on how to set up a VNC connection from your RPI to your computer. This step requires a flashed MicroSD with the TPM Explorer image in an RPI3 and VNC Viewer installed on your computer.
+This optional step will guide you on how to set up a VNC connection from your RPI to your computer. This step requires a flashed MicroSD with the OPTIGA™ TPM Explorer image in an RPI3 and VNC Viewer installed on your computer.
 
 Start-up the Raspberry Pi® with HDMI cable to monitor and start the terminal.
 
