@@ -47,7 +47,7 @@ class RestartApp(wx.Dialog):
 # Dialog for asking user input for ownerAuth
 class OwnerDlg(wx.Dialog):
     def __init__(self, parent, title):
-        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title, size=(500, 150))
+        wx.Dialog.__init__(self, parent, wx.ID_ANY, title=title)
         self.SetBackgroundColour(wx.WHITE)
 
         # declare the sizers
@@ -59,7 +59,7 @@ class OwnerDlg(wx.Dialog):
         mainsizer.Add(wx.StaticText(self, -1, "All spaces will be stripped, if any"), 0, wx.ALL, 5)
 
         # instantiate the objects
-        self.ownerAuth_input = wx.TextCtrl(self, -1)
+        self.ownerAuth_input = wx.TextCtrl(self, -1, size=wx.Size(275, 25))
         ownerAuth_input_blurb = wx.StaticText(self, -1, "Owner Authorisation Value: ")
         button_ok = wx.Button(self, -1, 'OK')
 
