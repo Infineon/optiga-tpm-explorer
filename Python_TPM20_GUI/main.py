@@ -70,34 +70,42 @@ class MainFrame(wx.Frame):
         tab4_image = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(tab4_image))
         # ~ tab4_image = wx.StaticBitmap(self, wx.ID_ANY, img.policy.getBitmap())
 
-        # declare the sizer
-        mainsizer = wx.GridSizer(cols=3, vgap=5, hgap=5)
-
+        # declare the sizers
+        mainsizer = wx.BoxSizer(wx.VERTICAL)
+        horisizer = wx.BoxSizer(wx.HORIZONTAL)
+        horisizer2 = wx.BoxSizer(wx.HORIZONTAL)
+        gdsizer = wx.GridSizer(rows=4, cols=3, vgap=0, hgap=5)
+        
         # add the widgets to the sizers (add row by row)
-        mainsizer.Add(tpm_image, 0, wx.ALIGN_LEFT | wx.ALIGN_TOP, 5)
-        mainsizer.Add(title_screen, 0, wx.ALIGN_CENTRE, 0)
-        mainsizer.Add(ifx_image, 0, wx.ALIGN_RIGHT | wx.ALIGN_TOP, 5)
+        horisizer.Add(tpm_image, 0)
+        horisizer.AddSpacer(150)
+        horisizer.Add(title_screen, 0, wx.ALIGN_CENTRE)
+        horisizer.AddSpacer(150)
+        horisizer.Add(ifx_image, 0, wx.TOP, 10)
+        
+        horisizer2.AddSpacer(1278)
 
-        mainsizer.Add(tab1_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
-        mainsizer.Add(tab2_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
-        mainsizer.Add(tab3_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        gdsizer.Add(tab1_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        gdsizer.Add(tab2_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        gdsizer.Add(tab3_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
 
-        mainsizer.Add(self.button1, 1, wx.EXPAND | wx.ALL, 30)
-        mainsizer.Add(self.button2, 1, wx.EXPAND | wx.ALL, 30)
-        mainsizer.Add(self.button3, 1, wx.EXPAND | wx.ALL, 30)
+        gdsizer.Add(self.button1, 1, wx.EXPAND | wx.ALL, 30)
+        gdsizer.Add(self.button2, 1, wx.EXPAND | wx.ALL, 30)
+        gdsizer.Add(self.button3, 1, wx.EXPAND | wx.ALL, 30)
 
-        mainsizer.Add(tab4_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
-        mainsizer.Add(tab5_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
-        mainsizer.Add(tab6_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        gdsizer.Add(tab4_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        gdsizer.Add(tab5_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
+        gdsizer.Add(tab6_image, 0, wx.ALIGN_CENTRE | wx.TOP, 5)
 
-        mainsizer.Add(self.button4, 1, wx.EXPAND | wx.ALL, 30)
-        mainsizer.Add(self.button5, 1, wx.EXPAND | wx.ALL, 30)
-        mainsizer.Add(self.button6, 1, wx.EXPAND | wx.ALL, 30)
+        gdsizer.Add(self.button4, 1, wx.EXPAND | wx.ALL, 30)
+        gdsizer.Add(self.button5, 1, wx.EXPAND | wx.ALL, 30)
+        gdsizer.Add(self.button6, 1, wx.EXPAND | wx.ALL, 30)
 
-#         mainsizer.Add((120, 80))
-#         mainsizer.Add((120, 80))
-#         mainsizer.Add((120, 80))
-
+        mainsizer.Add(horisizer, 0, wx.EXPAND)
+        mainsizer.Add(horisizer2)
+        mainsizer.Add(-1, 31)
+        mainsizer.Add(gdsizer, 1, wx.EXPAND)
+        
         # Bind events
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Bind(wx.EVT_BUTTON, self.OnButtonClick, self.button1)
@@ -117,7 +125,7 @@ class MainFrame(wx.Frame):
 
         self.SetSizer(mainsizer)
         mainsizer.Fit(self)
-#         self.Show(True)
+        self.Show(True)
         
         self.Centre()
         self.Check_IFX_TPM()
@@ -132,7 +140,6 @@ class MainFrame(wx.Frame):
                 self.Disable_Buttons()              
                 return
                         
-
             cmd =" tpm2_getcap properties-fixed | grep -A2 'MANUFACTURER' | grep value | grep -Eo '[A-Z]*'"
             ps_command = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
             command_output = ps_command.stdout.read()
@@ -141,7 +148,8 @@ class MainFrame(wx.Frame):
             if (not "IFX" in command_output.decode()):
                 misc.Not_IFX_TPM_Dlg(self, "Insert Infineon IRIDIUM Module").ShowModal()
                 self.Disable_Buttons()    
-                return    
+                return
+            
     def Disable_Buttons(self):
             self.button1.Disable()
             self.button2.Disable()
@@ -150,7 +158,6 @@ class MainFrame(wx.Frame):
             self.button5.Disable()
             self.button6.Disable()
                     
-
     def OnCloseWindow(self, evt):
         self.Destroy()
 
