@@ -281,7 +281,7 @@ To disable 'tpm2_clear' command, select "Disable Clear ON" at (1). Then, select 
 
 Figure 17: TPM Clearlock Disable Clear On Succeeded
 
-To renenable "Platform Clear", select "Disable Clear OFF" at (1) to disable clearlock. Then, perform a "Platform Clear" at (2) and check variable using "Get TPM capability (variable)" at (3). AuthSet should be successfully cleared.
+To re-enable "Platform Clear", select "Disable Clear OFF" at (1) to disable clearlock. Then, perform a "Platform Clear" at (2) and check variable using "Get TPM capability (variable)" at (3). AuthSet should be successfully cleared.
 
 | ![](/images/Optiga_Setup/Setup/PlatformDisableClearOffSucess.png) |
 | ------------------------------------------------------------ |
