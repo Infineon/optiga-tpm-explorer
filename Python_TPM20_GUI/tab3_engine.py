@@ -61,7 +61,7 @@ def ClientProcess(client_log):
             client_proc.terminate()
         except OSError:
             client_proc = None
-    client_proc = exec_cmd.createProcess("lxterminal --command='openssl s_client -connect localhost:4433 -CAfile CA_rsa_cert.pem'", client_log)
+    client_proc = exec_cmd.createProcess("lxterminal --command='openssl s_client -connect localhost:4433 -tls1_2 -CAfile CA_rsa_cert.pem'", client_log)
 
 
 def LogReader(text_server, text_client, server_log, client_log):
@@ -518,7 +518,7 @@ class Tab_RSA_CS(wx.Panel):
             client_proc = None
         else:
             #client_proc = exec_cmd.createProcess("lxterminal --title=Server --geometry=55x24 --command='openssl s_server -cert CAsigned_rsa_cert.crt -accept 4433 -keyform engine -engine tpm2tss -key rsa_server.tss'", server_log)
-            openssl_cmd="openssl s_client -connect localhost:4433 -CAfile CA_rsa_cert.pem"
+            openssl_cmd="openssl s_client -connect localhost:4433 -tls1_2 -CAfile CA_rsa_cert.pem"
             if (server_proc is not None):
                 client_proc = exec_cmd.createProcess(openssl_cmd, client_log)
                 client_thread = RSA_Client_Thread(2, client_proc)
@@ -919,7 +919,7 @@ class Tab_ECC_CS(wx.Panel):
             self.client_proc = None
         else:
             #client_proc = exec_cmd.createProcess("lxterminal --title=Server --geometry=55x24 --command='openssl s_server -cert CAsigned_rsa_cert.crt -accept 4433 -keyform engine -engine tpm2tss -key rsa_server.tss'", server_log)
-            openssl_cmd="openssl s_client -connect localhost:4432 -CAfile CA_ecc_cert.pem"
+            openssl_cmd="openssl s_client -connect localhost:4432 -tls1_2 -CAfile CA_ecc_cert.pem"
             if (self.server_proc is not None):
                 self.client_proc = exec_cmd.createProcess(openssl_cmd, None)
 
