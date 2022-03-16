@@ -1,13 +1,13 @@
--> As of this guide, the RASPBIAN kernel Version is v4.14.91-v7+
+-> As of this guide, the RASPBIAN kernel Version is v5.10.92-v7l+
 (check using the command: uname -a)
 
--> tpm2-tss version is commit 6d474ae073d8de3f0fc44764ca433c293721151b. Version tag is 2.2.2.-rc0
+-> tpm2-tss version is commit e237e4d33cbf280292a480edd8ad061dcd3a37a2. Version tag is 3.2.0.
 
--> tpm2-tools version is the commit with the hash 722f008c06ff010110d1b85c9d02e3059d160fd9
+-> tpm2-tools version is the commit with the hash ebd59ef827f1fc8e0efa43f9cade4d3d7efee59a. Version tag is 5.2.
 
--> tpm2-abrmd version is the commit with the hash 10ab488ee0ecb9df2dc7338e36d47a02b5f70073. Version tag is 2.1.1-rc0.
+-> tpm2-abrmd version is the commit with the hash 71bfb9457267683e1f6a6dea42622442a62203a5. Version tag is 2.4.1.
 
--> tpm2-tss-engine version is the commit with the hash a81d44a8610e28e5987af64f8aae16e4a2d09eaaVersion tag is v1.0.0 exactly.
+-> tpm2-tss-engine version is the commit with the hash 6f387a4efe2049f1b4833e8f621c77231bc1eef4. Version tag is v1.1.0.
 
 
 Step-by-step guide to setting up the Trusted Platform Module (TPM) on a Raspberry Pi
