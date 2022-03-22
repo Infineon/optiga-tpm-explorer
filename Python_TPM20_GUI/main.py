@@ -9,6 +9,7 @@ import misc_dialogs as misc
 import shell_util as exec_cmd
 import images as img
 import subprocess
+#import wx.lib.inspection
 
 class MainFrame(wx.Frame):
     def __init__(self, parent, title):
@@ -192,6 +193,7 @@ class Main(wx.App):
         dlg = MainFrame(None, title="Main")
         self.SetTopWindow(dlg)
         dlg.Centre()
+#         wx.lib.inspection.InspectionTool().Show()
         dlg.Show()
 
 
@@ -200,5 +202,5 @@ class Main(wx.App):
 # Navigation always starts from the /working_space folder.
 if __name__ == "__main__":
     exec_cmd.checkDir()
-    app = Main()
+    app = Main() 
     app.MainLoop()

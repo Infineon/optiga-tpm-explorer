@@ -30,10 +30,10 @@ class Tab4Frame(wx.Frame):
         self.pcr_bank_choice = wx.ComboBox(self, -1, "Pick the PCR Index", choices=pcr_index_list, style=wx.CB_READONLY)
         data_blurb = wx.StaticText(self, -1, "Data to be sealed: ")
         self.data_input = wx.TextCtrl(self, -1)
-        button_create_policy = wx.Button(self, -1, 'Generate Policy from selected PCR')
-        button_create_primary = wx.Button(self, -1, 'Generate Primary (Owner)')
-        button_seal_data = wx.Button(self, -1, 'Seal Data')
-        button_satisfy_unseal = wx.Button(self, -1, 'Satisfy Policy and Unseal')
+        button_create_policy = wx.Button(self, -1, 'Generate Policy from selected PCR', size = (-1, 48))
+        button_create_primary = wx.Button(self, -1, 'Generate Primary (Owner)', size = (-1, 48))
+        button_seal_data = wx.Button(self, -1, 'Seal Data', size = (-1, 48))
+        button_satisfy_unseal = wx.Button(self, -1, 'Satisfy Policy and Unseal', size = (-1, 48))
         self.command_out = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.command_out.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
         clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
@@ -49,9 +49,10 @@ class Tab4Frame(wx.Frame):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the sizers to the main sizer
-        mainsizer.Add(choices_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.AddSpacer(5)
+        mainsizer.Add(choices_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
         mainsizer.Add(buttons_plus_txtbox_sizer, 1, wx.EXPAND | wx.ALL, 5)
-        buttons_plus_txtbox_sizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        buttons_plus_txtbox_sizer.Add(button_sizer, 0, wx.EXPAND)
         buttons_plus_txtbox_sizer.Add(self.command_out, 1, wx.EXPAND | wx.ALL, 5)
 
         # attach the ui elements to the internal sizer
@@ -63,7 +64,8 @@ class Tab4Frame(wx.Frame):
         button_sizer.Add(button_create_primary, 0, wx.EXPAND | wx.ALL, 5)
         button_sizer.Add(button_seal_data, 0, wx.EXPAND | wx.ALL, 5)
         button_sizer.Add(button_satisfy_unseal, 0, wx.EXPAND | wx.ALL, 5)
-        button_sizer.Add(mini_button_sizer, 0, wx.ALIGN_CENTER | wx.ALL, 5)
+        button_sizer.AddSpacer(345)
+        button_sizer.Add(mini_button_sizer, 0, wx.EXPAND | wx.ALL, 0)
         mini_button_sizer.Add(infobutton, 0, wx.ALL, 5)
         mini_button_sizer.Add(clearbutton, 0, wx.ALL, 5)
         mini_button_sizer.Add(backbutton, 0, wx.ALL, 5)

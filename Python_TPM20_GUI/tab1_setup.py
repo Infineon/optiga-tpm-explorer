@@ -53,7 +53,7 @@ class Tab_Setup(wx.Panel):
 
         # attach the objects to the sizers
         mainsizer.Add(buttonsizer, 0, wx.EXPAND | wx.ALL, 5)
-        mainsizer.Add(self.text_display, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(self.text_display, 1, wx.EXPAND)
         buttonsizer.Add(button_getCapVar, 1, wx.EXPAND | wx.ALL, 5)
         buttonsizer.Add(button_getCapFix, 1, wx.EXPAND | wx.ALL, 5)
         buttonsizer.Add(button_takeown, 1, wx.EXPAND | wx.ALL, 5)
@@ -62,7 +62,7 @@ class Tab_Setup(wx.Panel):
         buttonsizer.Add(button_disablelock, 1, wx.EXPAND | wx.ALL, 5)
         buttonsizer.Add(button_dictAtk, 1, wx.EXPAND | wx.ALL, 5)
         buttonsizer.Add(button_start, 1, wx.EXPAND | wx.ALL, 5)
-        buttonsizer.Add(iconsizer, 0, wx.ALIGN_CENTER | wx.ALL, 0)
+        buttonsizer.Add(iconsizer, 0, wx.EXPAND | wx.ALL, 0)
         iconsizer.Add(clearbutton, 0, wx.ALL, 5)
         iconsizer.Add(backbutton, 0, wx.ALL, 5)
 
@@ -261,16 +261,17 @@ class Tab_PCR(wx.Panel):
 
 
         # attach the sizers to the main sizer
-        mainsizer.Add(top_row_sizer, 0, wx.ALL, 0)
-        mainsizer.Add(middle_row_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(bottom_row_sizer, 0, wx.ALIGN_CENTRE | wx.ALL, 0)
-        mainsizer.Add(self.bottom_txt_display, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(top_row_sizer, 0, wx.TOP, 5)
+        mainsizer.Add(middle_row_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
+        mainsizer.Add(bottom_row_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(self.bottom_txt_display, 1, wx.EXPAND | wx.TOP, 5)
 
         # attach the ui elements to the internal sizer
         top_row_sizer.Add(self.sha_checkbox, 0, wx.ALL, 5)
         top_row_sizer.Add((200, 10), proportion=1, flag=wx.EXPAND)
         top_row_sizer.Add(text_for_pcrbank, 0, wx.ALIGN_CENTRE, 5)
         top_row_sizer.Add(self.pcr_bank_choice, 0, wx.ALL, 5)
+        middle_row_sizer.AddSpacer(5)
         middle_row_sizer.Add(text_for_userinput, 0, wx.ALIGN_CENTRE, 5)
         middle_row_sizer.Add(self.user_input, 1, wx.ALL, 5)
         bottom_row_sizer.Add(button_pcrlistall, 1, wx.EXPAND | wx.ALL, 5)
@@ -448,7 +449,7 @@ class Tab_NVM(wx.Panel):
         button_nvwrite = wx.Button(self, -1, 'NV Write')
 
         button_nvwrite_file = wx.Button(self, -1, 'NV Write File')
-        self.filename_input = wx.TextCtrl(self, -1,value="ifx_ecc_cert.crt", style=(wx.TE_CHARWRAP|wx.TE_MULTILINE))
+        self.filename_input = wx.TextCtrl(self, -1, value="ifx_ecc_cert.crt", style=(wx.TE_CHARWRAP|wx.TE_MULTILINE), size=(-1, 61))
         # Create open file dialog
         
         button_nvrelease = wx.Button(self, -1, 'NV Release')
@@ -474,10 +475,11 @@ class Tab_NVM(wx.Panel):
         
         # attach the sizers to the main sizer
         mainsizer.Add(nvm_attr_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        mainsizer.Add(index_size_offset_input_sizer, 0, wx.ALL, 0)
+        mainsizer.Add(index_size_offset_input_sizer, 0, wx.RIGHT | wx.TOP, 5)
         mainsizer.Add(self.bottom_txt_display, 1, wx.EXPAND | wx.ALL, 0)
 
         # attach the ui elements to the internal sizer
+        nvm_attr_sizer.AddSpacer(5)
         nvm_attr_sizer.Add(text_for_nvm_attr, 0, wx.ALIGN_CENTER | wx.ALL, 5)
         nvm_attr_sizer.Add(self.nvm_attr, 1, wx.EXPAND | wx.ALL, 5)
         nvm_attr_sizer.Add(button_reset_attr, 0, wx.EXPAND | wx.ALL, 5)
@@ -513,7 +515,7 @@ class Tab_NVM(wx.Panel):
         input_sizer.Add(self.nvm_data, 1, wx.EXPAND | wx.ALL, 5)
 
         owner_sizer.Add(text_for_owner_auth, 1, wx.ALIGN_CENTRE, 5)
-        owner_sizer.Add(self.owner_input, 1, wx.EXPAND | wx.ALL, 5)
+        owner_sizer.Add(self.owner_input, 1, wx.ALL, 5)
 
         button_row_1.Add(button_nvdefine, 1, wx.ALL, 5)
         button_row_1.Add(button_nvwrite, 1, wx.ALL, 5)
@@ -525,7 +527,7 @@ class Tab_NVM(wx.Panel):
         button_row_3.Add(button_nvlist, 1, wx.ALL, 5)
 
         button_row_4.Add(button_nvwrite_file, 1, wx.ALL, 5)
-        button_row_4.Add(self.filename_input, 1, wx.ALL, 5)
+        button_row_4.Add(self.filename_input, 1, wx.EXPAND | wx.ALL, 5)
 
         rsa_sizer.Add(button_nv_read_rsa_cert, 1, wx.ALL, 5)
         rsa_sizer.Add(self.rsa_cert_index, 1, wx.ALL, 5) 
@@ -890,6 +892,7 @@ class Tab_Handles(wx.Panel):
         mainsizer = wx.BoxSizer(wx.VERTICAL)
         element_sizer = wx.BoxSizer(wx.HORIZONTAL)
         handle_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        handle_blurb_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # instantiate the objects
         input_handle_blurb = wx.StaticText(self, -1, "Handle: ")
@@ -913,11 +916,13 @@ class Tab_Handles(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the sizers to the main sizer
-        mainsizer.Add(handle_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(element_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(self.txt_display, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(handle_sizer, 0, wx.EXPAND | wx.TOP, 5)
+        mainsizer.Add(element_sizer, 0, wx.EXPAND | wx.RIGHT | wx.LEFT, 5)
+        mainsizer.Add(self.txt_display, 1, wx.EXPAND | wx.TOP, 5)
 
         # Add elements to the element sizer
+        handle_blurb_sizer.Add(input_handle_blurb, 0, wx.CENTRE | wx.LEFT, 10)
+        
         element_sizer.Add(button_listpersistent, 1, wx.EXPAND | wx.ALL, 5)
         element_sizer.Add(button_readpersistent, 1, wx.EXPAND | wx.ALL, 5)
         element_sizer.Add(button_evict_persistent, 1, wx.EXPAND | wx.ALL, 5)
@@ -927,8 +932,9 @@ class Tab_Handles(wx.Panel):
         element_sizer.Add(backbutton, 0, wx.EXPAND | wx.ALL, 5)
 
         # Attach UI elements to the internal sizers
-        handle_sizer.Add(input_handle_blurb, 0, wx.EXPAND | wx.ALL, 5)
+        handle_sizer.Add(handle_blurb_sizer, 0, wx.EXPAND | wx.ALL, 0)
         handle_sizer.Add(self.input_handle, 1, wx.EXPAND | wx.ALL, 5)
+        handle_sizer.AddSpacer(5)
 
         # Set tooltips
         button_listpersistent.SetToolTip(wx.ToolTip("List what handles exists in the persistent store."))
