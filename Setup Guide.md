@@ -34,10 +34,10 @@ This page provides instructions on how to install and configure the Raspberry Pi
 
 | Software        | Version    | Comment                                                      |
 | --------------- | ---------- | ------------------------------------------------------------ |
-| tpm2-tools      | 4.1.1-68   | https://github.com/tpm2-software/tpm2-tools  Tag: 961f8b5e21101ed0130ca2edf496312ab1b36961 |
-| tpm2-abrmd      | 2.3.1      | https://github.com/tpm2-software/tpm2-abrmd  Tag: 1beda7906dd959bfa53f39ca58f66bea073fa58c |
-| tpm2-tss        | 2.0.0      | https://github.com/tpm2-software/tpm2-tss  Tag: 23a264b041e836a0e485f7c10e1da2e2bce6bd6c |
-| tpm2-tss-engine | 1.1.0-rc0  | https://github.com/tpm2-software/tpm2-tss-engine  Tag: 2da48e4ceadc91a7198136309a81b8611327bdf3 |
+| tpm2-tools      | 5.2        | https://github.com/tpm2-software/tpm2-tools Tag: ebd59ef827f1fc8e0efa43f9cade4d3d7efee59a |
+| tpm2-abrmd      | 2.4.1      | https://github.com/tpm2-software/tpm2-abrmd Tag: 71bfb9457267683e1f6a6dea42622442a62203a5 |
+| tpm2-tss        | 3.2.0      | https://github.com/tpm2-software/tpm2-tss Tag: e237e4d33cbf280292a480edd8ad061dcd3a37a2 |
+| tpm2-tss-engine | 1.1.0      | https://github.com/tpm2-software/tpm2-tss-engine Tag: 6f387a4efe2049f1b4833e8f621c77231bc1eef4 |
 
 
 
