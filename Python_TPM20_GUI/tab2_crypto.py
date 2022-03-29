@@ -20,7 +20,7 @@ class Tab_Hash(wx.Panel):
         input_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # create UI elements
-        hashbutton = wx.Button(self, -1, 'Hash (SHA-2)')
+        hashbutton = wx.Button(self, -1, 'Hash (SHA-2)', size = (-1, 47))
         inputtext = wx.StaticText(self, -1, label="Input:")
         self.input_display = wx.TextCtrl(self,value="12345")
         self.command_display = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
@@ -101,11 +101,11 @@ class Tab_RSA(wx.Panel):
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # create UI elements
-        createprimary = wx.Button(self, -1, 'Create Primary')
-        createkeypairbutton = wx.Button(self, -1, 'Create RSA Keypair')
-        encbutton = wx.Button(self, -1, 'RSA Encrypt')
-        decbutton = wx.Button(self, -1, 'RSA Decrypt')
-        signbutton = wx.Button(self, -1, 'RSA Sign')
+        createprimary = wx.Button(self, -1, 'Create Primary', size=(-1, 48))
+        createkeypairbutton = wx.Button(self, -1, 'Create RSA Keypair', size=(-1, 48))
+        encbutton = wx.Button(self, -1, 'RSA Encrypt', size=(-1, 48))
+        decbutton = wx.Button(self, -1, 'RSA Decrypt', size=(-1, 48))
+        signbutton = wx.Button(self, -1, 'RSA Sign', size=(-1, 48))
         opensslverifybutton = wx.Button(self, -1, 'RSA Verify\n(By OpenSSL)')
         tpmverifybutton = wx.Button(self, -1, 'RSA Verify\n(By TPM2-Tools)')
         inputtext = wx.StaticText(self, -1, label="Data Input:")
@@ -121,9 +121,10 @@ class Tab_RSA(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
+        mainsizer.AddSpacer(5)
         mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 5)
         mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.TOP, 5)
         input_sizer.Add(inputtext, 0, wx.ALIGN_CENTRE, 5)
         input_sizer.Add(self.input_display, 1, wx.ALIGN_CENTRE, 0)
         # ~ button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.EXPAND | wx.ALL, 5)
@@ -421,9 +422,9 @@ class Tab_ECC(wx.Panel):
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # create UI elements
-        createprimary = wx.Button(self, -1, 'Create Primary')
-        createkeypairbutton = wx.Button(self, -1, 'Create ECC Keypair')
-        signbutton = wx.Button(self, -1, 'ECC Sign')
+        createprimary = wx.Button(self, -1, 'Create Primary', size = (-1, 48))
+        createkeypairbutton = wx.Button(self, -1, 'Create ECC Keypair', size =(-1, 48))
+        signbutton = wx.Button(self, -1, 'ECC Sign', size = (-1, 48))
         opensslverifybutton = wx.Button(self, -1, 'ECC Verify\n(By Openssl)')
         tpmverifybutton = wx.Button(self, -1, 'ECC Verify\n(By TPM2-Tools)')
         inputtext = wx.StaticText(self, -1, label="Data Input:")
@@ -439,9 +440,10 @@ class Tab_ECC(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
+        mainsizer.AddSpacer(5)
         mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 5)
         mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.TOP, 5)
         input_sizer.Add(inputtext, 0, wx.ALIGN_CENTRE, 5)
         input_sizer.Add(self.input_display, 1, wx.ALIGN_CENTRE, 0)
         button_sizer.Add(createprimary, 1, wx.ALIGN_CENTRE | wx.ALL, 5)

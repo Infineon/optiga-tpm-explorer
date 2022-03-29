@@ -35,10 +35,12 @@ class Tab6Frame(wx.Frame):
         inside_middlesizer_1 = wx.BoxSizer(wx.VERTICAL)
         inside_middlesizer_2 = wx.BoxSizer(wx.VERTICAL)
         inside_middlesizer_3 = wx.BoxSizer(wx.VERTICAL)
+        extrasizer = wx.BoxSizer(wx.HORIZONTAL)
         bottomsizer = wx.BoxSizer(wx.HORIZONTAL)
         buttonsizer = wx.BoxSizer(wx.VERTICAL)
         aws_sizer = wx.BoxSizer(wx.VERTICAL)
         aws_region_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        setawssizer = wx.BoxSizer(wx.HORIZONTAL)
         
         mini_button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         publish_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -47,32 +49,32 @@ class Tab6Frame(wx.Frame):
         # instantiate the objects
         self.bottom_txt_display = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.bottom_txt_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        self.aws_region_box = wx.ComboBox(self, -1, "Pick the AWS Region", choices=aws_region_list, style=wx.CB_READONLY)
+        self.aws_region_box = wx.ComboBox(self, -1, "Pick the AWS Region", choices=aws_region_list, style=wx.CB_READONLY, size=(150, -1))
         # Images
         user = wx.Image('../images/6user.png', wx.BITMAP_TYPE_PNG)
-        user = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(user), pos=(180, 10))
+        user = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(user), pos=(250, 10))
         # ~user = wx.StaticBitmap(self, wx.ID_ANY, img._6user.getBitmap(), pos=(180, 10))
         
         product = wx.Image('../images/6products.png', wx.BITMAP_TYPE_PNG)
-        product = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(product), pos=(495, 10))
+        product = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(product), pos=(565, 7))
         # ~product = wx.StaticBitmap(self, wx.ID_ANY, img._6products.getBitmap(), pos=(495, 10))
         
         cloud = wx.Image('../images/6cloud.png', wx.BITMAP_TYPE_PNG)
-        cloud = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(cloud), pos=(845, 10))
+        cloud = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(cloud), pos=(915, 8))
         # ~cloud = wx.StaticBitmap(self, wx.ID_ANY, img._6cloud.getBitmap(), pos=(845, 10))
         
         arrow = wx.Image('../images/6forward.png', wx.BITMAP_TYPE_PNG)
-        arrow = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(arrow), pos=(365, 67))
+        arrow = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(arrow), pos=(435, 67))
         # ~arrow = wx.StaticBitmap(self, wx.ID_ANY, img._6forward.getBitmap(), pos=(365, 67))
         
         arrow2 = wx.Image('../images/6exchange.png', wx.BITMAP_TYPE_PNG)
-        arrow2 = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(arrow2), pos=(700, 49))
+        arrow2 = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(arrow2), pos=(770, 49))
         # ~arrow2 = wx.StaticBitmap(self, wx.ID_ANY, img._6exchange.getBitmap(), pos=(700, 49))
 
         # Create Buttons
         button_oneclick = wx.Button(self, -1, '1-click provision (Step 1-6)')
         button_startconnection = wx.Button(self, -1, 'Start publishing')
-        button_configureAWS = wx.Button(self, -1, 'Set AWS credentials')
+        button_configureAWS = wx.Button(self, -1, 'Set AWS credentials', size = (256, -1))
         button_openconfigfile = wx.Button(self, -1, 'Open config file')
         button_openpolicyfile = wx.Button(self, -1, 'Open policy file')
         button_createpolicy = wx.Button(self, -1, 'Create Policy (from policy file)')
@@ -101,6 +103,7 @@ class Tab6Frame(wx.Frame):
         self.text_step7 = wx.StaticText(self, -1, "Step 7: Connect && start publishing")
         self.aws_key_input = wx.TextCtrl(self, -1)
         self.aws_secret_input = wx.TextCtrl(self, -1)
+        self.aws_session_input = wx.TextCtrl(self, -1)
         self.aws_endpoint = wx.TextCtrl(self, -1)
         
         self.text_mqtt_topic = wx.StaticText(self, -1, label="Topic")
@@ -111,29 +114,34 @@ class Tab6Frame(wx.Frame):
         self.publish_topic=wx.TextCtrl(self, -1,value="pulsioximeter")
 
         # attach the sizers to the main sizer
-        mainsizer.Add(imagesizer, 0, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(imagesizer, 0, wx.EXPAND | wx.ALL, 0)
         mainsizer.Add(self.middlesizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(extrasizer, 0, wx.EXPAND | wx.BOTTOM, 10)
         mainsizer.Add(bottomsizer, 1, wx.EXPAND | wx.ALL, 0)
-        self.middlesizer.Add(inside_middlesizer_1, 1, wx.EXPAND | wx.ALL, 5)
+        self.middlesizer.Add(inside_middlesizer_1, 1, wx.EXPAND | wx.LEFT, 0)
         self.middlesizer.Add(inside_middlesizer_2, 1, wx.EXPAND | wx.ALL, 0)
-        self.middlesizer.Add(inside_middlesizer_3, 1, wx.EXPAND | wx.ALL, 5)
-        bottomsizer.Add(buttonsizer, 0, wx.EXPAND | wx.ALL, 5)
-        bottomsizer.Add(self.bottom_txt_display, 1, wx.EXPAND | wx.ALL, 5)
+        self.middlesizer.Add(inside_middlesizer_3, 1, wx.EXPAND | wx.ALL, 0)
+        bottomsizer.Add(buttonsizer, 0, wx.EXPAND | wx.ALL, 0)
+        bottomsizer.Add(self.bottom_txt_display, 1, wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.LEFT, 5)
 
         # attach the ui elements to the internal sizer
         imagesizer.Add((50, 190))
 
-        inside_middlesizer_1.Add(aws_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        inside_middlesizer_2.Add(self.text_step1, 0, wx.EXPAND | wx.ALL, 5)
+        inside_middlesizer_1.Add(aws_sizer, 0, wx.EXPAND | wx.TOP, 25)
+        inside_middlesizer_2.AddSpacer(15)
+        inside_middlesizer_2.Add(self.text_step1, 0, wx.EXPAND | wx.RIGHT | wx.LEFT | wx.BOTTOM, 5)
         inside_middlesizer_2.Add(self.text_step2, 0, wx.EXPAND | wx.ALL, 5)
         inside_middlesizer_2.Add(self.text_step7, 0, wx.EXPAND | wx.ALL, 5)
         inside_middlesizer_2.Add(publish_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        inside_middlesizer_2.Add(button_startconnection, 0, wx.ALL, 5)
+        #inside_middlesizer_2.AddSpacer(1)
+        ##inside_middlesizer_2.Add(button_startconnection, 0, wx.ALL, 5)
         
-        inside_middlesizer_3.Add(self.text_step3, 0, wx.EXPAND | wx.ALL, 5)
+        inside_middlesizer_3.AddSpacer(15)
+        inside_middlesizer_3.Add(self.text_step3, 0, wx.EXPAND | wx.RIGHT | wx.LEFT | wx.BOTTOM, 5)
         inside_middlesizer_3.Add(self.text_step4, 0, wx.EXPAND | wx.ALL, 5)
         inside_middlesizer_3.Add(self.text_step5, 0, wx.EXPAND | wx.ALL, 5)
         inside_middlesizer_3.Add(self.text_step6, 0, wx.EXPAND | wx.ALL, 5)
+        ##inside_middlesizer_3.Add(self.aws_endpoint, 0, wx.EXPAND | wx.ALL, 5)
 
         publish_sizer.Add(self.text_mqtt_topic, 0, wx.ALIGN_CENTRE, 5)
         publish_sizer.Add(self.publish_topic, 1,  wx.EXPAND | wx.ALL, 5)
@@ -144,7 +152,7 @@ class Tab6Frame(wx.Frame):
         #~ buttonsizer.Add(button_configureAWS, 1, wx.EXPAND | wx.ALL, 5)
 
         #~ buttonsizer.Add(button_startconnection, 1, wx.EXPAND | wx.ALL, 5)
-        buttonsizer.Add(button_openconfigfile, 1, wx.EXPAND | wx.ALL, 5)
+        buttonsizer.Add(button_openconfigfile, 1, wx.EXPAND | wx.BOTTOM | wx.RIGHT | wx.LEFT, 5)
         buttonsizer.Add(button_openpolicyfile, 1, wx.EXPAND | wx.ALL, 5)
         buttonsizer.Add(button_createpolicy, 1, wx.EXPAND | wx.ALL, 5)
         buttonsizer.Add(button_oneclick, 1, wx.EXPAND | wx.ALL, 5)
@@ -155,11 +163,22 @@ class Tab6Frame(wx.Frame):
 
         aws_region_sizer.Add(self.aws_region_box, 0, wx.EXPAND | wx.ALL, 5)
         aws_region_sizer.Add(button_configureAWS, 1, wx.EXPAND | wx.ALL, 5)
-        aws_sizer.Add(self.aws_key_input, 0, wx.EXPAND | wx.ALL, 5)
-        aws_sizer.Add(self.aws_secret_input, 0, wx.EXPAND | wx.ALL, 5)
-        aws_sizer.Add(aws_region_sizer, 0, wx.EXPAND | wx.ALL, 5)        
+        
+        setawssizer.Add(button_startconnection, 1, wx.EXPAND | wx.ALL, 0)
+        
+        aws_sizer.Add(self.aws_key_input, 2, wx.EXPAND | wx.ALL, 5)
+        aws_sizer.AddSpacer(2)
+        aws_sizer.Add(self.aws_secret_input, 2, wx.EXPAND | wx.ALL, 5)
+        aws_sizer.AddSpacer(2)
+        aws_sizer.Add(self.aws_session_input, 2, wx.EXPAND | wx.ALL, 5)
+        
+        extrasizer.Add(aws_region_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        extrasizer.Add(setawssizer, 0, wx.ALL, 5)
+        extrasizer.Add(self.aws_endpoint, 1, wx.EXPAND | wx.ALL, 5)
+        #extrasizer.AddSpacer(227)
+        extrasizer.AddSpacer(80)
         #~ aws_sizer.Add(self.aws_region_box, 0, wx.EXPAND | wx.ALL, 5)
-        aws_sizer.Add(self.aws_endpoint, 0, wx.EXPAND | wx.ALL, 5)     
+        ##aws_sizer.Add(self.aws_endpoint, 0, wx.EXPAND | wx.ALL, 5)     
 
         # Set tooltips
         button_configureAWS.SetToolTip(wx.ToolTip("If your AWS Command Line Interface (CLI) has not been configured, this buttton can do it, but it is highly recommended to do it yourself."))
@@ -186,7 +205,8 @@ class Tab6Frame(wx.Frame):
         # set default values
         self.aws_key_input.SetHint("AWS Access Key here")
         self.aws_secret_input.SetHint("AWS Secret Access Key here")
-        self.aws_endpoint.SetHint("Set Endpont in Config file")
+        self.aws_session_input.SetHint("AWS Session Token for SSO Device here")
+        self.aws_endpoint.SetHint("Endpont in Config file")
         
         #~ self.publish_input_one.write("100")
         #~ self.publish_input_two.write("100")
@@ -398,6 +418,7 @@ class Tab6Frame(wx.Frame):
     def OnConfigureAWS(self, evt):
         awskey = self.aws_key_input.GetValue()
         awssecretkey = self.aws_secret_input.GetValue()
+        awssessiontoken = self.aws_session_input.GetValue()
         awsregion = self.aws_region_box.GetStringSelection()
         #~ if (awsregion != "us-east-1"):
             #~ if (misc.AwsRegionWarning(self, "Warning!").ShowModal() != wx.OK):
@@ -412,10 +433,15 @@ class Tab6Frame(wx.Frame):
         ])
         exec_cmd.execCLI([
             "aws", "configure", "set",
+            "aws_session_token", awssessiontoken,
+        ])       
+        exec_cmd.execCLI([
+            "aws", "configure", "set",
             "default.region", awsregion,
         ])
         self.aws_key_input.Clear()
         self.aws_secret_input.Clear()
+        self.aws_session_input.Clear()
 
     def OnOpenConfig(self, evt):
         self.activetab = misc.EditorFrame(self, "Editing config.jsn", "config.jsn").ShowModal()
