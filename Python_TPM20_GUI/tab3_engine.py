@@ -197,16 +197,16 @@ class Tab_RSA_CS(wx.Panel):
         client_sizer = wx.BoxSizer(wx.VERTICAL)
         
         # instantiate the objects
-        button_gen_ca = wx.Button(self, -1, 'Generate CA && CA Cert')
-        button_gen_keypair = wx.Button(self, -1, 'Create Keypair (for server)')
-        button_gen_csr = wx.Button(self, -1, 'Create CSR')
-        button_gen_cert = wx.Button(self, -1, 'Create Server Cert')
+        button_gen_ca = wx.Button(self, -1, 'Generate CA && CA Cert', size = (-1, 48))
+        button_gen_keypair = wx.Button(self, -1, 'Create Keypair (for server)', size = (-1, 48))
+        button_gen_csr = wx.Button(self, -1, 'Create CSR', size = (-1, 48))
+        button_gen_cert = wx.Button(self, -1, 'Create Server Cert', size = (-1, 48))
         button_start_server = wx.Button(self, -1, 'Start/Stop Server')
         button_start_client = wx.Button(self, -1, 'Start/Stop Client')
-        button_write_server = wx.Button(self, -1, 'Write to Client')
-        button_write_client = wx.Button(self, -1, 'Write to Server')
-        button_flush_client = wx.Button(self, -1, 'Clear client text')
-        button_flush_server = wx.Button(self, -1, 'Clear server text')
+        button_write_from_server = wx.Button(self, -1, 'Write to Client')
+        button_write_from_client = wx.Button(self, -1, 'Write to Server')
+        button_flush_client = wx.Button(self, -1, 'Clear client text', size = (-1, 48))
+        button_flush_server = wx.Button(self, -1, 'Clear server text', size = (-1, 48))
         self.text_client = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.text_client.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
         self.text_server = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
@@ -218,7 +218,7 @@ class Tab_RSA_CS(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the sizers to the main sizer
-        mainsizer.Add(steps_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(steps_sizer, 0, wx.EXPAND | wx.LEFT | wx.TOP | wx.BOTTOM, 5)
         mainsizer.Add(server_sizer, 1, wx.EXPAND | wx.ALL, 5)
         mainsizer.Add(client_sizer, 1, wx.EXPAND | wx.ALL, 5)
 
@@ -229,16 +229,17 @@ class Tab_RSA_CS(wx.Panel):
         steps_sizer.Add(button_gen_cert, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_server, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_client, 0, wx.EXPAND | wx.ALL, 5)
+        steps_sizer.AddSpacer(240)
         steps_sizer.Add(backbutton, 0, wx.ALL, 5)
         
         server_sizer.Add(self.text_server, 1, wx.EXPAND | wx.ALL, 5)
         server_sizer.Add(button_start_server, 0, wx.EXPAND | wx.ALL, 5)
         server_sizer.Add(self.input_server, 0, wx.EXPAND | wx.ALL, 5)
-        server_sizer.Add(button_write_server, 0, wx.EXPAND | wx.ALL, 5)
+        server_sizer.Add(button_write_from_server, 0, wx.EXPAND | wx.ALL, 5)
         client_sizer.Add(self.text_client, 1, wx.EXPAND | wx.ALL, 5)
         client_sizer.Add(button_start_client, 0, wx.EXPAND | wx.ALL, 5)
         client_sizer.Add(self.input_client, 0, wx.EXPAND | wx.ALL, 5)
-        client_sizer.Add(button_write_client, 0, wx.EXPAND | wx.ALL, 5)
+        client_sizer.Add(button_write_from_client, 0, wx.EXPAND | wx.ALL, 5)
 
         # Set tooltips
         button_gen_ca.SetToolTip(wx.ToolTip("Generate Key Pair and Self-Signed Certificate for the Certificate Authority (CA)."))
@@ -255,8 +256,8 @@ class Tab_RSA_CS(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.OnGenCert, button_gen_cert)
         self.Bind(wx.EVT_BUTTON, self.OnStartServer, button_start_server)
         self.Bind(wx.EVT_BUTTON, self.OnStartClient, button_start_client)
-        self.Bind(wx.EVT_BUTTON, self.OnWriteServer, button_write_server)
-        self.Bind(wx.EVT_BUTTON, self.OnWriteClient, button_write_client)
+        self.Bind(wx.EVT_BUTTON, self.OnWriteServer, button_write_from_server)
+        self.Bind(wx.EVT_BUTTON, self.OnWriteClient, button_write_from_client)
         self.Bind(wx.EVT_BUTTON, self.OnBack, backbutton)
         # Setup Publisher for text field update
         Publisher.subscribe(self.Upd_Server_Status, "Server_Text")
@@ -565,16 +566,16 @@ class Tab_ECC_CS(wx.Panel):
         client_sizer = wx.BoxSizer(wx.VERTICAL)
 
         # instantiate the objects
-        button_gen_ca = wx.Button(self, -1, 'Generate CA && CA Cert')
-        button_gen_keypair = wx.Button(self, -1, 'Create Keypair (for server)')
-        button_gen_csr = wx.Button(self, -1, 'Create CSR')
-        button_gen_cert = wx.Button(self, -1, 'Create Server Cert')
+        button_gen_ca = wx.Button(self, -1, 'Generate CA && CA Cert', size = (-1, 48))
+        button_gen_keypair = wx.Button(self, -1, 'Create Keypair (for server)', size = (-1, 48))
+        button_gen_csr = wx.Button(self, -1, 'Create CSR', size = (-1, 48))
+        button_gen_cert = wx.Button(self, -1, 'Create Server Cert', size = (-1, 48))
         button_start_server = wx.Button(self, -1, 'Start/Stop Server')
         button_start_client = wx.Button(self, -1, 'Start/Stop Client')
-        button_write_server = wx.Button(self, -1, 'Write to Server')
-        button_write_client = wx.Button(self, -1, 'Write to Client')
-        button_flush_client = wx.Button(self, -1, 'Clear client text')
-        button_flush_server = wx.Button(self, -1, 'Clear server text')
+        button_write_from_server = wx.Button(self, -1, 'Write to Client')
+        button_write_from_client = wx.Button(self, -1, 'Write to Server')
+        button_flush_client = wx.Button(self, -1, 'Clear client text', size = (-1, 48))
+        button_flush_server = wx.Button(self, -1, 'Clear server text', size = (-1, 48))
         self.text_client = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.text_server = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.text_client.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
@@ -588,7 +589,7 @@ class Tab_ECC_CS(wx.Panel):
 
 
         # attach the objects to the sizers
-        mainsizer.Add(steps_sizer, 0, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(steps_sizer, 0, wx.EXPAND | wx.LEFT | wx.TOP | wx.BOTTOM, 5)
         mainsizer.Add(server_sizer, 1, wx.EXPAND | wx.ALL, 5)
         mainsizer.Add(client_sizer, 1, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_gen_ca, 0, wx.EXPAND | wx.ALL, 5)
@@ -597,15 +598,16 @@ class Tab_ECC_CS(wx.Panel):
         steps_sizer.Add(button_gen_cert, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_server, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_client, 0, wx.EXPAND | wx.ALL, 5)
+        steps_sizer.AddSpacer(240)
         steps_sizer.Add(backbutton, 0, wx.ALL, 5)
         server_sizer.Add(self.text_server, 1, wx.EXPAND | wx.ALL, 5)
         server_sizer.Add(button_start_server, 0, wx.EXPAND | wx.ALL, 5)
         server_sizer.Add(self.input_server, 0, wx.EXPAND | wx.ALL, 5)
-        server_sizer.Add(button_write_server, 0, wx.EXPAND | wx.ALL, 5)
+        server_sizer.Add(button_write_from_server, 0, wx.EXPAND | wx.ALL, 5)
         client_sizer.Add(self.text_client, 1, wx.EXPAND | wx.ALL, 5)
         client_sizer.Add(button_start_client, 0, wx.EXPAND | wx.ALL, 5)
         client_sizer.Add(self.input_client, 0, wx.EXPAND | wx.ALL, 5)
-        client_sizer.Add(button_write_client, 0, wx.EXPAND | wx.ALL, 5)
+        client_sizer.Add(button_write_from_client, 0, wx.EXPAND | wx.ALL, 5)
 
         # Set tooltips
         button_gen_ca.SetToolTip(wx.ToolTip("Generate Key Pair and Self-Signed Certificate for the Certificate Authority (CA)."))
@@ -622,8 +624,8 @@ class Tab_ECC_CS(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.OnGenCert, button_gen_cert)
         self.Bind(wx.EVT_BUTTON, self.OnStartServer, button_start_server)
         self.Bind(wx.EVT_BUTTON, self.OnStartClient, button_start_client)
-        self.Bind(wx.EVT_BUTTON, self.OnWriteServer, button_write_server)
-        self.Bind(wx.EVT_BUTTON, self.OnWriteClient, button_write_client)
+        self.Bind(wx.EVT_BUTTON, self.OnWriteServer, button_write_from_server)
+        self.Bind(wx.EVT_BUTTON, self.OnWriteClient, button_write_from_client)
         self.Bind(wx.EVT_BUTTON, self.OnBack, backbutton)
         
         # Setup Publisher for text field update
@@ -969,11 +971,11 @@ class Tab_RSA_MISC(wx.Panel):
         data_input_blurb = wx.StaticText(self, -1, "Data Input: ")
         self.command_out = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY), size=(500, 500))
         self.command_out.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        button_gen_rsakey = wx.Button(self, -1, 'Generate RSA Keypair')
-        button_rsa_enc = wx.Button(self, -1, 'RSA Encrypt')
-        button_rsa_dec = wx.Button(self, -1, 'RSA Decrypt')
-        button_rsa_sign = wx.Button(self, -1, 'RSA Signing')
-        button_rsa_verify = wx.Button(self, -1, 'RSA Verification')
+        button_gen_rsakey = wx.Button(self, -1, 'Generate RSA Keypair', size = (-1, 47))
+        button_rsa_enc = wx.Button(self, -1, 'RSA Encrypt', size = (-1, 47))
+        button_rsa_dec = wx.Button(self, -1, 'RSA Decrypt', size = (-1, 47))
+        button_rsa_sign = wx.Button(self, -1, 'RSA Signing', size = (-1, 47))
+        button_rsa_verify = wx.Button(self, -1, 'RSA Verification', size = (-1, 47))
         clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
         clearbutton = wx.BitmapButton(self, -1, clearimage)
         # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
@@ -983,16 +985,17 @@ class Tab_RSA_MISC(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the ui elements to the main sizer
+        mainsizer.AddSpacer(5)
         mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 0)
         mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(self.command_out, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(self.command_out, 1, wx.EXPAND | wx.TOP, 5)
         input_sizer.Add(data_input_blurb, 0, wx.ALIGN_CENTER | wx.ALL, 5)
         input_sizer.Add(self.data_input, 1, wx.ALL, 5)
-        button_sizer.Add(button_gen_rsakey, 1, wx.ALL, 5)
-        button_sizer.Add(button_rsa_enc, 1, wx.ALL, 5)
-        button_sizer.Add(button_rsa_dec, 1, wx.ALL, 5)
-        button_sizer.Add(button_rsa_sign, 1, wx.ALL, 5)
-        button_sizer.Add(button_rsa_verify, 1, wx.ALL, 5)
+        button_sizer.Add(button_gen_rsakey, 1, wx.ALIGN_CENTER | wx.ALL, 5)
+        button_sizer.Add(button_rsa_enc, 1, wx.ALIGN_CENTER | wx.ALL, 5)
+        button_sizer.Add(button_rsa_dec, 1, wx.ALIGN_CENTER | wx.ALL, 5)
+        button_sizer.Add(button_rsa_sign, 1, wx.ALIGN_CENTER | wx.ALL, 5)
+        button_sizer.Add(button_rsa_verify, 1, wx.ALIGN_CENTER | wx.ALL, 5)
         button_sizer.Add(clearbutton, 0, wx.ALL, 5)
         button_sizer.Add(backbutton, 0, wx.ALL, 5)
 
@@ -1204,7 +1207,7 @@ class Tab_RNG(wx.Panel):
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # instantiate the objects
-        button_gen_rng = wx.Button(self, -1, 'Generate RNG')
+        button_gen_rng = wx.Button(self, -1, 'Generate RNG', size = (-1, 47))
         self.rng_input = wx.TextCtrl(self, -1)
         rng_input_blurb = wx.StaticText(self, -1, "No. of bytes to be generated: ")
         self.command_out = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
@@ -1221,14 +1224,14 @@ class Tab_RNG(wx.Panel):
 
         # attach the ui elements to the main sizer
         mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(self.command_out, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(self.command_out, 1, wx.EXPAND, 0)
         button_sizer.Add(rng_input_blurb, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
         button_sizer.Add(self.rng_input, 1, wx.ALIGN_CENTRE | wx.RIGHT, 10)
         button_sizer.Add(rng_type_blurb, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
         button_sizer.Add(self.rng_type, 1, wx.ALIGN_CENTRE | wx.LEFT, 5)
-        button_sizer.Add(button_gen_rng, 0, wx.ALIGN_CENTRE)
-        button_sizer.Add(clearbutton, 0, wx.ALL, 5)
-        button_sizer.Add(backbutton, 0, wx.ALL, 5)
+        button_sizer.Add(button_gen_rng, 0, wx.ALIGN_CENTRE | wx.LEFT, 5)
+        button_sizer.Add(clearbutton, 0, wx.ALIGN_CENTRE | wx.LEFT, 5)
+        button_sizer.Add(backbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
 
         # Set tooltips
         button_gen_rng.SetToolTip(wx.ToolTip("Generate a Random Number, output is based on the dropdown menu."))
