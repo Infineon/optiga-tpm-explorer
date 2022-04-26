@@ -421,6 +421,7 @@ class Tab_NVM(wx.Panel):
         read_sizer = wx.BoxSizer(wx.HORIZONTAL)
         input_sizer = wx.BoxSizer(wx.HORIZONTAL)
         owner_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        nv_auth_sizer = wx.BoxSizer(wx.HORIZONTAL)
         button_row_1 = wx.BoxSizer(wx.HORIZONTAL)
         button_row_2 = wx.BoxSizer(wx.HORIZONTAL)
         button_row_3 = wx.BoxSizer(wx.HORIZONTAL)
@@ -445,6 +446,8 @@ class Tab_NVM(wx.Panel):
         self.nvm_data = wx.TextCtrl(self, -1)
         text_for_owner_auth = wx.StaticText(self, -1, "Owner Authorisation: ")
         self.owner_input = wx.TextCtrl(self, -1)
+        text_for_nv_auth = wx.StaticText(self, -1, "NV Authorisation: ")
+        self.nv_auth_input = wx.TextCtrl(self, -1)
         button_nvdefine = wx.Button(self, -1, 'NV Define')
         button_nvwrite = wx.Button(self, -1, 'NV Write')
 
@@ -489,13 +492,14 @@ class Tab_NVM(wx.Panel):
         index_size_offset_input_sizer.Add(offset_sizer, 1, wx.EXPAND, 0)
         index_size_offset_input_sizer.Add(read_sizer, 1, wx.EXPAND, 0)
         index_size_offset_input_sizer.Add(owner_sizer, 1, wx.EXPAND, 0)
+        index_size_offset_input_sizer.Add(nv_auth_sizer, 1, wx.EXPAND, 0)
         index_size_offset_input_sizer.Add(button_row_1, 1, wx.EXPAND, 0)
         index_size_offset_input_sizer.Add(button_row_2, 1, wx.EXPAND, 0)
         index_size_offset_input_sizer.Add(button_row_3, 1, wx.EXPAND, 0)
         index_size_offset_input_sizer.Add(button_row_4, 1, wx.EXPAND, 0)
 
-        index_size_offset_input_sizer.Add(rsa_sizer, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(ecc_sizer, 1, wx.EXPAND, 0)
+        index_size_offset_input_sizer.Add(rsa_sizer, 0, wx.EXPAND, 0)
+        index_size_offset_input_sizer.Add(ecc_sizer, 0, wx.EXPAND, 0)
         
         index_size_offset_input_sizer.Add(icon_sizer, 0, wx.ALL, 5)
 
@@ -516,6 +520,9 @@ class Tab_NVM(wx.Panel):
 
         owner_sizer.Add(text_for_owner_auth, 1, wx.ALIGN_CENTRE, 5)
         owner_sizer.Add(self.owner_input, 1, wx.ALL, 5)
+        
+        nv_auth_sizer.Add(text_for_nv_auth, 1, wx.ALIGN_CENTRE, 5)
+        nv_auth_sizer.Add(self.nv_auth_input, 1, wx.ALL, 5)
 
         button_row_1.Add(button_nvdefine, 1, wx.ALL, 5)
         button_row_1.Add(button_nvwrite, 1, wx.ALL, 5)
@@ -572,7 +579,8 @@ class Tab_NVM(wx.Panel):
         self.read_amt.write("32")
         self.nvm_data.write("Hello World!")
         self.owner_input.write(exec_cmd.ownerAuth)
-        self.nvm_attr.SetCheckedStrings(["ownerread", "ownerwrite", "read_stclear"])
+        self.nv_auth_input.write(exec_cmd.nvAuth)
+        self.nvm_attr.SetCheckedStrings(["authread", "authwrite"])
         self.SetSizer(mainsizer)
  
     def OnClickFileName(self, evt):
@@ -724,6 +732,7 @@ class Tab_NVM(wx.Panel):
     def OnNVDefine(self, evt):
         nvm_index = self.nvm_index.GetValue()
         owner_val = self.owner_input.GetValue()
+        nv_auth_val = self.nv_auth_input.GetValue()
         nvm_size = self.nvm_size.GetValue()
         temp_attr = []
         nvm_attr = ""
@@ -740,17 +749,37 @@ class Tab_NVM(wx.Panel):
             return
         nvm_attr = "|".join(temp_attr)
         self.bottom_txt_display.AppendText("Attributes are: " + nvm_attr + "\n")
-        command_output = exec_cmd.execTpmToolsAndCheck([
-            "tpm2_nvdefine",
-            nvm_index,
-            "-C", "o",
-            "-s", nvm_size,
-            "-a", nvm_attr,
-            "-P", owner_val,
-        ])
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvdefine' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        if (self.owner_input.GetValue()=="" and self.nv_auth_input.GetValue()==""):
+            self.bottom_txt_display.AppendText("Owner Authorisation and NV Authorisation Empty. Input Again.\n")
+            return
+        #if NV field is not specified
+        if (self.nv_auth_input.GetValue()==""):
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "tpm2_nvdefine",
+                nvm_index,
+                "-C", "o",
+                "-s", nvm_size,
+                "-a", nvm_attr,
+                "-P", owner_val,
+            ])
+            self.bottom_txt_display.AppendText(str(command_output))
+            self.bottom_txt_display.AppendText("'tpm2_nvdefine' executed \n")
+            self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        
+        #if NV field is specified
+        elif (self.owner_input.GetValue()!="" and self.nv_auth_input.GetValue()!=""):
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "tpm2_nvdefine",
+                nvm_index,
+                "-C", "o",
+                "-s", nvm_size,
+                "-a", nvm_attr,
+                "-P", owner_val,
+                "-p", nv_auth_val,
+            ])
+            self.bottom_txt_display.AppendText(str(command_output))
+            self.bottom_txt_display.AppendText("'tpm2_nvdefine' executed \n")
+            self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVWriteFile(self, evt):
         nvm_index = self.nvm_index.GetValue()
@@ -777,22 +806,34 @@ class Tab_NVM(wx.Panel):
     def OnNVWrite(self, evt):
         nvm_index = self.nvm_index.GetValue()
         owner_val = self.owner_input.GetValue()
+        nv_auth_val = self.nv_auth_input.GetValue()
         nvm_data = self.nvm_data.GetValue()
         if ((nvm_index == 0) | (nvm_data == 0)):
             return
         data_file = open("nvm_data.txt", "w")
         data_file.write(nvm_data)
         data_file.close()
-        command_output = exec_cmd.execTpmToolsAndCheck([
-            "tpm2_nvwrite",
-            nvm_index,
-            "-C", "o",
-            "-P", owner_val,
-            "-i","nvm_data.txt",
-        ])
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvwrite' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        #if NV auth field is not specified
+        if (self.nv_auth_input.GetValue()==""):
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "tpm2_nvwrite",
+                nvm_index,
+                "-i","nvm_data.txt",
+            ])
+            self.bottom_txt_display.AppendText(str(command_output))
+            self.bottom_txt_display.AppendText("'tpm2_nvwrite' executed \n")
+            self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        #if NV auth field is specified
+        elif (self.nv_auth_input.GetValue()!=""):
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "tpm2_nvwrite",
+                nvm_index,
+                "-i","nvm_data.txt",
+                "-P", nv_auth_val,
+            ])
+            self.bottom_txt_display.AppendText(str(command_output))
+            self.bottom_txt_display.AppendText("'tpm2_nvwrite' executed \n")
+            self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVRelease(self, evt):
         nvm_index = self.nvm_index.GetValue()
@@ -813,6 +854,7 @@ class Tab_NVM(wx.Panel):
         nvm_index = self.nvm_index.GetValue()
         nvm_size = self.nvm_size.GetValue()
         owner_val = self.owner_input.GetValue()
+        nv_auth_val = self.nv_auth_input.GetValue()
         nvm_offset = self.nvm_offset.GetValue()
         read_size = self.read_amt.GetValue()
         try:
@@ -824,36 +866,65 @@ class Tab_NVM(wx.Panel):
             return
         if (int(read_size) == 0):
             return
+        #if NV auth field is not specified
+        if (self.nv_auth_input.GetValue()==""):
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "tpm2_nvread",
+                nvm_index,
+                "-s", str(read_size),
+                "-o","nvdata.txt",
+            ])
+            if (command_output.find("ERROR") != -1):
+                self.bottom_txt_display.AppendText(str(command_output)+"\n")
+                return
+                    
+            #~ f = open("nvdata.txt", "w+")
+            #~ f.write(command_output)
+            #~ f.close()
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "xxd", "nvdata.txt",
+            ]) 
+            
+            #~ global client_log
+            #~ command_output = exec_cmd.createProcess("tpm2_nvread -x" + nvm_index + " -a o -s "+ read_size+ " -o 0 -P "+ owner_val+" |  xxd > nvdata.txt", client_log)
+            #~ f = open("nvdata.txt", "r")
+            #~ text=f.read()  
+            
+            self.bottom_txt_display.AppendText(str(command_output))
+            self.bottom_txt_display.AppendText("\n")
+            self.bottom_txt_display.AppendText("'tpm2_nvread' executed \n")
+            self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
         
-        command_output = exec_cmd.execTpmToolsAndCheck([
-            "tpm2_nvread",
-            nvm_index,
-            "-C", "o",
-            "-s", str(read_size),
-            "-o", nvm_offset,
-            "-P", owner_val,
-            "-o","nvdata.txt",
-        ])
-        if (command_output.find("ERROR") != -1):
-            self.bottom_txt_display.AppendText(str(command_output)+"\n")
-            return
+        #if NV auth field is specified
+        elif (self.nv_auth_input.GetValue()!=""):
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "tpm2_nvread",
+                nvm_index,
+                "-s", str(read_size),
+                "-o","nvdata.txt",
+                "-P", nv_auth_val,
                 
-        #~ f = open("nvdata.txt", "w+")
-        #~ f.write(command_output)
-        #~ f.close()
-        command_output = exec_cmd.execTpmToolsAndCheck([
-            "xxd", "nvdata.txt",
-        ]) 
-        
-        #~ global client_log
-        #~ command_output = exec_cmd.createProcess("tpm2_nvread -x" + nvm_index + " -a o -s "+ read_size+ " -o 0 -P "+ owner_val+" |  xxd > nvdata.txt", client_log)
-        #~ f = open("nvdata.txt", "r")
-        #~ text=f.read()  
-        
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("\n")
-        self.bottom_txt_display.AppendText("'tpm2_nvread' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+            ])
+            if (command_output.find("ERROR") != -1):
+                self.bottom_txt_display.AppendText(str(command_output)+"\n")
+                return
+                    
+            #~ f = open("nvdata.txt", "w+")
+            #~ f.write(command_output)
+            #~ f.close()
+            command_output = exec_cmd.execTpmToolsAndCheck([
+                "xxd", "nvdata.txt",
+            ]) 
+            
+            #~ global client_log
+            #~ command_output = exec_cmd.createProcess("tpm2_nvread -x" + nvm_index + " -a o -s "+ read_size+ " -o 0 -P "+ owner_val+" |  xxd > nvdata.txt", client_log)
+            #~ f = open("nvdata.txt", "r")
+            #~ text=f.read()  
+            
+            self.bottom_txt_display.AppendText(str(command_output))
+            self.bottom_txt_display.AppendText("\n")
+            self.bottom_txt_display.AppendText("'tpm2_nvread' executed \n")
+            self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVReadLock(self, evt):
         nvm_index = self.nvm_index.GetValue()
