@@ -585,7 +585,7 @@ class Tab_NVM(wx.Panel):
  
     def OnClickFileName(self, evt):
         frame = wx.Frame(None, -1, '*.*')
-        frame.SetDimensions(0,0,200,50)
+        frame.SetSize(0,0,200,50)
             
         openFileDialog = wx.FileDialog(frame, "Open", "", "","All|*.bin;*.crt;*.der|Binary|*.bin|Certificate|*.crt;*.der", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
         if openFileDialog.ShowModal() ==wx.ID_CANCEL:
@@ -722,7 +722,7 @@ class Tab_NVM(wx.Panel):
 
 
     def OnResetAttr(self, evt):
-        self.nvm_attr.SetCheckedStrings(["ownerread", "ownerwrite", "read_stclear"])
+        self.nvm_attr.SetCheckedStrings(["authread", "authwrite"])
 
     def OnClear(self, evt):
         self.bottom_txt_display.Clear()
