@@ -9,7 +9,7 @@ import misc_dialogs as misc
 import shell_util as exec_cmd
 import images as img
 import subprocess
-#import wx.lib.inspection
+import wx.lib.inspection
 
 class MainFrame(wx.Frame):
     def __init__(self, parent, title):

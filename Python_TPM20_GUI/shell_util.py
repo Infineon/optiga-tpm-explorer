@@ -4,6 +4,7 @@ from subprocess import PIPE
 
 # Variables to hold the 3 authorisation values
 ownerAuth = "owner123"
+nvAuth = "nv123"
 endorseAuth = "endorsement123"
 lockoutAuth = "lockout123"
 openssl_cnf=("openssl_conf = openssl_init\n"
