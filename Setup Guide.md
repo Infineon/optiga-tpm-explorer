@@ -167,12 +167,18 @@ You should be successfully connected and able to view the RPI through VNC connec
 Download TPM Explorer Source Code (Approx. 175MB):  
 via: https://github.com/Infineon/optiga-tpm-explorer/releases
 or 
+
+via https:
 ```shell
 git clone https://github.com/Infineon/optiga-tpm-explorer.git
-cd optiga-tpm-explorer
+```
+via ssh:(Need to setup SSH keys associated with your account)
+```shell
+git clone git@github.com:Infineon/optiga-tpm-explorer.git
 ```
 Execute Installation script:
 ```shell
+cd optiga-tpm-explorer
 ./installation_script.sh
 ```
 
