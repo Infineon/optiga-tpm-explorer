@@ -4,8 +4,9 @@ import misc_dialogs as misc
 import info_dialogs as info
 import json
 import images as img
-from wx.lib.pubsub import setuparg1
-from wx.lib.pubsub import pub as Publisher
+# from wx.lib.pubsub import setuparg1
+# from wx.lib.pubsub import pub as Publisher
+from pubsub import pub as Publisher
 import threading
 from threading import Thread
 aws_log = None
@@ -221,17 +222,17 @@ class Tab6Frame(wx.Frame):
             while self.AWS_thread_active_flag==1 :
                 line = self.aws_proc.stdout.readline()
                 if line.decode() != '':
-                    wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text",line.decode())
+                    wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text", msg=line.decode())
                      
         finally:
             
             self.AWS_thread_active_flag=0
             #~ self.aws_proc=None
             print("Exit process AWS process Thread\n")
-            #~ wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text"," Exit AWS thread..\n")   
+            #~ wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text", msg=" Exit AWS thread..\n")   
                  
     def Upd_Cloud_Status(self,msg):
-        self.bottom_txt_display.AppendText(msg.data)
+        self.bottom_txt_display.AppendText(msg)
                 
     def OnOneClick(self, evt):
         self.middlesizer.ShowItems(show=False)
@@ -411,7 +412,7 @@ class Tab6Frame(wx.Frame):
         s_thread = threading.Thread(name='AWS-daemon', target=self.monitor_process_thread)
         s_thread.setDaemon(True)
         s_thread.start()
-        wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text","\n\n" + aws_cmd +"\n\n")      
+        wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text", msg="\n\n" + aws_cmd +"\n\n")      
 
 
 
