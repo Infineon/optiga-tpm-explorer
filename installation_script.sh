@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 sudo apt update 
-sudo apt -y install autoconf-archive awscli libcmocka0 libcmocka-dev procps iproute2 build-essential git pkg-config gcc libtool automake libssl-dev uthash-dev autoconf doxygen libgcrypt-dev libjson-c-dev libcurl4-gnutls-dev uuid-dev pandoc libglib2.0-dev libsqlite3-dev libyaml-dev python-wxtools
+sudo apt -y install autoconf-archive awscli libcmocka0 libcmocka-dev procps iproute2 build-essential git pkg-config gcc libtool automake libssl-dev uthash-dev autoconf doxygen libgcrypt-dev libjson-c-dev libcurl4-gnutls-dev uuid-dev pandoc libglib2.0-dev libsqlite3-dev libyaml-dev python-wxtools python3-pip
+pip3 install PyPubSub
 wget http://ftpmirror.gnu.org/autoconf-archive/autoconf-archive-2022.02.11.tar.xz -P $PWD/
 tar -xf $PWD/autoconf-archive-2022.02.11.tar.xz -C $PWD/
 git clone https://github.com/tpm2-software/tpm2-tss.git $PWD/tpm2-tss

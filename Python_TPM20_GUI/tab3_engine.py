@@ -7,8 +7,9 @@ import subprocess
 from subprocess import call
 import images as img
 import time
-from wx.lib.pubsub import setuparg1
-from wx.lib.pubsub import pub as Publisher
+# from wx.lib.pubsub import setuparg1
+# from wx.lib.pubsub import pub as Publisher
+from pubsub import pub as Publisher
 import threading
 from threading import Thread
 import signal
@@ -128,7 +129,7 @@ class RSA_Server_Thread(threading.Thread):
             while RSA_Server_thread_active_flag==1 :
                 line = self.Process.stdout.readline()
                 if line != '':
-                    wx.CallAfter(Publisher.sendMessage, "Server_Text",line) 
+                    wx.CallAfter(Publisher.sendMessage, "Server_Text", msg=line) 
                     #os.write(1, line)
                     #print line
                 #else:
@@ -137,7 +138,7 @@ class RSA_Server_Thread(threading.Thread):
             
             RSA_Server_thread_active_flag=0
             print("Exit RSA server Thread")
-            wx.CallAfter(Publisher.sendMessage, "Server_Text","Server Stopped..\n")
+            wx.CallAfter(Publisher.sendMessage, "Server_Text", msg="Server Stopped..\n")
 
     def get_id(self): 
   
@@ -175,7 +176,7 @@ class RSA_Client_Thread(threading.Thread):
             line = self.Process.stdout.readline()
             
             if line != '':
-                wx.CallAfter(Publisher.sendMessage, "Client_Text",line) 
+                wx.CallAfter(Publisher.sendMessage, "Client_Text", msg=line) 
             #else:
             #    break
         RSA_Client_thread_active_flag=0
@@ -183,7 +184,7 @@ class RSA_Client_Thread(threading.Thread):
         #self.Process.wait()
         #client_proc=None
         print("Exit RSA client Thread")
-        wx.CallAfter(Publisher.sendMessage, "Client_Text","Client Stopped..\n")
+        wx.CallAfter(Publisher.sendMessage, "Client_Text", msg="Client Stopped..\n")
 
         
 class Tab_RSA_CS(wx.Panel):
@@ -269,10 +270,10 @@ class Tab_RSA_CS(wx.Panel):
 
         self.SetSizer(mainsizer)
     def Upd_Server_Status(self,msg):
-        self.text_server.AppendText(msg.data)
+        self.text_server.AppendText(msg)
         
     def Upd_Client_Status(self,msg):
-        self.text_client.AppendText(msg.data)        
+        self.text_client.AppendText(msg)        
          
     def OnFlushClient(self, evt):
         self.text_client.Clear()
@@ -503,7 +504,7 @@ class Tab_RSA_CS(wx.Panel):
             server_proc = exec_cmd.createProcess(openssl_cmd, server_log)
             server_thread = RSA_Server_Thread(1, server_proc)
             server_thread.start()
-            wx.CallAfter(Publisher.sendMessage, "Server_Text","\n\n" + openssl_cmd +"\n\n")      
+            wx.CallAfter(Publisher.sendMessage, "Server_Text", msg="\n\n" + openssl_cmd +"\n\n")      
 
     def OnStartClient(self, evt):
         global client_proc,client_log,server_proc
@@ -524,9 +525,9 @@ class Tab_RSA_CS(wx.Panel):
                 client_proc = exec_cmd.createProcess(openssl_cmd, client_log)
                 client_thread = RSA_Client_Thread(2, client_proc)
                 client_thread.start() 
-                wx.CallAfter(Publisher.sendMessage, "Client_Text","\n\n" +openssl_cmd+"\n\n")
+                wx.CallAfter(Publisher.sendMessage, "Client_Text", msg="\n\n" +openssl_cmd+"\n\n")
             else:
-                wx.CallAfter(Publisher.sendMessage, "Client_Text","Server is not active..\n")     
+                wx.CallAfter(Publisher.sendMessage, "Client_Text", msg="Server is not active..\n")     
             
 
     def OnWriteServer(self, evt):
@@ -645,12 +646,12 @@ class Tab_ECC_CS(wx.Panel):
             while self.Server_thread_active_flag==1 :
                 line = self.server_proc.stdout.readline()
                 if line != '':
-                    wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text",line) 
+                    wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text", msg=line) 
         finally:
             
             self.Server_thread_active_flag=0
             print("Exit ECC server Thread\n")
-            wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text","Server Stopped..\n")
+            wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text", msg="Server Stopped..\n")
 
     def client_thread(self):
         
@@ -658,17 +659,17 @@ class Tab_ECC_CS(wx.Panel):
             line = self.client_proc.stdout.readline()
             
             if line != '':
-                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text",line) 
+                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text", msg=line) 
             
         self.Client_thread_active_flag=0
         print("Exit ECC client Thread\n")
-        wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text","Client Stopped..\n")        
+        wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text", msg="Client Stopped..\n")        
                 
     def Upd_Server_Status(self,msg):
-        self.text_server.AppendText(msg.data)
+        self.text_server.AppendText(msg)
         
     def Upd_Client_Status(self,msg):
-        self.text_client.AppendText(msg.data)                
+        self.text_client.AppendText(msg)                
         
     def OnBack(self, evt):
 
@@ -906,7 +907,7 @@ class Tab_ECC_CS(wx.Panel):
             s_thread = threading.Thread(name='Server-daemon', target=self.server_thread)
             s_thread.setDaemon(True)
             s_thread.start()
-            wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text","\n\n" + openssl_cmd +"\n\n")      
+            wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text", msg="\n\n" + openssl_cmd +"\n\n")      
     
 
     def OnStartClient(self, evt):
@@ -929,9 +930,9 @@ class Tab_ECC_CS(wx.Panel):
                 c_thread = threading.Thread(name='Client-daemon', target=self.client_thread)
                 c_thread.setDaemon(True)
                 c_thread.start()                
-                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text","\n\n" +openssl_cmd+"\n\n")
+                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text", msg="\n\n" +openssl_cmd+"\n\n")
             else:
-                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text","Server is not active..\n")     
+                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text", msg="Server is not active..\n")     
     def OnWriteServer(self, evt):
         global server_proc
         if (self.server_proc is None):
