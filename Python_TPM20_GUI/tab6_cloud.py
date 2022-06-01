@@ -192,10 +192,10 @@ class Tab6Frame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Bind(wx.EVT_BUTTON, self.OnOneClick, button_oneclick)
         self.Bind(wx.EVT_BUTTON, self.OnStartConnection, button_startconnection)
-        self.Bind(wx.EVT_BUTTON, self.OnConfigureAWS, button_configureAWS)
+        self.Bind(wx.EVT_BUTTON, self.OnConfigureAWS1, button_configureAWS)
         self.Bind(wx.EVT_BUTTON, self.OnOpenConfig, button_openconfigfile)
         self.Bind(wx.EVT_BUTTON, self.OnOpenPolicy, button_openpolicyfile)
-        self.Bind(wx.EVT_BUTTON, self.OnCreatePolicy, button_createpolicy)
+        self.Bind(wx.EVT_BUTTON, self.OnCreatePolicy1, button_createpolicy)
         self.Bind(wx.EVT_BUTTON, self.OnClear, clearbutton)
         self.Bind(wx.EVT_BUTTON, self.OnInfo, infobutton)
         self.Bind(wx.EVT_BUTTON, self.OnCloseWindow, backbutton)
@@ -414,9 +414,11 @@ class Tab6Frame(wx.Frame):
         s_thread.start()
         wx.CallAfter(Publisher.sendMessage, "AWS_Cloud_Text", msg="\n\n" + aws_cmd +"\n\n")      
 
+    def OnConfigureAWS1(self, evt):
+        self.bottom_txt_display.WriteText("Setting AWS credentials... \n")
+        wx.CallLater(10, self.OnConfigureAWS)
 
-
-    def OnConfigureAWS(self, evt):
+    def OnConfigureAWS(self):
         awskey = self.aws_key_input.GetValue()
         awssecretkey = self.aws_secret_input.GetValue()
         awssessiontoken = self.aws_session_input.GetValue()
@@ -443,6 +445,8 @@ class Tab6Frame(wx.Frame):
         self.aws_key_input.Clear()
         self.aws_secret_input.Clear()
         self.aws_session_input.Clear()
+        self.bottom_txt_display.WriteText("AWS credentials configured successfully\n")
+        self.bottom_txt_display.WriteText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnOpenConfig(self, evt):
         self.activetab = misc.EditorFrame(self, "Editing config.jsn", "config.jsn").ShowModal()
@@ -450,11 +454,15 @@ class Tab6Frame(wx.Frame):
     def OnOpenPolicy(self, evt):
         self.activetab = misc.EditorFrame(self, "Editing policy.jsn", "policy.jsn").ShowModal()
 
-    def OnCreatePolicy(self, evt):
+    def OnCreatePolicy1(self, evt):
+        self.bottom_txt_display.AppendText("Creating AWS IoT Policy... \n")
+        wx.CallLater(10, self.OnCreatePolicy)
+    
+    def OnCreatePolicy(self):
         configfile = json.load(open("config.jsn"))
         policyname = configfile["AmazonIoT"]["PolicyName"]
         # Create IoT Policy
-        self.bottom_txt_display.write("Create AWS IoT Policy: 'aws iot create-policy --policy-name $policyname --policy-document file://policy.jsn'\n")
+        self.bottom_txt_display.write("'aws iot create-policy --policy-name $policyname --policy-document file://policy.jsn'\n")
         command_output = exec_cmd.execCLI([
             "aws",
             "iot", "create-policy",

@@ -165,21 +165,28 @@ class Tab_RSA(wx.Panel):
         clearbutton.SetToolTip(wx.ToolTip("Clear all textboxes."))
 
         # bind events
-        self.Bind(wx.EVT_BUTTON, self.OnCreatePrimary, createprimary)
-        self.Bind(wx.EVT_BUTTON, self.OnCreateKeyPair, createkeypairbutton)
+        self.Bind(wx.EVT_BUTTON, self.OnCreatePrimary2, createprimary)
+        self.Bind(wx.EVT_BUTTON, self.OnCreateKeyPair2, createkeypairbutton)
         self.Bind(wx.EVT_BUTTON, self.OnEnc, encbutton)
         self.Bind(wx.EVT_BUTTON, self.OnDec, decbutton)
-        self.Bind(wx.EVT_BUTTON, self.OnSign, signbutton)
+        self.Bind(wx.EVT_BUTTON, self.OnSign1, signbutton)
         self.Bind(wx.EVT_BUTTON, self.OnVerifySSL, opensslverifybutton)
-        self.Bind(wx.EVT_BUTTON, self.OnVerifyTPM, tpmverifybutton)
+        self.Bind(wx.EVT_BUTTON, self.OnVerifyTPM1, tpmverifybutton)
         self.Bind(wx.EVT_BUTTON, self.OnClear, clearbutton)
         self.Bind(wx.EVT_BUTTON, self.OnBack, backbutton)
         self.SetSizer(mainsizer)
 
-    # note: this function/command runs for quite a while as compared to ECC.
-    def OnCreatePrimary(self, evt):
+    def OnCreatePrimary2(self, evt):
         if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
             return
+        self.OnCreatePrimary1()
+    
+    def OnCreatePrimary1(self):
+        self.command_display.AppendText("Creating RSA Primary Key (may take a while)...\n")
+        wx.CallLater(150, self.OnCreatePrimary)
+    
+    # note: this function/command runs for quite a while as compared to ECC.
+    def OnCreatePrimary(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "RSAprimary.ctx"])
         output_message = exec_cmd.execTpmToolsAndCheck([
             "tpm2_createprimary",
@@ -203,9 +210,16 @@ class Tab_RSA(wx.Panel):
         self.command_display.AppendText("tpm2_evictcontrol -C o -c RSAprimary.ctx -P " + exec_cmd.ownerAuth + " 0x81000004\n")
         self.command_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnCreateKeyPair(self, evt):
+    def OnCreateKeyPair2(self, evt):
         if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
             return
+        self.OnCreateKeyPair1()
+    
+    def OnCreateKeyPair1(self):
+        self.command_display.AppendText("Creating RSA Key Pair... \n")
+        wx.CallLater(150, self.OnCreateKeyPair)
+    
+    def OnCreateKeyPair(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "RSAkeycontext.ctx"])
         exec_cmd.execTpmToolsAndCheck(["rm", "RSAPriv.key"])
         exec_cmd.execTpmToolsAndCheck(["rm", "RSAPub.key"])
@@ -281,7 +295,11 @@ class Tab_RSA(wx.Panel):
         self.command_display.AppendText("tpm2_rsadecrypt -c 0x81000005 -p RSAleaf123 -o dataout.txt data_encrypted.txt\n")
         self.command_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnSign(self, evt):
+    def OnSign1(self, evt):
+        self.command_display.AppendText("Signing Data Input with RSA Private Key... \n")
+        wx.CallLater(10, self.OnSign)
+    
+    def OnSign(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "hash.bin"])
         exec_cmd.execTpmToolsAndCheck(["rm", "ticket.bin"])
         exec_cmd.execTpmToolsAndCheck(["rm", "signature_blob"])
@@ -373,7 +391,11 @@ class Tab_RSA(wx.Panel):
         self.command_display.AppendText(str(output_message) + "\n")
         self.command_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnVerifyTPM(self, evt):
+    def OnVerifyTPM1(self, evt):
+        self.command_display.AppendText("Verifying signature using RSA Public Key... \n")
+        wx.CallLater(10, self.OnVerifyTPM)
+    
+    def OnVerifyTPM(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "RSAverifyleaf.ctx"])
  
         input_message = self.input_display.GetValue()
@@ -466,7 +488,7 @@ class Tab_ECC(wx.Panel):
         # set colours for UI elements
 #         createkeypairbutton.SetBackgroundColour((255, 153, 204))
 #         signbutton.SetBackgroundColour((204, 255, 204))
-#         opensslverifybutton.SetBackgroundColour((102, 255, 255))
+#         openssdlverifybutton.SetBackgroundColour((102, 255, 255))
 #         tpmverifybutton.SetBackgroundColour((204, 255, 51))
 
         # create tooltips
@@ -478,18 +500,25 @@ class Tab_ECC(wx.Panel):
         clearbutton.SetToolTip(wx.ToolTip("Clear all textboxes."))
 
         # bind events
-        self.Bind(wx.EVT_BUTTON, self.OnCreatePrimary, createprimary)
-        self.Bind(wx.EVT_BUTTON, self.OnCreateKeyPair, createkeypairbutton)
-        self.Bind(wx.EVT_BUTTON, self.OnSign, signbutton)
-        self.Bind(wx.EVT_BUTTON, self.OnVerifySSL, opensslverifybutton)
-        self.Bind(wx.EVT_BUTTON, self.OnVerifyTPM, tpmverifybutton)
+        self.Bind(wx.EVT_BUTTON, self.OnCreatePrimary2, createprimary)
+        self.Bind(wx.EVT_BUTTON, self.OnCreateKeyPair2, createkeypairbutton)
+        self.Bind(wx.EVT_BUTTON, self.OnSign1, signbutton)
+        self.Bind(wx.EVT_BUTTON, self.OnVerifySSL1, opensslverifybutton)
+        self.Bind(wx.EVT_BUTTON, self.OnVerifyTPM1, tpmverifybutton)
         self.Bind(wx.EVT_BUTTON, self.OnClear, clearbutton)
         self.Bind(wx.EVT_BUTTON, self.OnBack, backbutton)
         self.SetSizer(mainsizer)
 
-    def OnCreatePrimary(self, evt):
+    def OnCreatePrimary2(self, evt):
         if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
             return
+        self.OnCreatePrimary1()
+    
+    def OnCreatePrimary1(self):
+        self.command_display.AppendText("Creating ECC Primary Key... \n")
+        wx.CallLater(150, self.OnCreatePrimary)
+    
+    def OnCreatePrimary(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "ECCprimary.ctx"])
         output_message = exec_cmd.execTpmToolsAndCheck([
             "tpm2_createprimary",
@@ -514,9 +543,16 @@ class Tab_ECC(wx.Panel):
         self.command_display.AppendText("tpm2_evictcontrol -C o -c ECCprimary.ctx -p 0x81000006 -P " + exec_cmd.ownerAuth + "\n")
         self.command_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnCreateKeyPair(self, evt):
+    def OnCreateKeyPair2(self, evt):
         if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
             return
+        self.OnCreateKeyPair1()
+    
+    def OnCreateKeyPair1(self):
+        self.command_display.AppendText("Creating ECC Key Pair... \n")
+        wx.CallLater(150, self.OnCreateKeyPair)
+    
+    def OnCreateKeyPair(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "ECCkeycontext.ctx"])
         exec_cmd.execTpmToolsAndCheck(["rm", "ECCpri.key"])
         exec_cmd.execTpmToolsAndCheck(["rm", "ECCpub.key"])
@@ -555,7 +591,11 @@ class Tab_ECC(wx.Panel):
         self.command_display.AppendText("tpm2_evictcontrol -C o -c ECCkeycontext.ctx -P " + exec_cmd.ownerAuth + " 0x81000007\n")
         self.command_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnSign(self, evt):
+    def OnSign1(self, evt):
+        self.command_display.AppendText("Signing Data with ECC Private Key... \n")
+        wx.CallLater(10, self.OnSign)
+    
+    def OnSign(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "secret.data"])
         exec_cmd.execTpmToolsAndCheck(["rm", "signature_data"])
         exec_cmd.execTpmToolsAndCheck(["rm", "signature_blob"])
@@ -592,7 +632,11 @@ class Tab_ECC(wx.Panel):
         self.command_display.AppendText("tpm2_sign -c 0x81000007 -p ECCleaf123 -g sha256 -o signature_blob secret.data\n")
         self.command_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnVerifySSL(self, evt):
+    def OnVerifySSL1(self, evt):
+        self.command_display.AppendText("Verifying Data with ECC Public Key using Openssl... \n")
+        wx.CallLater(10, self.OnVerifySSL)
+    
+    def OnVerifySSL(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "ECCkey.pem"])
         input_message = self.input_display.GetValue()
         if (input_message == ""):
@@ -623,7 +667,11 @@ class Tab_ECC(wx.Panel):
         self.command_display.AppendText("openssl dgst -verify ECCkey.pem -keyform pem -sha256 -signature signature_data secret.data\n")
         self.command_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnVerifyTPM(self, evt):
+    def OnVerifyTPM1(self, evt):
+        self.command_display.AppendText("Verifying Data with ECC Public Key using TPM2-Tools...\n")
+        wx.CallLater(10, self.OnVerifyTPM)
+    
+    def OnVerifyTPM(self):
         exec_cmd.execTpmToolsAndCheck(["rm", "ECCverifyleaf.ctx"])
         input_message = self.input_display.GetValue()
         if (input_message == ""):
