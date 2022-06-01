@@ -138,9 +138,9 @@ class Tab5Frame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnInfo, infobutton)
         self.Bind(wx.EVT_BUTTON, self.OnCloseWindow, backbutton)
         self.Bind(wx.EVT_BUTTON, self.OnGenEK, button_gen_ek)
-        self.Bind(wx.EVT_BUTTON, self.OnGenAK, button_gen_ak)
+        self.Bind(wx.EVT_BUTTON, self.OnGenAK2, button_gen_ak)
         self.Bind(wx.EVT_BUTTON, self.OnEvict, button_evictak)
-        self.Bind(wx.EVT_BUTTON, self.OnGenQuote, button_gen_quote)
+        self.Bind(wx.EVT_BUTTON, self.OnGenQuote1, button_gen_quote)
 #         self.Bind(wx.EVT_BUTTON, self.OnVerifyQSSL, button_verify_quote_ssl)
         self.Bind(wx.EVT_BUTTON, self.OnVerifyQTPM, button_verify_quote_tpm)
         self.Bind(wx.EVT_BUTTON, self.OnListPersist, button_listpersist)
@@ -180,16 +180,27 @@ class Tab5Frame(wx.Frame):
         self.command_out.AppendText("'tpm2_createek -P " + exec_cmd.endorseAuth + " -w " + exec_cmd.ownerAuth + " -c 0x81010001 -G rsa -u ek.pub' executed \n")
         self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnGenAK(self, evt):
+    def OnGenAK2(self, evt):
+        if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
+            return
+        if (misc.EndorseDlg(self, "Enter Endorsement Authorisation").ShowModal() == -1):
+            return
+        self.OnGenAK1()
+    
+    def OnGenAK1(self):
+        self.command_out.AppendText("Generating Attestation Key Pair... \n")
+        wx.CallLater(150, self.OnGenAK)
+    
+    def OnGenAK(self):
         specific_handle = self.ak_handle_input.GetValue()
         exec_cmd.execCLI(["rm", "ak*", ])
         exec_cmd.execCLI(["rm", "ek*", ])
         exec_cmd.execCLI(["rm", "quote_sign_data", ])
         exec_cmd.execCLI(["rm", "tpmquote.data", ])
-        if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
-            return
-        if (misc.EndorseDlg(self, "Enter Endorsement Authorisation").ShowModal() == -1):
-            return
+#         if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
+#             return
+#         if (misc.EndorseDlg(self, "Enter Endorsement Authorisation").ShowModal() == -1):
+#             return
         command_output = exec_cmd.execTpmToolsAndCheck([
             "tpm2_createak",
             "-P", exec_cmd.endorseAuth,
@@ -216,7 +227,11 @@ class Tab5Frame(wx.Frame):
 
         self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnGenQuote(self, evt):
+    def OnGenQuote1(self, evt):
+        self.command_out.AppendText("Generating Quote of the PCR Index... \n")
+        wx.CallLater(10, self.OnGenQuote)
+    
+    def OnGenQuote(self):
         pcr_choice = self.pcr_bank_choice.GetStringSelection()
         specific_handle = self.ak_handle_input.GetValue()
         input_nonce = self.nonce_input.GetValue()
@@ -274,12 +289,11 @@ class Tab5Frame(wx.Frame):
             "-u", "ak_pub.pem",
             "-m", "tpmquote.data",
             "-s", "quote_sign_data",
-            "-F", "rsassa",
             "-g", "sha256",
             "-q", input_nonce,
         ])
         self.command_out.AppendText(str(command_output))
-        self.command_out.AppendText("'tpm2_checkquote -c ak_pub.pem -m tpmquote.data -s quote_sign_data -f rsassa -G sha256 -q " + input_nonce + "' executed \n")
+        self.command_out.AppendText("'tpm2_checkquote -c ak_pub.pem -m tpmquote.data -s quote_sign_data -G sha256 -q " + input_nonce + "' executed \n")
         self.command_out.AppendText("Verification Successful Unless Error Message Is Shown\n")
         self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 

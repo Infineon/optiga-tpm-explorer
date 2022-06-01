@@ -251,9 +251,9 @@ class Tab_RSA_CS(wx.Panel):
         # declare and bind events
         self.Bind(wx.EVT_BUTTON, self.OnFlushClient, button_flush_client)
         self.Bind(wx.EVT_BUTTON, self.OnFlushServer, button_flush_server)
-        self.Bind(wx.EVT_BUTTON, self.OnGenCA, button_gen_ca)
-        self.Bind(wx.EVT_BUTTON, self.OnGenKeyPair, button_gen_keypair)
-        self.Bind(wx.EVT_BUTTON, self.OnGenCSR, button_gen_csr)
+        self.Bind(wx.EVT_BUTTON, self.OnGenCA1, button_gen_ca)
+        self.Bind(wx.EVT_BUTTON, self.OnGenKeyPair1, button_gen_keypair)
+        self.Bind(wx.EVT_BUTTON, self.OnGenCSR1, button_gen_csr)
         self.Bind(wx.EVT_BUTTON, self.OnGenCert, button_gen_cert)
         self.Bind(wx.EVT_BUTTON, self.OnStartServer, button_start_server)
         self.Bind(wx.EVT_BUTTON, self.OnStartClient, button_start_client)
@@ -307,6 +307,7 @@ class Tab_RSA_CS(wx.Panel):
             #~ server_proc = None
         
         self.Parent.Parent.OnCloseWindow(None)
+        
     def Destroy(self):
         global server_proc,client_proc,RSA_Server_thread_active_flag,RSA_Client_thread_active_flag
         if (server_proc is not None):
@@ -327,7 +328,11 @@ class Tab_RSA_CS(wx.Panel):
             server_proc.wait()
             server_proc = None
                     
-    def OnGenCA(self, evt):
+    def OnGenCA1(self, evt):
+        self.text_server.AppendText("Generating CA key-pair...\n")
+        wx.CallLater(10, self.OnGenCA)
+    
+    def OnGenCA(self):
 
         exec_cmd.execCLI(["rm", "rsa_CA.tss", ])
         exec_cmd.execCLI(["rm", "CA_rsa_cert.pem", ])
@@ -347,7 +352,7 @@ class Tab_RSA_CS(wx.Panel):
                 "-o",exec_cmd.ownerAuth,
                 "rsa_CA.tss",
             ])
-            self.text_server.AppendText("Generating CA key-pair: 'tpm2tss-genkey -a rsa -o %s rsa_CA.tss'\n" % exec_cmd.ownerAuth)
+            self.text_server.AppendText("'tpm2tss-genkey -a rsa -o %s rsa_CA.tss'\n" % exec_cmd.ownerAuth)
             self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
             self.text_server.AppendText("Creating Self-Signed Certificate:\n")
 
@@ -378,7 +383,11 @@ class Tab_RSA_CS(wx.Panel):
         #~ self.text_server.AppendText("openssl req -key rsa_CA.tss -new -x509 -days 7300 -sha256 -engine tpm2tss -keyform engine -extensions v3_ca -out CA_rsa_cert.pem -subj '/C=SG/ST=Singapore/L=Singapore/O=Infineon Technologies/OU=DSS/CN=TPMEvalKitCA'\n")
         self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnGenKeyPair(self, evt):
+    def OnGenKeyPair1(self, evt):
+        self.text_server.AppendText("Generating SERVER key-pair...\n")
+        wx.CallLater(10, self.OnGenKeyPair)
+    
+    def OnGenKeyPair(self):
         if (exec_cmd.ownerAuth !=""):
             exec_cmd.execCLI([
                 "tpm2tss-genkey",
@@ -386,7 +395,7 @@ class Tab_RSA_CS(wx.Panel):
                 "-a", "rsa",
                 "rsa_server.tss",
             ])
-            self.text_server.AppendText("Generating SERVER key-pair: 'tpm2tss-genkey -o %s -a rsa rsa_server.tss'\n" %exec_cmd.ownerAuth)
+            self.text_server.AppendText("'tpm2tss-genkey -o %s -a rsa rsa_server.tss'\n" %exec_cmd.ownerAuth)
         else:
             exec_cmd.execCLI([
                 "tpm2tss-genkey",
@@ -396,15 +405,16 @@ class Tab_RSA_CS(wx.Panel):
             self.text_server.AppendText("Generating SERVER key-pair: 'tpm2tss-genkey -a rsa rsa_server.tss'\n")
         self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnGenCSR(self, evt):
-        self.text_server.AppendText("Creating Certificate Signing Request:\n")
-        
+    def OnGenCSR1(self, evt):
+        self.text_server.AppendText("Creating Certificate Signing Request...\n")
+        wx.CallLater(10, self.OnGenCSR)
+    
+    def OnGenCSR(self):
         if (exec_cmd.ownerAuth !=""):
             f = open("temp.conf", "w+")
             f.write(exec_cmd.openssl_cnf)
             f.close()
             #~ self.text_server.AppendText("Creating Certificate Signing Request:\n")
-
             command_output = exec_cmd.execCLI([
                 "openssl",
                 "req", "-new",
@@ -433,9 +443,8 @@ class Tab_RSA_CS(wx.Panel):
             self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
             
     def OnGenCert(self, evt):
-        self.text_server.AppendText("Creating Server Certificate:\n")
+        self.text_server.AppendText("Creating Server Certificate...\n")
         if (exec_cmd.ownerAuth !=""):
-
             f = open("temp.conf", "w+")
             f.write(exec_cmd.openssl_cnf)
             f.close()
@@ -469,7 +478,6 @@ class Tab_RSA_CS(wx.Panel):
         self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnStartServer(self, evt):
-        
         global server_proc,client_proc,server_log
         global server_thread
         global RSA_Server_thread_active_flag,RSA_Client_thread_active_flag
@@ -529,7 +537,6 @@ class Tab_RSA_CS(wx.Panel):
             else:
                 wx.CallAfter(Publisher.sendMessage, "Client_Text", msg="Server is not active..\n")     
             
-
     def OnWriteServer(self, evt):
         global server_proc
         if (server_proc is None):
@@ -541,6 +548,7 @@ class Tab_RSA_CS(wx.Panel):
             return
         server_proc.stdin.write((write_value+"\n").encode())
         server_proc.stdin.flush()
+    
     def OnWriteClient(self, evt):
         global client_proc
         if (client_proc is None):
@@ -619,9 +627,9 @@ class Tab_ECC_CS(wx.Panel):
         # declare and bind events
         self.Bind(wx.EVT_BUTTON, self.OnFlushClient, button_flush_client)
         self.Bind(wx.EVT_BUTTON, self.OnFlushServer, button_flush_server)
-        self.Bind(wx.EVT_BUTTON, self.OnGenCA, button_gen_ca)
-        self.Bind(wx.EVT_BUTTON, self.OnGenKeyPair, button_gen_keypair)
-        self.Bind(wx.EVT_BUTTON, self.OnGenCSR, button_gen_csr)
+        self.Bind(wx.EVT_BUTTON, self.OnGenCA1, button_gen_ca)
+        self.Bind(wx.EVT_BUTTON, self.OnGenKeyPair1, button_gen_keypair)
+        self.Bind(wx.EVT_BUTTON, self.OnGenCSR1, button_gen_csr)
         self.Bind(wx.EVT_BUTTON, self.OnGenCert, button_gen_cert)
         self.Bind(wx.EVT_BUTTON, self.OnStartServer, button_start_server)
         self.Bind(wx.EVT_BUTTON, self.OnStartClient, button_start_client)
@@ -692,6 +700,7 @@ class Tab_ECC_CS(wx.Panel):
             #~ self.server_proc = None
                     
         self.Parent.Parent.OnCloseWindow(None)
+    
     def Destroy(self):
         if (self.server_proc is not None):
             self.Server_thread_active_flag=0
@@ -716,8 +725,12 @@ class Tab_ECC_CS(wx.Panel):
 
     def OnFlushServer(self, evt):
         self.text_server.Clear()
-
-    def OnGenCA(self, evt):
+    
+    def OnGenCA1(self, evt):
+        self.text_server.AppendText("Generating CA key-pair...\n")
+        wx.CallLater(10, self.OnGenCA)
+        
+    def OnGenCA(self):
         exec_cmd.execCLI(["rm", "ecc_CA.tss", ])
         exec_cmd.execCLI(["rm", "CA_ecc_cert.pem", ])
         exec_cmd.execCLI(["rm", "ecc_server.tss", ])
@@ -736,7 +749,7 @@ class Tab_ECC_CS(wx.Panel):
                 "ecc_CA.tss",
             ])
             
-            self.text_server.AppendText("Generating CA key-pair: 'tpm2tss-genkey -a ecdsa -o %s ecc_CA.tss'\n" % exec_cmd.ownerAuth)
+            self.text_server.AppendText("'tpm2tss-genkey -a ecdsa -o %s ecc_CA.tss'\n" % exec_cmd.ownerAuth)
             self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
             self.text_server.AppendText("Creating Self-Signed Certificate:\n")
             command_output = exec_cmd.execCLI([
@@ -780,8 +793,11 @@ class Tab_ECC_CS(wx.Panel):
             self.text_server.AppendText("openssl req -key ecc_CA.tss -new -x509 -days 7300 -sha256 -engine tpm2tss -keyform engine -extensions v3_ca -out CA_ecc_cert.pem -subj '/C=SG/ST=Singapore/L=Singapore/O=Infineon Technologies/OU=DSS/CN=TPMEvalKitCA'\n")
             self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
             
-
-    def OnGenKeyPair(self, evt):
+    def OnGenKeyPair1(self, evt):
+        self.text_server.AppendText("Generating SERVER key-pair...\n")
+        wx.CallLater(10, self.OnGenKeyPair)
+    
+    def OnGenKeyPair(self):
         
         if (exec_cmd.ownerAuth !=""):
         
@@ -791,7 +807,7 @@ class Tab_ECC_CS(wx.Panel):
                 "-o",exec_cmd.ownerAuth,   
                 "ecc_server.tss",
             ])
-            self.text_server.AppendText("Generating SERVER key-pair: 'tpm2tss-genkey -a ecdsa -o %s ecc_server.tss'\n" % exec_cmd.ownerAuth)
+            self.text_server.AppendText("'tpm2tss-genkey -a ecdsa -o %s ecc_server.tss'\n" % exec_cmd.ownerAuth)
             self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
         else:
             exec_cmd.execCLI([
@@ -801,10 +817,12 @@ class Tab_ECC_CS(wx.Panel):
             ])
             self.text_server.AppendText("Generating SERVER key-pair: 'tpm2tss-genkey -a ecdsa ecc_server.tss'\n")
             self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
-
+    
+    def OnGenCSR1(self, evt):
+        self.text_server.AppendText("Creating Certificate Signing Request...\n")
+        wx.CallLater(10, self.OnGenCSR)
         
-    def OnGenCSR(self, evt):
-        self.text_server.AppendText("Creating Certificate Signing Request:\n")
+    def OnGenCSR(self):
         if (exec_cmd.ownerAuth !=""):
 
             f = open("temp.conf", "w+")
@@ -838,10 +856,8 @@ class Tab_ECC_CS(wx.Panel):
         self.text_server.AppendText("openssl req -new -engine tpm2tss -key ecc_server.tss -keyform engine -subj /CN=TPM_UI/O=Infineon/C=SG -out server_ecc.csr\n")
         self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-
-
     def OnGenCert(self, evt):
-        self.text_server.AppendText("Creating Server Certificate:\n")
+        self.text_server.AppendText("Creating Server Certificate...\n")
         if (exec_cmd.ownerAuth !=""):
    
             f = open("temp.conf", "w+")
@@ -909,7 +925,6 @@ class Tab_ECC_CS(wx.Panel):
             s_thread.start()
             wx.CallAfter(Publisher.sendMessage, "ECC_Server_Text", msg="\n\n" + openssl_cmd +"\n\n")      
     
-
     def OnStartClient(self, evt):
         
         if (self.client_proc is not None):
@@ -932,7 +947,8 @@ class Tab_ECC_CS(wx.Panel):
                 c_thread.start()                
                 wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text", msg="\n\n" +openssl_cmd+"\n\n")
             else:
-                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text", msg="Server is not active..\n")     
+                wx.CallAfter(Publisher.sendMessage, "ECC_Client_Text", msg="Server is not active..\n")
+                
     def OnWriteServer(self, evt):
         global server_proc
         if (self.server_proc is None):
@@ -1010,21 +1026,24 @@ class Tab_RSA_MISC(wx.Panel):
 
         # declare and bind events
         self.Bind(wx.EVT_BUTTON, self.OnClear, clearbutton)
-        self.Bind(wx.EVT_BUTTON, self.OnGenKey, button_gen_rsakey)
-        self.Bind(wx.EVT_BUTTON, self.OnEnc, button_rsa_enc)
-        self.Bind(wx.EVT_BUTTON, self.OnDec, button_rsa_dec)
-        self.Bind(wx.EVT_BUTTON, self.OnSign, button_rsa_sign)
+        self.Bind(wx.EVT_BUTTON, self.OnGenKey1, button_gen_rsakey)
+        self.Bind(wx.EVT_BUTTON, self.OnEnc1, button_rsa_enc)
+        self.Bind(wx.EVT_BUTTON, self.OnDec1, button_rsa_dec)
+        self.Bind(wx.EVT_BUTTON, self.OnSign1, button_rsa_sign)
         self.Bind(wx.EVT_BUTTON, self.OnVerify, button_rsa_verify)
         self.Bind(wx.EVT_BUTTON, self.OnBack, backbutton)
 
         self.data_input.write("Hello World")
         self.SetSizer(mainsizer)
 
-    def OnGenKey(self, evt):
+    def OnGenKey1(self, evt):
+        self.command_out.write("Setting up TPM...\n")
+        wx.CallLater(10, self.OnGenKey)
+    
+    def OnGenKey(self):
         exec_cmd.execCLI(["rm", "rsa2.tss", ])
         exec_cmd.execCLI(["rm", "mycipher", ])
         exec_cmd.execCLI(["rm", "mysig", ])
-        self.command_out.write("Setting up TPM\n")
 
         if (exec_cmd.ownerAuth !=""):
             command_output = exec_cmd.execCLI([
@@ -1073,10 +1092,12 @@ class Tab_RSA_MISC(wx.Panel):
             self.command_out.AppendText(filehandle.read() + "\n")
             filehandle.close()
             self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
-
-
-            
-    def OnEnc(self, evt):
+    
+    def OnEnc1(self, evt):
+        self.command_out.write("Encrypting Data...\n")
+        wx.CallLater(10, self.OnEnc)
+    
+    def OnEnc(self):
         if (self.data_input.GetValue()):
             input_data = self.data_input.GetValue()
         else:
@@ -1099,9 +1120,11 @@ class Tab_RSA_MISC(wx.Panel):
         self.command_out.AppendText(command_output + "\n")
         self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
             
+    def OnDec1(self, evt):
+        self.command_out.write("Decrypting Data...\n")
+        wx.CallLater(10, self.OnDec)
 
-
-    def OnDec(self, evt):
+    def OnDec(self):
         if (exec_cmd.ownerAuth !=""):
         
             f = open("temp.conf", "w+")
@@ -1129,10 +1152,11 @@ class Tab_RSA_MISC(wx.Panel):
             self.command_out.AppendText("\n'openssl pkeyutl -engine tpm2tss -keyform engine -inkey rsa2.tss -decrypt -in mycipher' executed \n")
             self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
+    def OnSign1(self, evt):
+        self.command_out.write("Signing Data Input with Private Key...\n")
+        wx.CallLater(10, self.OnSign)
 
-
-
-    def OnSign(self, evt):
+    def OnSign(self):
         if (self.data_input.GetValue()):
             input_data = self.data_input.GetValue()
         else:
@@ -1169,7 +1193,6 @@ class Tab_RSA_MISC(wx.Panel):
         self.command_out.AppendText(command_output + "\n")
         self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
             
-
     def OnVerify(self, evt):
         input_data = self.data_input.GetValue()
         if(input_data==""):

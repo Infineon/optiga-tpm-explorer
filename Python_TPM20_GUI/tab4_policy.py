@@ -80,10 +80,10 @@ class Tab4Frame(wx.Frame):
         # declare and bind events
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Bind(wx.EVT_BUTTON, self.OnClear, clearbutton)
-        self.Bind(wx.EVT_BUTTON, self.OnNewPolicy, button_create_policy)
-        self.Bind(wx.EVT_BUTTON, self.OnNewPrimary, button_create_primary)
+        self.Bind(wx.EVT_BUTTON, self.OnNewPolicy1, button_create_policy)
+        self.Bind(wx.EVT_BUTTON, self.OnNewPrimary1, button_create_primary)
         self.Bind(wx.EVT_BUTTON, self.OnSealData, button_seal_data)
-        self.Bind(wx.EVT_BUTTON, self.OnSatisfyPolicy_UnsealData, button_satisfy_unseal)
+        self.Bind(wx.EVT_BUTTON, self.OnSatisfyPolicy_UnsealData1, button_satisfy_unseal)
         self.Bind(wx.EVT_BUTTON, self.OnMoreInfo, infobutton)
         self.Bind(wx.EVT_BUTTON, self.OnCloseWindow, backbutton)
 
@@ -92,8 +92,12 @@ class Tab4Frame(wx.Frame):
         self.data_input.write("My secret")
         self.SetSizer(mainsizer)
         self.Show(True)
-
-    def OnNewPolicy(self, evt):
+    
+    def OnNewPolicy1(self, evt):
+        self.command_out.AppendText("Generating Policy... \n")
+        wx.CallLater(10, self.OnNewPolicy)
+        
+    def OnNewPolicy(self):
         pcr_choice = self.pcr_bank_choice.GetStringSelection()
         
         os.system('rm *.dat')
@@ -131,7 +135,11 @@ class Tab4Frame(wx.Frame):
         self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
         exec_cmd.execCLI(["rm", "session.dat", ])
 
-    def OnNewPrimary(self, evt):
+    def OnNewPrimary1(self, evt):
+        self.command_out.AppendText("Creating Primary Key Pair... \n")
+        wx.CallLater(10, self.OnNewPrimary)
+    
+    def OnNewPrimary(self):
         if (misc.OwnerDlg(self, "Enter Owner Authorisation").ShowModal() == -1):
             return
         command_output = exec_cmd.execTpmToolsAndCheck([
@@ -163,6 +171,7 @@ class Tab4Frame(wx.Frame):
         data_file = open("data_to_be_sealed.txt", "w")
         data_file.write(seal_data)
         data_file.close()
+        self.command_out.AppendText("Sealing data_to_be_sealed.txt...\n")
         command_output = exec_cmd.execTpmToolsAndCheck([
             "tpm2_create",
             "-C", "0x81000001",
@@ -176,7 +185,11 @@ class Tab4Frame(wx.Frame):
         self.command_out.AppendText("'tpm2_create -C 0x81000001 -g sha256 -u key.pub -r key.priv -L policy.dat -i data_to_be_sealed.txt' executed \n")
         self.command_out.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
-    def OnSatisfyPolicy_UnsealData(self, evt):
+    def OnSatisfyPolicy_UnsealData1(self, evt):
+        self.command_out.AppendText("Checking if the PCR index satisfies the policy... \n")
+        wx.CallLater(10, self.OnSatisfyPolicy_UnsealData)
+    
+    def OnSatisfyPolicy_UnsealData(self):
         pcr_choice = self.pcr_bank_choice.GetStringSelection()
         os.system('rm unseal.key*.*')
         os.system('rm session*.dat')

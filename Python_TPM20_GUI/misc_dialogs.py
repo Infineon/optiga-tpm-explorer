@@ -208,11 +208,12 @@ class CredentialDlg(wx.Dialog):
             command_output = exec_cmd.execTpmToolsAndCheck([
                 "tpm2_changeauth",
                 "-c","o",
-                 "-p", exec_cmd.ownerAuth,
+                "-p", exec_cmd.ownerAuth,
             ])
             self.parent.text_display.AppendText(str(command_output))
             self.parent.text_display.AppendText("'tpm2_changeauth -c o -p " + exec_cmd.ownerAuth + "' executed \n")
             self.parent.text_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+            
     def OnClearEndorseAuth(self, evt):
         user_endorse = self.endorseAuth_input.GetValue()
         exec_cmd.endorseAuth = user_endorse.replace(" ", "")
