@@ -1,12 +1,12 @@
 # **OPTIGA™ TPM 2.0 Explorer User Guide**
 
 
-This page helps you explore the tool to accelerate your learning about OPTIGA™ TPM2.0. 
+This page helps you explore the tool to accelerate your learning about OPTIGA™ TPM 2.0. 
 
 1. [Overview](#overview)
     - [1.1 Features](#features)
     - [1.2 Use cases](#use-cases)
-    - [1.3 Setup and Usage Environment](#setup-and-usage-environment)
+    - [1.3 Setup environment](#setup-environment)
 2.  [Setup and Basic Features](#setup-and-basic-features)
     - [2.1 Setup](#setup)
         - [2.1.1 OPTIGA™ TPM Setup Functions](#optiga-tpm-setup-functions)
@@ -78,47 +78,47 @@ This page helps you explore the tool to accelerate your learning about OPTIGA™
 
 # Overview
 
-The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for beginners to evaluate Infineon OPTIGA™ TPM 2.0 with Infineon OPTIGA™ TPM 2.0 evaluation board connected to the Raspberry Pi running TPM 2.0 Software Stack (TSS) on Raspbian Linux.  
+The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for users to familiarize themselves with TPM 2.0 quickly and easily using Infineon's OPTIGA™ TPM 2.0 solution for Raspberry Pi. In addition, the OPTIGA™ TPM 2.0 Explorer demonstrates how the OPTIGA™ TPM 2.0 can be used to increase security and trust for data sharing across different networking and cloud platforms.
 
-Using this tool, you can start experiencing the benefits that the [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) will bring to smart home devices and network equipment.
+Using this tool, you can instantly experience the benefits that [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) will bring to IoT devices and network equipment.
 
 ## Features
 
--   Allow for reading OPTIGA™ TPM2.0 commands executed and the corresponded responses from the display screen or the terminal in the background.
--   Display all properties defined within a OPTIGA™ TPM 2.0
--   Initialize a OPTIGA™ TPM 2.0
--   Reset back to default settings
--   Manage the authorization values for the owner, endorsement and lockout
--   Manage OPTIGA™ TPM 2.0 NV memory for creation, deletion, reading, writing, listing and etc
--   Handle PCR Indexes by listing all the different registers in SHA-1 or SHA-256
--   Handle PCR Indexes by extending a value into the registers in SHA-1 or SHA-256 using PCR Extend/Event
--   Manage specific handle and context associated with transient and persistent objects
--   Configure dictionary attack settings such as the number of attempts before lockout, the time taken for recovery from failure and lockout recovery
--   Create RSA-2048 and ECC-P256 primary and secondary key under storage hierarchy without supporting endorsement and platform hierarchy
--   Encrypt and decrypt data using RSA-2048
--   Sign and verify data with RSA-2048 and ECC-P256
+-   Shows OPTIGA™ TPM 2.0 commands executed and the corresponding responses on the display screen or the terminal in the background
+-   Displays all properties defined within an OPTIGA™ TPM 2.0
+-   Initializes an OPTIGA™ TPM 2.0
+-   Resets back to default settings
+-   Manages the authorization values for the owner, endorsement and lockout
+-   Manages OPTIGA™ TPM 2.0 NV memory for creating, deleting, reading, writing, listing, etc.
+-   Handles PCR indexes by listing all the different registers in SHA-1 or SHA-256
+-   Handles PCR indexes by extending a value to the registers in SHA-1 or SHA-256 using PCR Extend/Event
+-   Manages specific handles and contexts associated with transient and persistent objects
+-   Configures dictionary attack settings such as the number of attempts before lockout as well as the time required for recovery from failure and from lockout
+-   Creates RSA-2048 and ECC-P256 primary and secondary keys under storage hierarchy without supporting endorsement and platform hierarchy
+-   Encrypts and decrypts data using RSA-2048
+-   Signs and verifies data with RSA-2048 and ECC-P256
 
 ## Use cases
 
--   Data Sealing with Policy
+-   Data sealing with policy
 -   Remote attestation
 -   Cryptographic operations using OpenSSL library
--   Secured communication with OpenSSL library
--   Device certificate provisioning and onboarding to AWS IoT core
+-   Secured communications with OpenSSL library
+-   Device certificate provisioning and onboarding to AWS IoT Core
 
-## Setup and Usage Environment
+## Setup environment
 
-For more information on how to setup the environment for the OPTIGA™ TPM 2.0 Explorer Application, you may refer to the [OPTIGA™ TPM 2.0 Explorer Setup Guide](./Setup%20Guide.md)
+For more information on how to setup the tool environment, refer to the [OPTIGA™ TPM 2.0 Explorer Setup Guide](./Setup%20Guide.md)
 
-This tool was tested on a Raspberry Pi ® (RPi) 3 Model B+/ RPi 4 Model B with Raspbian Linux in Release Version 11 (Bullseye) and kernel version 5.10.92 with an Infineon OPTIGA™ TPM SLB 9670 TPM2.0 attached to the Raspberry Pi® board (Figure 1 and Figure 2).
+This tool was tested on a Raspberry Pi (RPi) 3 Model B+/ RPi 4 Model B with Raspbian Linux in Release Version 11 (Bullseye) and kernel version 5.10.92 using an Infineon OPTIGA™ TPM SLB 9670 TPM2.0 attached to the Raspberry Pi board (Figure 1 and Figure 2).
 
 ![](/images/Overview/RpiBullseye.png) 
 
-Figure 1: Raspbian Linux 11 (Bullseye) is used with kernel version 5.10.92
+Figure 1: Raspbian Linux 11 (Bullseye) and kernel version 5.10.92
 
 ![](/images/Overview/TPMRPI3.png) 
 
-Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi® 3
+Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi 3
 
 
 
@@ -126,9 +126,9 @@ Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi® 3
 
 | Hardware             | Version   and Firmware/OS                                    | Comment                                                      |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Host  PC             | • x86  architecture and USB 2.0 (or higher)  •  Capable of running Linux, for example Ubuntu® 18.04  •  Arbitrary as long as VNC viewer is present | This  platform is used for patching the Kernel, maintaining and interacting with  the Raspberry Pi® in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi®. |
-| OPTIGA™ TPM 2.0 evaluation board      | • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) | This  board contains the Infineon OPTIGA™ TPM SLB 9670 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
-| Raspberry  Pi® Board | •  Model 3 B+/ 4 B, Bullseye OS (2022-01-28)   •  Micro SD Card with at least 8 GB   •  Micro-B/ Type C USB cable for power supply | A SD  card with Raspberry Pi® Bullseye OS and kernel version 5.10.92 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
+| Host  PC             | • x86  architecture and USB 2.0 (or higher)  •  Capable of running Linux, for example Ubuntu 18.04  •  Arbitrary as long as VNC viewer is present | This  platform is used for patching the Kernel, maintaining and interacting with  the Raspberry Pi in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi. |
+| OPTIGA™ TPM 2.0 evaluation board      | • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) | This  board contains the Infineon OPTIGA™ TPM SLB 9670 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi. |
+| Raspberry  Pi Board | •  Model 3 B+/ 4 B, Bullseye OS (2022-01-28)   •  Micro SD Card with at least 8 GB   •  Micro-B/ Type C USB cable for power supply | A SD  card with Raspberry Pi Bullseye OS and kernel version 5.10.92 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
 
 
 
