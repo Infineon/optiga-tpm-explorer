@@ -220,8 +220,8 @@ class Tab_RSA_CS(wx.Panel):
 
         # attach the sizers to the main sizer
         mainsizer.Add(steps_sizer, 0, wx.EXPAND | wx.LEFT | wx.TOP | wx.BOTTOM, 5)
-        mainsizer.Add(server_sizer, 1, wx.EXPAND | wx.ALL, 5)
-        mainsizer.Add(client_sizer, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(server_sizer, 1, wx.EXPAND | wx.RIGHT | wx.TOP | wx.BOTTOM, 5)
+        mainsizer.Add(client_sizer, 1, wx.EXPAND | wx.RIGHT | wx.TOP | wx.BOTTOM, 5)
 
         # attach the objects to the sizers
         steps_sizer.Add(button_gen_ca, 0, wx.EXPAND | wx.ALL, 5)
@@ -230,7 +230,7 @@ class Tab_RSA_CS(wx.Panel):
         steps_sizer.Add(button_gen_cert, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_server, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_client, 0, wx.EXPAND | wx.ALL, 5)
-        steps_sizer.AddSpacer(240)
+        steps_sizer.AddSpacer(236)
         steps_sizer.Add(backbutton, 0, wx.ALL, 5)
         
         server_sizer.Add(self.text_server, 1, wx.EXPAND | wx.ALL, 5)
@@ -596,18 +596,17 @@ class Tab_ECC_CS(wx.Panel):
         backbutton = wx.BitmapButton(self, -1, backimage)
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
-
         # attach the objects to the sizers
         mainsizer.Add(steps_sizer, 0, wx.EXPAND | wx.LEFT | wx.TOP | wx.BOTTOM, 5)
-        mainsizer.Add(server_sizer, 1, wx.EXPAND | wx.ALL, 5)
-        mainsizer.Add(client_sizer, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(server_sizer, 1, wx.EXPAND | wx.RIGHT | wx.TOP | wx.BOTTOM, 5)
+        mainsizer.Add(client_sizer, 1, wx.EXPAND | wx.RIGHT | wx.TOP | wx.BOTTOM, 5)
         steps_sizer.Add(button_gen_ca, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_gen_keypair, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_gen_csr, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_gen_cert, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_server, 0, wx.EXPAND | wx.ALL, 5)
         steps_sizer.Add(button_flush_client, 0, wx.EXPAND | wx.ALL, 5)
-        steps_sizer.AddSpacer(240)
+        steps_sizer.AddSpacer(236)
         steps_sizer.Add(backbutton, 0, wx.ALL, 5)
         server_sizer.Add(self.text_server, 1, wx.EXPAND | wx.ALL, 5)
         server_sizer.Add(button_start_server, 0, wx.EXPAND | wx.ALL, 5)
@@ -1003,8 +1002,8 @@ class Tab_RSA_MISC(wx.Panel):
 
         # attach the ui elements to the main sizer
         mainsizer.AddSpacer(5)
-        mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 0)
-        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
+        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
         mainsizer.Add(self.command_out, 1, wx.EXPAND | wx.TOP, 5)
         input_sizer.Add(data_input_blurb, 0, wx.ALIGN_CENTER | wx.ALL, 5)
         input_sizer.Add(self.data_input, 1, wx.ALL, 5)
@@ -1233,10 +1232,10 @@ class Tab_RNG(wx.Panel):
         # instantiate the objects
         button_gen_rng = wx.Button(self, -1, 'Generate RNG', size = (-1, 47))
         self.rng_input = wx.TextCtrl(self, -1)
-        rng_input_blurb = wx.StaticText(self, -1, "No. of bytes to be generated: ")
+        rng_input_blurb = wx.StaticText(self, -1, "No. of bytes to be generated:")
         self.command_out = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
         self.command_out.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-        rng_type_blurb = wx.StaticText(self, -1, "Pick encoding of Random Number: ")
+        rng_type_blurb = wx.StaticText(self, -1, "Pick encoding of Random Number:")
         self.rng_type = wx.ComboBox(self, -1, "RN Encoding", choices=rng_type_list, style=wx.CB_READONLY)
         clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
         clearbutton = wx.BitmapButton(self, -1, clearimage)
@@ -1247,15 +1246,15 @@ class Tab_RNG(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the ui elements to the main sizer
-        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.LEFT, 5)
         mainsizer.Add(self.command_out, 1, wx.EXPAND, 0)
         button_sizer.Add(rng_input_blurb, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
         button_sizer.Add(self.rng_input, 1, wx.ALIGN_CENTRE | wx.RIGHT, 10)
         button_sizer.Add(rng_type_blurb, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
         button_sizer.Add(self.rng_type, 1, wx.ALIGN_CENTRE | wx.LEFT, 5)
-        button_sizer.Add(button_gen_rng, 0, wx.ALIGN_CENTRE | wx.LEFT, 5)
-        button_sizer.Add(clearbutton, 0, wx.ALIGN_CENTRE | wx.LEFT, 5)
-        button_sizer.Add(backbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 5)
+        button_sizer.Add(button_gen_rng, 0, wx.ALIGN_CENTRE | wx.LEFT, 10)
+        button_sizer.Add(clearbutton, 0, wx.ALIGN_CENTRE | wx.LEFT, 10)
+        button_sizer.Add(backbutton, 0, wx.ALIGN_CENTRE | wx.ALL, 10)
 
         # Set tooltips
         button_gen_rng.SetToolTip(wx.ToolTip("Generate a Random Number, output is based on the dropdown menu."))

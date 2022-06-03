@@ -95,9 +95,9 @@ class Tab5Frame(wx.Frame):
         second_column.AddSpacer(50)
         second_column.Add(combimage, 0, wx.CENTRE)
         third_column.Add(button_gen_ak, 0, wx.CENTRE| wx.TOP, 5)
-        third_column.Add((5, 5))
+        third_column.Add((23, 23))
         third_column.Add(tpm_image, 0, wx.EXPAND | wx.ALL, 5)
-        third_column.Add((5, 5))
+        third_column.Add((20, 20))
         third_column.Add(button_gen_quote, 0, wx.CENTRE | wx.TOP, 5)
 
         # settings sizer
