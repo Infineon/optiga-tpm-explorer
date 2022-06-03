@@ -108,7 +108,7 @@ class Tab_RSA(wx.Panel):
         signbutton = wx.Button(self, -1, 'RSA Sign', size=(-1, 48))
         opensslverifybutton = wx.Button(self, -1, 'RSA Verify\n(By OpenSSL)')
         tpmverifybutton = wx.Button(self, -1, 'RSA Verify\n(By TPM2-Tools)')
-        inputtext = wx.StaticText(self, -1, label="Data Input:")
+        inputtext = wx.StaticText(self, -1, label="Data Input: ")
         self.input_display = wx.TextCtrl(self,value="168168")
         self.command_display = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
         self.command_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
@@ -121,9 +121,10 @@ class Tab_RSA(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
+        mainsizer.AddSpacer(10)
+        mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 10)
         mainsizer.AddSpacer(5)
-        mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
         mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.TOP, 5)
         input_sizer.Add(inputtext, 0, wx.ALIGN_CENTRE, 5)
         input_sizer.Add(self.input_display, 1, wx.ALIGN_CENTRE, 0)
@@ -449,7 +450,7 @@ class Tab_ECC(wx.Panel):
         signbutton = wx.Button(self, -1, 'ECC Sign', size = (-1, 48))
         opensslverifybutton = wx.Button(self, -1, 'ECC Verify\n(By Openssl)')
         tpmverifybutton = wx.Button(self, -1, 'ECC Verify\n(By TPM2-Tools)')
-        inputtext = wx.StaticText(self, -1, label="Data Input:")
+        inputtext = wx.StaticText(self, -1, label="Data Input: ")
         self.input_display = wx.TextCtrl(self,value="138831")
         self.command_display = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
         self.command_display.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
@@ -462,9 +463,10 @@ class Tab_ECC(wx.Panel):
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
 
         # attach the objects to the sizers
+        mainsizer.AddSpacer(10)
+        mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 10)
         mainsizer.AddSpacer(5)
-        mainsizer.Add(input_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(button_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
         mainsizer.Add(self.command_display, 1, wx.EXPAND | wx.TOP, 5)
         input_sizer.Add(inputtext, 0, wx.ALIGN_CENTRE, 5)
         input_sizer.Add(self.input_display, 1, wx.ALIGN_CENTRE, 0)

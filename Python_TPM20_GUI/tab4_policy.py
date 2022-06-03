@@ -26,9 +26,9 @@ class Tab4Frame(wx.Frame):
         mini_button_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # instantiate the objects
-        pcr_bank_blurb = wx.StaticText(self, -1, "Pick the PCR Index: ")
+        pcr_bank_blurb = wx.StaticText(self, -1, "Pick the PCR Index:")
         self.pcr_bank_choice = wx.ComboBox(self, -1, "Pick the PCR Index", choices=pcr_index_list, style=wx.CB_READONLY)
-        data_blurb = wx.StaticText(self, -1, "Data to be sealed: ")
+        data_blurb = wx.StaticText(self, -1, "Data to be sealed:")
         self.data_input = wx.TextCtrl(self, -1)
         button_create_policy = wx.Button(self, -1, 'Generate Policy from selected PCR', size = (-1, 48))
         button_create_primary = wx.Button(self, -1, 'Generate Primary (Owner)', size = (-1, 48))
@@ -51,20 +51,21 @@ class Tab4Frame(wx.Frame):
         # attach the sizers to the main sizer
         mainsizer.AddSpacer(5)
         mainsizer.Add(choices_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
-        mainsizer.Add(buttons_plus_txtbox_sizer, 1, wx.EXPAND | wx.ALL, 5)
+        mainsizer.Add(buttons_plus_txtbox_sizer, 1, wx.EXPAND | wx.BOTTOM | wx.LEFT | wx.RIGHT, 5)
         buttons_plus_txtbox_sizer.Add(button_sizer, 0, wx.EXPAND)
         buttons_plus_txtbox_sizer.Add(self.command_out, 1, wx.EXPAND | wx.ALL, 5)
 
         # attach the ui elements to the internal sizer
         choices_sizer.Add(pcr_bank_blurb, 0, wx.ALIGN_CENTER | wx.ALL, 5)
         choices_sizer.Add(self.pcr_bank_choice, 0, wx.EXPAND | wx.ALL, 5)
+        choices_sizer.AddSpacer(5)
         choices_sizer.Add(data_blurb, 0, wx.ALIGN_CENTER | wx.ALL, 5)
         choices_sizer.Add(self.data_input, 1, wx.EXPAND | wx.ALL, 5)
         button_sizer.Add(button_create_policy, 0, wx.EXPAND | wx.ALL, 5)
         button_sizer.Add(button_create_primary, 0, wx.EXPAND | wx.ALL, 5)
         button_sizer.Add(button_seal_data, 0, wx.EXPAND | wx.ALL, 5)
         button_sizer.Add(button_satisfy_unseal, 0, wx.EXPAND | wx.ALL, 5)
-        button_sizer.AddSpacer(345)
+        button_sizer.AddSpacer(348)
         button_sizer.Add(mini_button_sizer, 0, wx.EXPAND | wx.ALL, 0)
         mini_button_sizer.Add(infobutton, 0, wx.ALL, 5)
         mini_button_sizer.Add(clearbutton, 0, wx.ALL, 5)

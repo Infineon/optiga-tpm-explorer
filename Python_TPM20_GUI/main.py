@@ -78,11 +78,12 @@ class MainFrame(wx.Frame):
         gdsizer = wx.GridSizer(rows=4, cols=3, vgap=0, hgap=5)
         
         # add the widgets to the sizers (add row by row)
-        horisizer.Add(tpm_image, 0)
-        horisizer.AddSpacer(150)
+        horisizer.AddSpacer(25)
+        horisizer.Add(tpm_image, 0, wx.TOP, 17)
+        horisizer.AddSpacer(175)
         horisizer.Add(title_screen, 0, wx.ALIGN_CENTRE)
         horisizer.AddSpacer(150)
-        horisizer.Add(ifx_image, 0, wx.TOP, 10)
+        horisizer.Add(ifx_image, 0)
         
         horisizer2.AddSpacer(1278)
 
@@ -102,7 +103,7 @@ class MainFrame(wx.Frame):
         gdsizer.Add(self.button5, 1, wx.EXPAND | wx.ALL, 30)
         gdsizer.Add(self.button6, 1, wx.EXPAND | wx.ALL, 30)
 
-        mainsizer.Add(horisizer, 0, wx.EXPAND)
+        mainsizer.Add(horisizer, 0, wx.EXPAND | wx.TOP, 20)
         mainsizer.Add(horisizer2)
         mainsizer.Add(-1, 31)
         mainsizer.Add(gdsizer, 1, wx.EXPAND)
@@ -126,7 +127,7 @@ class MainFrame(wx.Frame):
 
         self.SetSizer(mainsizer)
         mainsizer.Fit(self)
-        self.Show(True)
+#         self.Show(True)
         
         self.Centre()
         self.Check_IFX_TPM()

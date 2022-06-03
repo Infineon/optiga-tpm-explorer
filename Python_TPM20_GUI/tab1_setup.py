@@ -266,12 +266,13 @@ class Tab_PCR(wx.Panel):
         # attach the sizers to the main sizer
         mainsizer.Add(top_row_sizer, 0, wx.TOP, 5)
         mainsizer.Add(middle_row_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
-        mainsizer.Add(bottom_row_sizer, 0, wx.EXPAND | wx.ALL, 0)
+        mainsizer.Add(bottom_row_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 5)
         mainsizer.Add(self.bottom_txt_display, 1, wx.EXPAND | wx.TOP, 5)
 
         # attach the ui elements to the internal sizer
         top_row_sizer.Add(self.sha_checkbox, 0, wx.ALL, 5)
         top_row_sizer.Add((200, 10), proportion=1, flag=wx.EXPAND)
+        top_row_sizer.AddSpacer(60)
         top_row_sizer.Add(text_for_pcrbank, 0, wx.ALIGN_CENTRE, 5)
         top_row_sizer.Add(self.pcr_bank_choice, 0, wx.ALL, 5)
         middle_row_sizer.AddSpacer(5)
@@ -409,55 +410,34 @@ class Tab_PCR(wx.Panel):
     def OnBack(self, evt):
         self.Parent.Parent.OnCloseWindow(None)
 
-
 class Tab_NVM(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
-
-        # declare the sizers
-        mainsizer = wx.BoxSizer(wx.HORIZONTAL)
-        nvm_attr_sizer = wx.BoxSizer(wx.VERTICAL)
-        index_size_offset_input_sizer = wx.BoxSizer(wx.VERTICAL)
-        index_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        size_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        offset_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        read_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        input_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        owner_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        nv_auth_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        button_row_1 = wx.BoxSizer(wx.HORIZONTAL)
-        button_row_2 = wx.BoxSizer(wx.HORIZONTAL)
-        button_row_3 = wx.BoxSizer(wx.HORIZONTAL)
-        button_row_4 = wx.BoxSizer(wx.HORIZONTAL)
-        rsa_sizer    = wx.BoxSizer(wx.HORIZONTAL)
-        ecc_sizer    = wx.BoxSizer(wx.HORIZONTAL)
         
-        icon_sizer = wx.BoxSizer(wx.HORIZONTAL)
-
-        # instantiate the objects
+        # instantiate the objects for left
         text_for_nvm_attr = wx.StaticText(self, -1, "NVM attributes:")
         self.nvm_attr = wx.CheckListBox(self, -1, choices=nvm_attr_list)
+        
+        # instantiate the objects for middle
         text_for_nvm_index = wx.StaticText(self, -1, "NVM index (in hex): ")
-        self.nvm_index = wx.TextCtrl(self, -1)
+        self.nvm_index = wx.TextCtrl(self, -1, size=(212, 33))
         text_for_nvm_size = wx.StaticText(self, -1, "NVM size (in bytes): ")
         self.nvm_size = wx.TextCtrl(self, -1)
         text_for_nvm_offset = wx.StaticText(self, -1, "NVM offset: ")
-        self.nvm_offset = wx.TextCtrl(self, -1)
+        self.nvm_offset = wx.TextCtrl(self, -1, size=(292, 33))
         text_for_read_amt = wx.StaticText(self, -1, "Read size: ")
         self.read_amt = wx.TextCtrl(self, -1)
         text_for_nvm_data = wx.StaticText(self, -1, "NVM data: ")
         self.nvm_data = wx.TextCtrl(self, -1)
         text_for_owner_auth = wx.StaticText(self, -1, "Owner Authorisation: ")
-        self.owner_input = wx.TextCtrl(self, -1)
+        self.owner_input = wx.TextCtrl(self, -1, size=(201, 33))
         text_for_nv_auth = wx.StaticText(self, -1, "NV Authorisation: ")
         self.nv_auth_input = wx.TextCtrl(self, -1)
-        button_nvdefine = wx.Button(self, -1, 'NV Define')
+        button_nvdefine = wx.Button(self, -1, 'NV Define', size=(201, 33))
         button_nvwrite = wx.Button(self, -1, 'NV Write')
-
-        button_nvwrite_file = wx.Button(self, -1, 'NV Write File')
-        self.filename_input = wx.TextCtrl(self, -1, value="ifx_ecc_cert.crt", style=(wx.TE_CHARWRAP|wx.TE_MULTILINE), size=(-1, 61))
+        button_nvwrite_file = wx.Button(self, -1, 'NV Write File', size=(201, 33))
+        self.filename_input = wx.TextCtrl(self, -1, value="ifx_ecc_cert.crt", style=(wx.TE_CHARWRAP|wx.TE_MULTILINE), size=(201, 70))
         # Create open file dialog
-        
         button_nvrelease = wx.Button(self, -1, 'NV Release')
         button_reset_attr = wx.Button(self, -1, 'Reset to Default')
         button_nvread = wx.Button(self, -1, 'NV Read')
@@ -467,87 +447,89 @@ class Tab_NVM(wx.Panel):
         self.rsa_cert_index = wx.TextCtrl(self, -1,value="0x1c00002")
         button_nv_read_ecc_cert = wx.Button(self, -1, 'Read ECC Cert')
         self.ecc_cert_index = wx.TextCtrl(self, -1,value="0x1c0000a")
-        
-        self.bottom_txt_display = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
-        self.bottom_txt_display.SetFont(wx.Font(11, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
- 
         clearimage = wx.Image('../images/clear.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
         clearbutton = wx.BitmapButton(self, -1, clearimage)
         # ~clearbutton = wx.BitmapButton(self, -1, img.clear.getBitmap())
-
         backimage = wx.Image('../images/back.png', wx.BITMAP_TYPE_PNG).ConvertToBitmap()
         backbutton = wx.BitmapButton(self, -1, backimage)
         # ~backbutton = wx.BitmapButton(self, -1, img.back.getBitmap())
         
+        #instantiate the objects for right
+        self.right_txt_display = wx.TextCtrl(self, -1, style=(wx.TE_MULTILINE | wx.TE_READONLY))
+        self.right_txt_display.SetFont(wx.Font(11, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+ 
+        # declare the sizers
+        mainsizer = wx.BoxSizer(wx.HORIZONTAL)
+        left_nvm_attr_sizer = wx.BoxSizer(wx.VERTICAL)
+        middle_input_sizer = wx.BoxSizer(wx.VERTICAL)
+        right_display_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        
+        # declare sizers inside middle_input_sizer
+        fgs1 = wx.FlexGridSizer(rows=2, cols=2, vgap=9, hgap=0)
+        fgs2 = wx.FlexGridSizer(rows=3, cols=2, vgap=9, hgap=0)
+        fgs3 = wx.FlexGridSizer(rows=2, cols=2, vgap=9, hgap=0)
+        gs1 = wx.GridSizer(rows=3, cols=2, vgap=9, hgap=10)
+        hori_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        gs2 = wx.GridSizer(rows=2, cols=2, vgap=9, hgap=10)
+        icon_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        # declare sizers inside hori_sizer and attach to hori_sizer
+        inside_hori_sizer1 = wx.BoxSizer(wx.VERTICAL)
+        inside_hori_sizer2 = wx.BoxSizer(wx.VERTICAL)
+        hori_sizer.Add(inside_hori_sizer1, 0, wx.EXPAND | wx.RIGHT, 9)
+        hori_sizer.Add(inside_hori_sizer2, 1, wx.EXPAND)
+        
         # attach the sizers to the main sizer
-        mainsizer.Add(nvm_attr_sizer, 0, wx.EXPAND | wx.ALL, 5)
-        mainsizer.Add(index_size_offset_input_sizer, 0, wx.RIGHT | wx.TOP, 5)
-        mainsizer.Add(self.bottom_txt_display, 1, wx.EXPAND | wx.ALL, 0)
-
-        # attach the ui elements to the internal sizer
-        nvm_attr_sizer.AddSpacer(5)
-        nvm_attr_sizer.Add(text_for_nvm_attr, 0, wx.ALIGN_CENTER | wx.ALL, 5)
-        nvm_attr_sizer.Add(self.nvm_attr, 1, wx.EXPAND | wx.ALL, 5)
-        nvm_attr_sizer.Add(button_reset_attr, 0, wx.EXPAND | wx.ALL, 5)
-        index_size_offset_input_sizer.Add(index_sizer, 0, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(size_sizer, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(input_sizer, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(offset_sizer, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(read_sizer, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(owner_sizer, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(nv_auth_sizer, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(button_row_1, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(button_row_2, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(button_row_3, 1, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(button_row_4, 1, wx.EXPAND, 0)
-
-        index_size_offset_input_sizer.Add(rsa_sizer, 0, wx.EXPAND, 0)
-        index_size_offset_input_sizer.Add(ecc_sizer, 0, wx.EXPAND, 0)
+        mainsizer.Add(left_nvm_attr_sizer, 0, wx.EXPAND | wx.ALL, 9)
+        mainsizer.Add(middle_input_sizer, 0, wx.EXPAND | wx.TOP | wx.BOTTOM | wx.RIGHT, 9)
+        mainsizer.Add(right_display_sizer, 1, wx.EXPAND | wx.ALL, 0)
         
-        index_size_offset_input_sizer.Add(icon_sizer, 0, wx.TOP|wx.BOTTOM|wx.RIGHT, 5)
-
-        index_sizer.Add(text_for_nvm_index, 1, wx.ALIGN_CENTRE, 5)
-        index_sizer.Add(self.nvm_index, 1, wx.EXPAND | wx.ALL, 5)
-
-        size_sizer.Add(text_for_nvm_size, 0, wx.ALIGN_CENTRE, 5)
-        size_sizer.Add(self.nvm_size, 1, wx.ALL, 5)
-
-        offset_sizer.Add(text_for_nvm_offset, 0, wx.ALIGN_CENTRE, 5)
-        offset_sizer.Add(self.nvm_offset, 1, wx.ALL, 5)
-
-        read_sizer.Add(text_for_read_amt, 0, wx.ALIGN_CENTRE, 5)
-        read_sizer.Add(self.read_amt, 1, wx.ALL, 5)
-
-        input_sizer.Add(text_for_nvm_data, 0, wx.ALIGN_CENTRE, 5)
-        input_sizer.Add(self.nvm_data, 1, wx.EXPAND | wx.ALL, 5)
-
-        owner_sizer.Add(text_for_owner_auth, 1, wx.ALIGN_CENTRE, 5)
-        owner_sizer.Add(self.owner_input, 1, wx.ALL, 5)
+        # attach the sizers to the middle sizer
+        middle_input_sizer.Add(fgs1, 0, wx.EXPAND | wx.BOTTOM, 9)
+        middle_input_sizer.Add(fgs2, 0, wx.EXPAND | wx.BOTTOM, 9)
+        middle_input_sizer.Add(fgs3, 0, wx.EXPAND | wx.BOTTOM, 12)
+        middle_input_sizer.Add(gs1, 0, wx.EXPAND | wx.BOTTOM, 9)
+        middle_input_sizer.Add(hori_sizer, 0, wx.EXPAND | wx.BOTTOM, 9)
+        middle_input_sizer.Add(gs2, 0, wx.EXPAND | wx.BOTTOM, 9)
+        middle_input_sizer.Add(icon_sizer, 0, wx.EXPAND | wx.ALL, 0)
         
-        nv_auth_sizer.Add(text_for_nv_auth, 1, wx.ALIGN_CENTRE, 5)
-        nv_auth_sizer.Add(self.nv_auth_input, 1, wx.ALL, 5)
-
-        button_row_1.Add(button_nvdefine, 1, wx.ALL, 5)
-        button_row_1.Add(button_nvwrite, 1, wx.ALL, 5)
-
-        button_row_2.Add(button_nvrelease, 1, wx.ALL, 5)
-        button_row_2.Add(button_nvread, 1, wx.ALL, 5)
-
-        button_row_3.Add(button_nvrelock, 1, wx.ALL, 5)
-        button_row_3.Add(button_nvlist, 1, wx.ALL, 5)
-
-        button_row_4.Add(button_nvwrite_file, 1, wx.ALL, 5)
-        button_row_4.Add(self.filename_input, 1, wx.EXPAND | wx.ALL, 5)
-
-        rsa_sizer.Add(button_nv_read_rsa_cert, 1, wx.ALL, 5)
-        rsa_sizer.Add(self.rsa_cert_index, 1, wx.ALL, 5) 
-
-        ecc_sizer.Add(button_nv_read_ecc_cert, 1, wx.ALL, 5)
-        ecc_sizer.Add(self.ecc_cert_index, 1, wx.ALL, 5) 
-               
-        icon_sizer.Add(clearbutton, 0, wx.ALL, 5)
-        icon_sizer.AddSpacer(5)
-        icon_sizer.Add(backbutton, 0, wx.ALL, 5)
+        # attach the object to the right sizer
+        right_display_sizer.Add(self.right_txt_display, 1, wx.EXPAND | wx.ALL, 0)
+        
+        # attach the objects to the left sizer
+        left_nvm_attr_sizer.Add(text_for_nvm_attr, 0, wx.ALIGN_CENTER | wx.ALL, 0)
+        left_nvm_attr_sizer.Add(self.nvm_attr, 1, wx.EXPAND | wx.ALL, 0)
+        left_nvm_attr_sizer.Add(button_reset_attr, 0, wx.EXPAND | wx.TOP, 9)
+        
+        # attach the objects to the middle sizer
+        fgs1.Add(text_for_nvm_index, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        fgs1.Add(self.nvm_index, 0, wx.EXPAND, 0)
+        fgs1.Add(text_for_nvm_size, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        fgs1.Add(self.nvm_size, 0, wx.EXPAND, 0)
+        fgs2.Add(text_for_nvm_offset, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        fgs2.Add(self.nvm_offset, 0, wx.EXPAND, 0)
+        fgs2.Add(text_for_nvm_data, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        fgs2.Add(self.nvm_data, 0, wx.EXPAND, 0)
+        fgs2.Add(text_for_read_amt, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        fgs2.Add(self.read_amt, 0, wx.EXPAND, 0)
+        fgs3.Add(text_for_owner_auth, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        fgs3.Add(self.owner_input, 0, wx.EXPAND, 0)
+        fgs3.Add(text_for_nv_auth, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        fgs3.Add(self.nv_auth_input, 0, wx.EXPAND, 0)
+        gs1.Add(button_nvdefine, 0, wx.EXPAND, 0)
+        gs1.Add(button_nvwrite, 0, wx.EXPAND, 0)
+        gs1.Add(button_nvrelease, 0, wx.EXPAND, 0)
+        gs1.Add(button_nvread, 0, wx.EXPAND, 0)
+        gs1.Add(button_nvrelock, 0, wx.EXPAND, 0)
+        gs1.Add(button_nvlist, 0, wx.EXPAND, 0)
+        inside_hori_sizer1.Add(button_nvwrite_file, 0, wx.EXPAND, 0)
+        inside_hori_sizer2.Add(self.filename_input, 0, wx.EXPAND, 0)
+        gs2.Add(button_nv_read_rsa_cert, 0, wx.EXPAND, 0)
+        gs2.Add(self.rsa_cert_index, 0, wx.EXPAND, 0)
+        gs2.Add(button_nv_read_ecc_cert, 0, wx.EXPAND, 0)
+        gs2.Add(self.ecc_cert_index, 0, wx.EXPAND, 0)
+        icon_sizer.Add(clearbutton, 0, wx.RIGHT, 9)
+        icon_sizer.Add(backbutton, 0)
 
         # Set tooltips
         button_nvdefine.SetToolTip(wx.ToolTip("TPM2_NVDefine: Cause the TPM to reserve space and associate that space with the NV index and attributes."))
@@ -586,6 +568,8 @@ class Tab_NVM(wx.Panel):
         self.nv_auth_input.write(exec_cmd.nvAuth)
         self.nvm_attr.SetCheckedStrings(["authread", "authwrite", "read_stclear"])
         self.SetSizer(mainsizer)
+        mainsizer.Fit(self)
+        self.Show(True)
  
     def OnClickFileName(self, evt):
         frame = wx.Frame(None, -1, '*.*')
@@ -614,7 +598,7 @@ class Tab_NVM(wx.Panel):
         try:
             int(read_size)
         except ValueError:
-            self.bottom_txt_display.write("Offset or size is an invalid value (not an integer).\n")
+            self.right_txt_display.write("Offset or size is an invalid value (not an integer).\n")
             return
         if (int(read_size) == 0):
             return
@@ -650,7 +634,7 @@ class Tab_NVM(wx.Panel):
             ])
         
         if (command_output.find("ERROR") != -1):
-            self.bottom_txt_display.AppendText(str(command_output)+"\n")
+            self.right_txt_display.AppendText(str(command_output)+"\n")
             return
                 
         #~ f = open("ifx_ecc_cert.crt", "w+")
@@ -670,10 +654,10 @@ class Tab_NVM(wx.Panel):
         command_output = ps_command.stdout.read()
         retcode = ps_command.wait()
 
-        self.bottom_txt_display.AppendText(str(command_output.decode()))
-        self.bottom_txt_display.AppendText("\n")
-        #~ self.bottom_txt_display.AppendText("%s executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output.decode()))
+        self.right_txt_display.AppendText("\n")
+        #~ self.right_txt_display.AppendText("%s executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnReadRSACert(self, evt):
         cert_index = self.rsa_cert_index.GetValue()
@@ -689,7 +673,7 @@ class Tab_NVM(wx.Panel):
         try:
             int(read_size)
         except ValueError:
-            self.bottom_txt_display.write("Offset or size is an invalid value (not an integer).\n")
+            self.right_txt_display.write("Offset or size is an invalid value (not an integer).\n")
             return
         if (int(read_size) == 0):
             return
@@ -716,7 +700,7 @@ class Tab_NVM(wx.Panel):
             ])
             
         if (command_output.find("ERROR") != -1):
-            self.bottom_txt_display.AppendText(str(command_output)+"\n")
+            self.right_txt_display.AppendText(str(command_output)+"\n")
             return
                 
         #~ f = open("ifx_rsa_cert.crt", "w+")
@@ -736,16 +720,16 @@ class Tab_NVM(wx.Panel):
         command_output = ps_command.stdout.read()
         retcode = ps_command.wait()
         
-        self.bottom_txt_display.AppendText(str(command_output.decode()))
-        self.bottom_txt_display.AppendText("\n")
-        #~ self.bottom_txt_display.AppendText("%s executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output.decode()))
+        self.right_txt_display.AppendText("\n")
+        #~ self.right_txt_display.AppendText("%s executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnResetAttr(self, evt):
         self.nvm_attr.SetCheckedStrings(["authread", "authwrite"])
 
     def OnClear(self, evt):
-        self.bottom_txt_display.Clear()
+        self.right_txt_display.Clear()
 
     # nvm_attr is derived from temp_attr. However, the command may not support all attributes and may return an error.
     # this is the tpm2_tools limitation
@@ -761,16 +745,16 @@ class Tab_NVM(wx.Panel):
         except ValueError:
             return
         if (int(nvm_size) > 2048):
-            self.bottom_txt_display.AppendText("Maximum NVM size is 2048. Input Again.\n")
+            self.right_txt_display.AppendText("Maximum NVM size is 2048. Input Again.\n")
             return
         for value in (self.nvm_attr.GetCheckedStrings()):
             temp_attr.append(value)
         if ((nvm_index == 0) | (nvm_size == 0)):
             return
         nvm_attr = "|".join(temp_attr)
-        self.bottom_txt_display.AppendText("Attributes are: " + nvm_attr + "\n")
+        self.right_txt_display.AppendText("Attributes are: " + nvm_attr + "\n")
         if (self.owner_input.GetValue()=="" and self.nv_auth_input.GetValue()==""):
-            self.bottom_txt_display.AppendText("Owner Authorisation and NV Authorisation Empty. Input Again.\n")
+            self.right_txt_display.AppendText("Owner Authorisation and NV Authorisation Empty. Input Again.\n")
             return
         
         #if NV field is empty
@@ -796,9 +780,9 @@ class Tab_NVM(wx.Panel):
                 "-p", nv_auth_val,
             ])
         
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvdefine' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output))
+        self.right_txt_display.AppendText("'tpm2_nvdefine' executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVWriteFile(self, evt):
         nvm_index = self.nvm_index.GetValue()
@@ -831,9 +815,9 @@ class Tab_NVM(wx.Panel):
                 "-i",binary_file,
             ])
             
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvwrite' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output))
+        self.right_txt_display.AppendText("'tpm2_nvwrite' executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVWrite(self, evt):
         nvm_index = self.nvm_index.GetValue()
@@ -865,9 +849,9 @@ class Tab_NVM(wx.Panel):
                 "-P", nv_auth_val,
             ])
             
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvwrite' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output))
+        self.right_txt_display.AppendText("'tpm2_nvwrite' executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVRelease(self, evt):
         nvm_index = self.nvm_index.GetValue()
@@ -880,9 +864,9 @@ class Tab_NVM(wx.Panel):
             "-P", owner_val,
             nvm_index,
         ])
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvrelease' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output))
+        self.right_txt_display.AppendText("'tpm2_nvrelease' executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVRead(self, evt):
         nvm_index = self.nvm_index.GetValue()
@@ -897,7 +881,7 @@ class Tab_NVM(wx.Panel):
             int(nvm_offset)
             int(read_size)
         except ValueError:
-            self.bottom_txt_display.write("Offset or size is an invalid value (not an integer).\n")
+            self.right_txt_display.write("Offset or size is an invalid value (not an integer).\n")
             return
         if (int(read_size) == 0):
             return
@@ -926,7 +910,7 @@ class Tab_NVM(wx.Panel):
             ])
         
         if (command_output.find("ERROR") != -1):
-            self.bottom_txt_display.AppendText(str(command_output)+"\n")
+            self.right_txt_display.AppendText(str(command_output)+"\n")
             return
                 
         #~ f = open("nvdata.txt", "w+")
@@ -941,10 +925,10 @@ class Tab_NVM(wx.Panel):
         #~ f = open("nvdata.txt", "r")
         #~ text=f.read()  
         
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("\n")
-        self.bottom_txt_display.AppendText("'tpm2_nvread' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output))
+        self.right_txt_display.AppendText("\n")
+        self.right_txt_display.AppendText("'tpm2_nvread' executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVReadLock(self, evt):
         nvm_index = self.nvm_index.GetValue()
@@ -968,23 +952,22 @@ class Tab_NVM(wx.Panel):
                 "-P", nv_auth_val,
             ])
             
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvreadlock' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output))
+        self.right_txt_display.AppendText("'tpm2_nvreadlock' executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     def OnNVList(self, evt):
         command_output = exec_cmd.execTpmToolsAndCheck([
             "tpm2_nvreadpublic",
         ])
-        self.bottom_txt_display.AppendText(str(command_output))
-        self.bottom_txt_display.AppendText("'tpm2_nvreadpublic' executed \n")
-        self.bottom_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
+        self.right_txt_display.AppendText(str(command_output))
+        self.right_txt_display.AppendText("'tpm2_nvreadpublic' executed \n")
+        self.right_txt_display.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
     # Calling parent of the parent, as direct parent is the notebook,
     # then the second parent is the frame, from which we call the destruction
     def OnBack(self, evt):
         self.Parent.Parent.OnCloseWindow(None)
-
 
 class Tab_Handles(wx.Panel):
     def __init__(self, parent):
