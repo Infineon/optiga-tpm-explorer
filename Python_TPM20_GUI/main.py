@@ -82,8 +82,8 @@ class MainFrame(wx.Frame):
         horisizer.Add(tpm_image, 0, wx.TOP, 17)
         horisizer.AddSpacer(175)
         horisizer.Add(title_screen, 0, wx.ALIGN_CENTRE)
-        horisizer.AddSpacer(150)
-        horisizer.Add(ifx_image, 0)
+        horisizer.AddSpacer(145)
+        horisizer.Add(ifx_image, 0, wx.TOP, 10)
         
         horisizer2.AddSpacer(1278)
 
