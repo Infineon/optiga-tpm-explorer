@@ -110,13 +110,14 @@ Using this tool, you can instantly experience the benefits that [OPTIGA™ TPM 2
 
 For more information on how to setup the tool environment, refer to the [OPTIGA™ TPM 2.0 Explorer Setup Guide](./Setup%20Guide.md)
 
-This tool was tested on a Raspberry Pi (RPi) 3 Model B+/ RPi 4 Model B with Raspbian Linux in Release Version 11 (Bullseye) and kernel version 5.10.92 using an Infineon OPTIGA™ TPM SLB 9670 TPM2.0 attached to the Raspberry Pi board (Figure 1 and Figure 2).
+This tool was tested on a Raspberry Pi (RPi) 3 Model B+/ RPi 4 Model B with Raspbian Linux in Release Version 11 (Bullseye) and kernel version 5.15.61 using an Infineon OPTIGA™ TPM SLB 9670/72 TPM2.0 attached to the Raspberry Pi board (Figure 1 and Figure 2).
 
 ![](images/Overview/RpiBullseye.png) 
 
-Figure 1: Raspbian Linux 11 (Bullseye) and kernel version 5.10.92
+Figure 1: Raspbian Linux 11 (Bullseye)
 
-![](images/Overview/TPMRPI3.png) 
+| ![](images/Overview/TPMRPI3.png) |
+| :------------------------------: |
 
 Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi 3
 
@@ -126,9 +127,9 @@ Figure 2: Infineon Iridium SLB 9670 TPM2.0 SPI Board on a Raspberry Pi 3
 
 | Hardware             | Version   and Firmware/OS                                    | Comment                                                      |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Host  PC             | • x86  architecture and USB 2.0 (or higher)  •  Capable of running Linux, for example Ubuntu 18.04  •  Arbitrary as long as VNC viewer is present | This  platform is used for patching the Kernel, maintaining and interacting with  the Raspberry Pi in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi. |
-| OPTIGA™ TPM 2.0 evaluation board      | • [Iridium SLB 9670 TPM2.0](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) | This  board contains the Infineon OPTIGA™ TPM SLB 9670 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi. |
-| Raspberry  Pi Board | •  Model 3 B+/ 4 B, Bullseye OS (2022-01-28)   •  Micro SD Card with at least 8 GB   •  Micro-B/ Type C USB cable for power supply | A SD  card with Raspberry Pi Bullseye OS and kernel version 5.10.92 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
+| Host  PC             | Running Linux/Windows®, for example Ubuntu® 18.04 above or Windows 10 as long as VNC viewer is present | This  platform is used for interacting with  the Raspberry Pi® in a more convenient and faster way compared to doing all  actions directly on the Raspberry Pi®. |
+|  OPTIGA™ TPM 2.0 evaluation board       |  • [IRIDIUM9670 TPM2.0 LINUX](https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/) <br /> • [OPTIGA™ TPM SLB 9672 RPI evaluation board](https://www.infineon.com/cms/en/product/evaluation-boards/optiga-tpm-9672-rpi-eval/)  | These  boards contains Infineon OPTIGA™ TPM SLB 9670/72 TPM2.0 mounted on an  easy-to-use hardware board, which can be attached to the Raspberry Pi®. |
+| Raspberry  Pi® Board | •  Model 3 B+/ 4 B, Bullseye OS (2022-09-26) <br />  •  Micro SD Card with at least 16 GB <br />  •  Micro-B/ Type C USB cable for power supply | A SD  card with Raspberry Pi® Bullseye OS and kernel version 5.15.61 on it is required, which can be downloaded at [[1]](#references). This SD card will be  plugged in the developer PC |
 
 
 
@@ -1006,7 +1007,7 @@ application or secure memory and have proven to contain bugs or vulnerabilities 
 
 the last several years.
 
-The benefit of using SLx 9670 TPM2.0 to protect the private key involved in the TLS handshake process.
+The benefit of using SLx 9670/72 TPM2.0 to protect the private key involved in the TLS handshake process.
 
 ### RSA (Client/Server) Function Description
 
@@ -1655,10 +1656,11 @@ Figure 168: AWS IOT WebBrowser Successfully Published
 
 ## <a name="references"></a>References
 
-1.  https://downloads.raspberrypi.org/raspios_armhfimages/raspios_armhf-2022-01-28/
+1.  <https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2022-09-26/>
 2.  <https://www.infineon.com/cms/en/product/evaluation-boards/iridium9670-tpm2.0-linux/>
 3.  <http://www.infineon.com/tpm>
 4.  https://trustedcomputinggroup.org/resource/tpm-main-specification/
+5. <https://www.infineon.com/cms/en/product/evaluation-boards/optiga-tpm-9672-rpi-eval/>
 
 
 
