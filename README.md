@@ -3,12 +3,12 @@ The OPTIGA™ TPM 2.0 Explorer is a GUI-based tool for users to familiarize them
 
 Using this tool, you can instantly experience the benefits that [OPTIGA™ TPM 2.0](https://www.infineon.com/cms/en/product/security-smart-card-solutions/optiga-embedded-security-solutions/optiga-tpm/?redirId=39899/) will bring to IoT devices and network equipment.
 
-| ![](/images/Setup/MainScreen.png) |
+| ![](images/Setup/MainScreen.png) |
 | ------------------------------------------------------- |
 
 Tool highlights include the opportunity to explore OPTIGA™ TPM 2.0 features and use cases faster - without having to familiarize yourself with TPM 2.0 or various command sets. You simply select a button to activate the relevant function or task. Once you select a button, the view menu gives you instant visual feedback, showing the commands that have been executed and the corresponding responses. This easy-to-use GUI makes it possible for all users - regardless of their level of experience or knowledge - to effortlessly access different OPTIGA™ TPM 2.0 features and explore common use cases. 
 
-| ![](/images/Optiga_Setup/PCR/TPMPCRSHA1_ListAll.png) |
+| ![](images/Optiga_Setup/PCR/TPMPCRSHA1_ListAll.png) |
 | ---------------------------------------------------- |
 
 ## Features
@@ -45,7 +45,7 @@ Tool highlights include the opportunity to explore OPTIGA™ TPM 2.0 features an
     -   [OPTIGA™ TPM SLB 9672 RPI evaluation board](https://www.infineon.com/cms/en/product/evaluation-boards/optiga-tpm-9672-rpi-eval/)
     
 
-| ![](/images/Overview/TPMRPI3.png) |
+| ![](images/Overview/TPMRPI3.png) |
 | --------------------------------- |
 
 ## Setup environment
@@ -61,7 +61,7 @@ The following software is required for the OPTIGA™ TPM 2.0 Explorer:
 
 For more information on how to setup the tool environment, refer to the [OPTIGA™ TPM 2.0 Explorer Setup Guide](./Setup%20Guide.md)
 
-![](/images/Overview/RpiBullseye.png) 
+![](images/Overview/RpiBullseye.png) 
 
 ## User guide
 
