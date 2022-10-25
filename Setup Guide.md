@@ -52,7 +52,7 @@ Open the configuration file in an editor:
 sudo nano /boot/config.txt   
 ```
 
-Insert the following lines to enable SPI and TPM: 
+Insert the following lines to enable SPI and TPM( for SLB9670 and SLB9672): 
 
 ```shell
 dtoverlay=tpm-slb9670

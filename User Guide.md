@@ -443,14 +443,14 @@ Figure 34: Read ECC Cert
 
 ### Writing File
 
-To write, we select "NV Write File" to select a file to write.
+To write file, select the file name box as follow.
 
 | ![](images/Optiga_Setup/NVM/Write_cert.png) |
 | -------------------------------------------- |
 
 Figure 35: NV Write File
 
-For this example, ifx_ecc_cert.crt is selected.
+For this example, ifx_ecc_cert.crt is selected. Click the "NV Write File" button to write the file to index 0x1500016.
 
 | ![](images/Optiga_Setup/NVM/TPMNVM_WriteFile.png) |
 | -------------------------------------------------- |
