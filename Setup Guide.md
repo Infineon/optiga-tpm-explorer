@@ -192,13 +192,13 @@ The installation script installs the following dependencies required and compile
 -   tpm2-abrmd
 -   tpm2-tss-engine
 
-Once complete, to run from source:
+Once complete, to run from binary:
 
 ```shell
-cd ~/optiga-tpm-explorer/Python_TPM20_GUI
-python main.py
+cd ~/optiga-tpm-explorer/Python_TPM20_GUI/bin
+python main.pyc
 ```
-To run from binary:
+To run from start up script:
 
 go to your home directory and access the file called TPM_Explorer.
 
