@@ -1,0 +1,3 @@
+# SPDX-FileCopyrightText: 2021-2024 Infineon Technologies AG
+# SPDX-License-Identifier: MIT
+PyPubSub==4.0.3
