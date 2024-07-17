@@ -26,15 +26,15 @@ class PolicyInfoDlg(wx.MessageDialog):
         wx.MessageDialog.__init__(self, parent, message="", caption=title, style=wx.OK | wx.ICON_INFORMATION)
         self.SetMessage("Enhanced Authorisation(EA):\n\
 EA allows users to require specific tests or actions to be performed before an action can be done.\n\
-Step 1: In this case, the policy is created. To fulfil the policy, the specified PCR bank has to have a certain value at the time of policy creation.\n\
-Step 2: Creation of a primary (if not already done) is required for a creation of a leaf key to be used in sealing and unsealing.\n\
+Step 1: In this case, a policy is created. To fulfil the policy, the specified PCR bank has to have a certain value at the time of policy creation.\n\
+Step 2: Creation of a primary key (if not already done) is required for a creation of a leaf key to be used in sealing and unsealing.\n\
 Step 3: The sealing step involves the creation of a keypair under the Owner Hierarchy. That keypair is immediately used in sealing the secret values.\n\
-Step 4: The key-pair then cannot be used (to unseal) until the Policy is fulfilled, which requires a PCR bank to the specific value.\n\
+Step 4: The key-pair then cannot be used (to unseal) until the Policy is fulfilled, which requires a PCR to be set to a specific value.\n\
 A policy defines the conditions for use of an entity, and can be very complex:\n\
-    a) A policy can only have 1 condition (e.g. in this case, a specific value in a specific PCR bank)\n\
+    a) A policy can only have one condition (e.g. in this case, a specific value in a specific PCR bank)\n\
     b) Multiple conditions which ALL must be fulfilled (Policy AND)\n\
     c) Multiple conditions which only ONE is enough to be fulfilled (Policy OR)\n\
-    d) Or a complex chain of conditions (e.g. OR->AND->OR)\n\
+    d) A complex chain of conditions (e.g. OR->AND->OR)\n\
 Policy conditions can vary, some are here:\n\
     a) TPM2_PolicyPCR: Fulfilled if a PCR bank has a specific value (this use case)\n\
     b) TPM2_PolicyAuthorise: Fulfilled if the policy is signed by a designated authority's signing key.\n\
