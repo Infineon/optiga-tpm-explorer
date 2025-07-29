@@ -1,2 +1,0 @@
-make
-cp eHealthDevice ../../../eHealthDevice

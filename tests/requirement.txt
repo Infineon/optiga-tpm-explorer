@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2025 Infineon Technologies AG
+# SPDX-License-Identifier: CC0-1.0
+
+# Requirements for local CLI client
+requests
+
+# Requirements for remote server
+flask
+
+# Requirements for tests
+pytest
+coverage[toml]
+
+# Requirements for documentation
+sphinx
+sphinx_mdinclude
+sphinx-pyproject
+
+# Requirements for CI
+mypy
+mypy-gitlab-code-quality
+lxml
+types-requests
+pylint
+pylint-gitlab
+reuse
+
+# Requirements for developers
+autopep8

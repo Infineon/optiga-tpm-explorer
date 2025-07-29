@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2024 Infineon Technologies AG
+#
+# SPDX-License-Identifier: MIT
+
+version = 1
+
+[[annotations]]
+path = ["README.md", 
+        "CHANGELOG.md", 
+        "Setup Guide.md",
+        "User Guide.md",
+        "docs/**",
+        "src/Python_TPM20_GUI/bin/images/**",
+        "src/Python_TPM20_GUI/images/**",
+        "src/Python_TPM20_GUI/bin/working_space/**",
+        "src/Python_TPM20_GUI/bin/commit_info"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2022-2024 Infineon Technologies AG"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["src/Python_TPM20_GUI/bin/*.pyc",
+        "src/Python_TPM20_GUI/bin/*.sh",
+        ".gitignore"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2022-2024 Infineon Technologies AG"
+SPDX-License-Identifier = "MIT"
