@@ -1,10 +1,6 @@
-## 2.0.0 (2025-06-12)
-* First release version 2.0
+## V 2.0.1 (2026-02-02)
+* Using latest tpm2-openssl version 1.3.0.
 
-* Support new RPI Bookworm OS
+* Fixed provider key generation issue when system openssl configuration file(/etc/ssl/openssl.cnf) is used.
 
-* Support SLB9670/72/73
-
-* Support Empty Authorization values 
-
-  
+* Selectable installation of SLB9670/72 or SLB9673 by defining TPM_SPI_OVERLAY or  TPM_I2C_OVERLAY in installation script. 

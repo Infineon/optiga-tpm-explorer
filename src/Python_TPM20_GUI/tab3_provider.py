@@ -467,6 +467,10 @@ class Tab_RSA_CS(wx.Panel):
                 "genpkey",
                 "-provider",
                 "tpm2",
+                "-provider",
+                "default",
+                "-propquery",
+                "?provider=tpm2",
                 "-algorithm",
                 "RSA",
                 "-pkeyopt",
@@ -476,7 +480,7 @@ class Tab_RSA_CS(wx.Panel):
             ]
         )
         self.text_server.AppendText(
-            "'openssl genpkey -provider tpm2 -algorithm RSA -pkeyopt parent:0x8100000A -out rsa_server_tss.pem'\n"
+            "'openssl genpkey -provider tpm2 -provider default -propquery '?provider=tpm2' -algorithm RSA -pkeyopt parent:0x8100000A -out rsa_server_tss.pem'\n"
         )
         self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
@@ -823,12 +827,12 @@ class Tab_ECC_CS(wx.Panel):
                 "-out",
                 "ecc_CA_key.pem",
                 "-pkeyopt",
-                "ec_paramgen_curve:P-384",
+                "group:P-256",
             ]
         )
 
         self.text_server.AppendText(
-            "'openssl genpkey -algorithm EC -out ecc_CA_key.pem -pkeyopt ec_paramgen_curve:P-384'\n"
+            "'openssl genpkey -algorithm EC -out ecc_CA_key.pem -pkeyopt group:P-256'\n"
         )
         self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
         self.text_server.AppendText("Creating Self-Signed Certificate:\n")
@@ -904,18 +908,22 @@ class Tab_ECC_CS(wx.Panel):
                 "genpkey",
                 "-provider",
                 "tpm2",
+                "-provider",
+                "default",
+                "-propquery",
+                "?provider=tpm2",
                 "-algorithm",
                 "EC",
                 "-pkeyopt",
                 "parent:0x8100000B",
                 "-pkeyopt",
-                "ec_paramgen_curve:P-384",
+                "group:P-256",
                 "-out",
                 "ecc_server_tss.pem",
             ]
         )
         self.text_server.AppendText(
-            "'openssl genpkey -provider tpm2 -algorithm EC -pkeyopt parent:0x8100000B -pkeyopt ec_paramgen_curve:P-384 -out ecc_server_tss.pem'\n"
+            "'openssl genpkey -provider tpm2 -provider default -propquery '?provider=tpm2' -algorithm EC -pkeyopt parent:0x8100000B -pkeyopt group:P-256 -out ecc_server_tss.pem'\n"
         )
         self.text_server.AppendText("++++++++++++++++++++++++++++++++++++++++++++\n")
 
@@ -1182,6 +1190,10 @@ class Tab_RSA_MISC(wx.Panel):
                     "RSA",
                     "-provider",
                     "tpm2",
+                    "-provider",
+                    "default",
+                    "-propquery",
+                    "?provider=tpm2",
                     "-pkeyopt",
                     "bits:2048",
                     "-pkeyopt",
@@ -1192,23 +1204,8 @@ class Tab_RSA_MISC(wx.Panel):
             )
             self.command_out.AppendText(str(command_output))
             self.command_out.AppendText(
-                f"'openssl genpkey -algorithm RSA -provider tpm2 -pkeyopt bits:2048 -pkeyopt parent:0x81000008 -out rsa2.pem' executed \n"
+                f"'openssl genpkey -algorithm RSA -provider tpm2 -provider default -propquery '?provider=tpm2' -pkeyopt bits:2048 -pkeyopt parent:0x81000008 -out rsa2.pem' executed \n"
             )
-            """
-            # Step 4: Generate child RSA key with owner auth value
-            command_output = exec_cmd.execCLI([
-                "openssl", "genpkey", "-algorithm", "RSA", "-provider", "tpm2",  "-pkeyopt", "parent:0x81000008","-pkeyopt", "bits:2048", "-pkeyopt", f"user-auth:{owner_auth}", "-out", "rsa2.pem"
-            ])
-            self.command_out.AppendText(str(command_output))
-            self.command_out.AppendText(f"'openssl genpkey -algorithm RSA -provider tpm2 -pkeyopt bits:2048 -pkeyopt user-auth:{owner_auth} -out rsa2.pem' executed \n")
-            
-            # Step 5: Extract public key from the generated RSA key
-            command_output = exec_cmd.execCLI([
-                "openssl", "pkey", "-provider", "tpm2", "-provider", "default", "-passin", f"pass:{owner_auth}", "-in", "rsa2.pem", "-pubout", "-out", "rsa2.pub.pem"
-            ])
-            self.command_out.AppendText(str(command_output))
-            self.command_out.AppendText(f"'openssl pkey -provider tpm2 -provider default -passin pass:{owner_auth} -in rsa2.pem -pubout -out rsa2.pub.pem' executed \n")
-            """
 
             # Step 5: Extract public key from the generated RSA key
             command_output = exec_cmd.execCLI(
@@ -1242,11 +1239,24 @@ class Tab_RSA_MISC(wx.Panel):
 
         else:
             command_output = exec_cmd.execCLI(
-                ["openssl", "genpkey", "-provider", "tpm2", "-algorithm", "RSA", "-out", "rsa2.pem"]
+                [
+                    "openssl",
+                    "genpkey",
+                    "-provider",
+                    "tpm2",
+                    "-provider",
+                    "default",
+                    "-propquery",
+                    "?provider=tpm2",
+                    "-algorithm",
+                    "RSA",
+                    "-out",
+                    "rsa2.pem",
+                ]
             )
             self.command_out.AppendText(str(command_output))
             self.command_out.AppendText(
-                f"'openssl genpkey -provider tpm2 -algorithm RSA -out rsa2.pem' executed \n"
+                f"'openssl genpkey -provider tpm2 -provider default -propquery '?provider=tpm2' -algorithm RSA -out rsa2.pem' executed \n"
             )
             command_output = exec_cmd.execCLI(
                 [
@@ -1583,33 +1593,22 @@ class Tab_ECC_MISC(wx.Panel):
                     "EC",
                     "-provider",
                     "tpm2",
+                    "-provider",
+                    "default",
+                    "-propquery",
+                    "?provider=tpm2",
                     "-pkeyopt",
                     "parent:0x81000009",
                     "-pkeyopt",
-                    "ec_paramgen_curve:P-384",
+                    "group:P-256",
                     "-out",
                     "ecc2.pem",
                 ]
             )
             self.command_out.AppendText(str(command_output))
             self.command_out.AppendText(
-                f"'openssl genpkey -algorithm EC -provider tpm2 -pkeyopt parent:0x81000009 -pkeyopt ec_paramgen_curve:P-384 -out ecc2.pem' executed \n"
+                f"'openssl genpkey -algorithm EC -provider tpm2 -provider default -propquery '?provider=tpm2' -pkeyopt parent:0x81000009 -pkeyopt group:P-256 -out ecc2.pem' executed \n"
             )
-            """
-            # Step 4: Generate child ECC key with owner auth value
-            command_output = exec_cmd.execCLI([
-                "openssl", "genpkey", "-algorithm", "EC", "-provider", "tpm2",  "-pkeyopt", "parent:0x81000009","-pkeyopt", "bits:2048", "-pkeyopt", f"user-auth:{owner_auth}", "-out", "ecc2.pem"
-            ])
-            self.command_out.AppendText(str(command_output))
-            self.command_out.AppendText(f"'openssl genpkey -algorithm EC -provider tpm2 -pkeyopt bits:2048 -pkeyopt user-auth:{owner_auth} -out ecc2.pem' executed \n")
-            
-            # Step 5: Extract public key from the generated RSA key
-            command_output = exec_cmd.execCLI([
-                "openssl", "pkey", "-provider", "tpm2", "-provider", "default", "-passin", f"pass:{owner_auth}", "-in", "ecc2.pem", "-pubout", "-out", "ecc2.pub.pem"
-            ])
-            self.command_out.AppendText(str(command_output))
-            self.command_out.AppendText(f"'openssl pkey -provider tpm2 -provider default -passin pass:{owner_auth} -in ecc2.pem -pubout -out ecc2.pub.pem' executed \n")
-            """
 
             # Step 5: Extract public key from the generated RSA key
             command_output = exec_cmd.execCLI(
@@ -1648,17 +1647,21 @@ class Tab_ECC_MISC(wx.Panel):
                     "genpkey",
                     "-provider",
                     "tpm2",
+                    "-provider",
+                    "default",
+                    "-propquery",
+                    "?provider=tpm2",
                     "-algorithm",
                     "EC",
                     "-pkeyopt",
-                    "ec_paramgen_curve:P-384",
+                    "group:P-256",
                     "-out",
                     "ecc2.pem",
                 ]
             )
             self.command_out.AppendText(str(command_output))
             self.command_out.AppendText(
-                f"'openssl genpkey -provider tpm2 -algorithm EC -pkeyopt ec_paramgen_curve:P-384 -out ecc2.pem' executed \n"
+                f"'openssl genpkey -provider tpm2 -provider default -propquery '?provider=tpm2' -algorithm EC -pkeyopt group:P-256 -out ecc2.pem' executed \n"
             )
             command_output = exec_cmd.execCLI(
                 [
